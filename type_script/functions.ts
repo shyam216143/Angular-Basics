@@ -41,7 +41,7 @@ function add3(num1:number,num2:number,...num3:number[]):number{
 
 
 console.log(add3(1,2,...[4,5,6]))   //18 rest parameters
-console.log(add3(1,2,4,5,6))   //18 rest parameters
+console.log(add3(1,2,4,5,6,7))   //18 rest parameters
 
 // generic functions
 

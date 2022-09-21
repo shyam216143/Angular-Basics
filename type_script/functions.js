@@ -24,7 +24,7 @@ function add3(num1, num2, ...num3) {
     return num1 + num2 + num3.reduce((a, b) => a + b, 0);
 }
 console.log(add3(1, 2, ...[4, 5, 6])); //18 rest parameters
-console.log(add3(1, 2, 4, 5, 6)); //18 rest parameters
+console.log(add3(1, 2, 4, 5, 6, 7)); //18 rest parameters
 // generic functions
 function getItems(items) {
     return new Array().concat(items);

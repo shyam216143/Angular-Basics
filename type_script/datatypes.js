@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 let fname; //string
 fname = 'shyam';
 let newname = fname.toUpperCase();
@@ -23,7 +23,7 @@ let result2 = numlist.find((num) => num === 2);
 console.log(result2);
 let sum = numlist.reduce((acc, num) => (acc + num));
 console.log(sum);
-let c = 2 /* Color.blue */;
+let c = 2 /* blue */;
 console.log(typeof (c));
 //  tuples
 let swapnums;

@@ -1,4 +1,3 @@
-'use strict';
 let fname : string;  //string
 fname='shyam';
 let newname = fname.toUpperCase();

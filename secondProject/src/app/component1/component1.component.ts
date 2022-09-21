@@ -9,13 +9,16 @@ import { component1, Roomlist } from './component1';
   styleUrls: ['./component1.component.scss'],
   
 })
-export class Component1Component implements OnInit, AfterViewInit, DoCheck{
+export class Component1Component implements OnInit, AfterViewInit, DoCheck,AfterViewChecked{
   title: string = 'shyam';
  roomlist:Roomlist[]=[];
-  @ViewChild(HeaderComponent)  headerComponent!: HeaderComponent;
+  @ViewChild(HeaderComponent, {static:true})  headerComponent!: HeaderComponent;
   constructor() {
 
    }
+  ngAfterViewChecked(): void {
+   
+  }
 
    ngOnChange(){
   console.log('on change has occcured')
@@ -61,6 +64,7 @@ selectedRoom!:Roomlist;
   }
   ngAfterViewInit() {
     console.log(this.headerComponent);
+    this.headerComponent.title='rooms';
   }
   name='shyam';
   age =20;

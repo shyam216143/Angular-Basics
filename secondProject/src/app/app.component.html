@@ -1,8 +1,9 @@
-<h1>welcome to {{name}}</h1>
+<h1>welcome to {{name1}}</h1>
+<app-component1></app-component1>
+<div #name></div>
 
 
-
-<div [ngSwitch]="role">
+<!-- <div [ngSwitch]="role">
   <div *ngSwitchCase="'User'">Welcome The User</div>
   <div *ngSwitchCase="'Admin'">
     <app-component1></app-component1>
@@ -12,4 +13,9 @@
 
 <mat-slider min="1" max="100" step="1" value="50">
   <button mat-button color="primary">Primary</button>
-</mat-slider>
+</mat-slider> -->
+
+<!-- 
+<div>
+  <ng-template #user></ng-template>
+</div> -->

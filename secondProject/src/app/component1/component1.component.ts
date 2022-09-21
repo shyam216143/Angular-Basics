@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy } from '@angular/compiler';
-import { Component, OnInit, DoCheck, OnChanges, ViewChild } from '@angular/core';
+import { Component, OnInit, DoCheck, OnChanges, ViewChild, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { component1, Roomlist } from './component1';
 
@@ -9,20 +9,21 @@ import { component1, Roomlist } from './component1';
   styleUrls: ['./component1.component.scss'],
   
 })
-export class Component1Component implements OnInit {
+export class Component1Component implements OnInit, AfterViewInit, DoCheck{
   title: string = 'shyam';
  roomlist:Roomlist[]=[];
-  @ViewChild(HeaderComponent)
-  headerComponent!: HeaderComponent;
+  @ViewChild(HeaderComponent)  headerComponent!: HeaderComponent;
   constructor() {
 
    }
+
    ngOnChange(){
   console.log('on change has occcured')
    }
    ngDoCheck(){
     console.log('on check is  has occcured')
      }
+    
 selectedRoom!:Roomlist;
   ngOnInit() {
     console.log(this.headerComponent)
@@ -58,6 +59,9 @@ selectedRoom!:Roomlist;
 
   }]
   }
+  ngAfterViewInit() {
+    console.log(this.headerComponent);
+  }
   name='shyam';
   age =20;
   bool=false
@@ -86,8 +90,10 @@ addRoom(){
     chectOutTime:new Date('22-Nov-2022'),
 
   }
+
+
   // this.roomlist.push(room)
   this.roomlist=[...this.roomlist, room]
 }
-  
+
 }

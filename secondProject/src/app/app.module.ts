@@ -7,12 +7,14 @@ import { Component1Component } from './component1/component1.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { Childcomponent1Component } from './component1/childcomponent1/childcomponent1.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     Component1Component,
-    Childcomponent1Component
+    Childcomponent1Component,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck, OnChanges, ViewChild } from '@angular/core';
+import { HeaderComponent } from '../header/header.component';
 import { component1, Roomlist } from './component1';
 
 @Component({
@@ -9,12 +10,22 @@ import { component1, Roomlist } from './component1';
   
 })
 export class Component1Component implements OnInit {
+  title: string = 'shyam';
  roomlist:Roomlist[]=[];
+  @ViewChild(HeaderComponent)
+  headerComponent!: HeaderComponent;
   constructor() {
 
    }
+   ngOnChange(){
+  console.log('on change has occcured')
+   }
+   ngDoCheck(){
+    console.log('on check is  has occcured')
+     }
 selectedRoom!:Roomlist;
   ngOnInit() {
+    console.log(this.headerComponent)
    this.roomlist=[
     {
     roomNumber:102,
@@ -50,9 +61,10 @@ selectedRoom!:Roomlist;
   name='shyam';
   age =20;
   bool=false
-
   fun1(){
     this.bool=!this.bool
+    this.title='This is changed the basics';
+    
   }
   room:component1={
     totalRooms:30,

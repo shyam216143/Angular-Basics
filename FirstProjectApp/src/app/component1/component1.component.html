@@ -1,4 +1,8 @@
 <p>component1 works!</p>
+<app-header></app-header>
+<app-header></app-header>
+<app-header></app-header>
+<app-header></app-header>
 <h1>welcome Mr.{{name}}</h1>
 <div [hidden]="child">Your age is:<div [innerText]="age"></div></div>
 <div [hidden]="bool"> {{myemp1|json}}
@@ -24,4 +28,4 @@
     </table>
 </div>
 <div *ngIf="myemp1">this is happend after selected{{myemp1|json}}</div>
-<app-childcomponent  [childemp]="myemp"  (moveparentemp)="fun1($event)"></app-childcomponent>
+<app-childcomponent  [childemp]="myemp" [title]="title" (moveparentemp)="fun1($event)"></app-childcomponent>

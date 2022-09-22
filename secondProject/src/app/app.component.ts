@@ -14,7 +14,8 @@ export class AppComponent implements OnInit {
   role='Admin';
   @ViewChild('user',{read:ViewContainerRef}) vcr!:ViewContainerRef; 
   ngOnInit(): void {
-    console.log(this.name);
+    console.log(this.name.nativeElement.innerText='nvjndinp');
+    
   }
   // ngAfterViewInit(): void {
   //   const componentRef = this.vcr.createComponent(Component1Component)

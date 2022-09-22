@@ -8,13 +8,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { Childcomponent1Component } from './component1/childcomponent1/childcomponent1.component';
 import { HeaderComponent } from './header/header.component';
+import { ContainerComponent } from './container/container.component';
+import { EmployesComponent } from './employes/employes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     Component1Component,
     Childcomponent1Component,
-    HeaderComponent
+    HeaderComponent,
+    ContainerComponent,
+    EmployesComponent
   ],
   imports: [
     BrowserModule,

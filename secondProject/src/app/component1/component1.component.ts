@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy } from '@angular/compiler';
-import { Component, OnInit, DoCheck, OnChanges, ViewChild, AfterViewChecked, AfterViewInit } from '@angular/core';
+import { Component, OnInit, DoCheck, OnChanges, ViewChild, AfterViewChecked, AfterViewInit, ViewChildren, QueryList, SkipSelf } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { component1, Roomlist } from './component1';
+import { Componenet1Service } from './services/componenet1.service';
 
 @Component({
   selector: 'app-component1',
@@ -11,11 +12,10 @@ import { component1, Roomlist } from './component1';
 })
 export class Component1Component implements OnInit, AfterViewInit, DoCheck,AfterViewChecked{
   title: string = 'shyam';
- roomlist:Roomlist[]=[];
+ roomlist: Roomlist []=[];
   @ViewChild(HeaderComponent, {static:true})  headerComponent!: HeaderComponent;
-  constructor() {
-
-   }
+  @ViewChildren(HeaderComponent)  headeChildrenComponent!: QueryList<HeaderComponent>;
+  constructor(@SkipSelf() private roomservice:Componenet1Service) { }
   ngAfterViewChecked(): void {
    
   }
@@ -23,48 +23,21 @@ export class Component1Component implements OnInit, AfterViewInit, DoCheck,After
    ngOnChange(){
   console.log('on change has occcured')
    }
-   ngDoCheck(){
+   ngDoCheck(){ 
     console.log('on check is  has occcured')
      }
     
 selectedRoom!:Roomlist;
   ngOnInit() {
-    console.log(this.headerComponent)
-   this.roomlist=[
-    {
-    roomNumber:102,
-    roomType:'dwdd',
-    amenities:'kjnnkfg',
-    price:500,
-    photos:'',
-    checkinTime:new Date('12-Nov-2022'),
-    chectOutTime:new Date('22-Nov-2022'),
-
-  },
-  {
-    roomNumber:103,
-    roomType:'dwdvmvd',
-    amenities:'kjlmvmlnnkfg',
-    price:5020,
-    photos:'',
-    checkinTime:new Date('12-Nov-2012'),
-    chectOutTime:new Date('22-Nov-2012'),
-
-  },
-  {
-    roomNumber:104,
-    roomType:'dwddff',
-    amenities:'kjnggnkfg',
-    price:5700,
-    photos:'',
-    checkinTime:new Date('02-Nov-2022'),
-    chectOutTime:new Date('22-Nov-2022'),
-
-  }]
+   this.roomlist=this.roomservice.getComponent1();
+ 
   }
   ngAfterViewInit() {
-    console.log(this.headerComponent);
+    
+    // console.log(this.headerComponent);
     this.headerComponent.title='rooms';
+    console.log(this.headeChildrenComponent.last.title='last title');
+    // this.headeChildrenComponent.get(0)
   }
   name='shyam';
   age =20;

@@ -1,0 +1,11 @@
+<p>book works!</p>
+<li class="product">
+
+    <img [src]='product1.image' [alt]=product1.name srcset=""
+        width="100">
+`    <p> {{product1.name |uppercase}}</p>
+    <p>{{product1.price|currency:'INR'}}</p>   
+    <p>{{product1.size|uppercase}}</p>
+    <button *ngIf="!isInCart" (click)="funCart()">Add to cart</button>
+    <button *ngIf="isInCart" (click)="funCartRemove()">Retun to cart</button>
+</li>

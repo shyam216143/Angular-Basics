@@ -1,0 +1,40 @@
+<h1>hello</h1>
+<button (click)="isDisabled=!isDisabled">
+    <ng-container *ngIf="!isDisabled">Show Product</ng-container>
+    <ng-container *ngIf="isDisabled">Hide Product</ng-container>
+</button>
+
+<div>{{name}}</div>
+
+
+
+<h1>hello</h1>
+
+<ul *ngIf="isDisabled">
+    <ng-container  *ngFor="let item of productList; let i=index ">
+        <app-book [product1]="item" ></app-book>
+</ng-container>
+    
+
+</ul>
+<h1>Add to cart</h1>
+
+<ul >
+    <ng-container  *ngFor="let item of x; let i=index ">
+    <li class="product">
+
+        <img [src]='item.image' [alt]=item.name srcset=""
+            width="100">
+
+        <p> {{item.name}}</p>
+        <p>{{item.price}}</p>   
+        <p>{{item.size}}</p>
+       
+    </li>
+    </ng-container>
+    
+
+</ul>
+
+
+

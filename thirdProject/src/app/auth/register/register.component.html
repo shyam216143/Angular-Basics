@@ -1,0 +1,27 @@
+<p>register works!</p>
+<div class="xyz">
+    <form (submit)="submitRegisterForm()" #myform="ngForm">
+
+        <h1>Register</h1>
+        <div>
+            <label for="email">Email Address</label> 
+            <input type="email" id="email" placeholder="enter email" [(ngModel)]="form.email" name="email" #email="ngModel" required>
+        </div>
+        <div class="emailR" *ngIf="email.invalid && (email.dirty || email.touched)">@ Email Field Must Be Valid</div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="enter password" [(ngModel)]="form.password" name="password" #password="ngModel" required>
+        </div>
+        <div class="emailR" *ngIf="password.invalid && (password.dirty || password.touched)">@ Password Field Must Be Valid</div>
+        <div>
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" id="confirm_password" placeholder="enter confirm_password" [(ngModel)]="form.confirm_password" name="confirm_password" #confirm_password="ngModel" required>
+        </div>
+        <div class="emailR" *ngIf="confirm_password.invalid && (confirm_password.dirty || confirm_password.touched)">@ password Field Must Be Valid</div>
+        <div>
+            <button type="submit" [disabled]="myform.form.invalid"> 
+                <ng-container *ngIf="isLoading()">...Loading</ng-container>
+                <ng-container *ngIf="!isLoading()">submit</ng-container> </button>
+        </div>
+    </form>
+</div>

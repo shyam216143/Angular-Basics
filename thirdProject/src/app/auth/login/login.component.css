@@ -1,0 +1,12 @@
+.xyz{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    font-family: 3em;
+}
+.emailL{
+    color: red;
+    /* background-color: rgb(226, 166, 180); */
+    font-size: small;
+}

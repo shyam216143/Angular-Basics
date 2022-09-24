@@ -1,10 +1,18 @@
 <nav>
-  <div>
+  <div class="xyz">
     <h1><a routerLink="/">Cart Shop</a></h1>
+    <ng-container *ngIf="!isAuthenticated()">
+      <h1><a routerLink="/register">Register</a></h1>
+      <h1><a routerLink="/login">Login</a></h1>
+    </ng-container>
+    <ng-container *ngIf="isAuthenticated()">
+     <button (click)="logOut()">LogOut</button>
+    </ng-container>
+
+    <h1><a routerLink="/cart">cart </a></h1>
+
   </div>
-  <div><button>
-    <a href="/cart">cart</a>
-  </button></div>
+
 </nav>
 <div>
   <router-outlet></router-outlet>

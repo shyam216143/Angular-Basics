@@ -1,0 +1,21 @@
+<p>login works!</p>
+<div class="xyz">
+    <form (submit)="submitLoginForm()" #myform="ngForm">
+        <h1>Login</h1>
+        <div>
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="enter email" [(ngModel)]="form.email" name="email" #email="ngModel" required>
+        </div>
+        <div class="emailL" *ngIf="email.invalid && (email.dirty || email.touched)">Please enter correct Email Crediential</div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="enter password" [(ngModel)]="form.password" name="password" #password="ngModel"required>
+        </div>
+        <div class="emailL"  *ngIf="password.invalid && (password.dirty || password.touched)">Please enter correct Password Crediential</div>
+        <div>
+            <button type="submit" [disabled]="myform.form.invalid">
+                <ng-container *ngIf="isloading()">...Loading</ng-container>
+                <ng-container *ngIf="!isloading()">submit</ng-container> </button>
+        </div>
+    </form>
+</div>

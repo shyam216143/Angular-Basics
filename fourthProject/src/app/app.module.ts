@@ -11,7 +11,13 @@ import { ProductComponent } from './product/product.component';
 import { ClientComponent } from './client/client.component';
 import { SearchComponent } from './search/search.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-
+import { AdminComponent } from './admin/admin.component';
+import { AdminEditComponent } from './admin-edit/admin-edit.component';
+import { AdminDeleteComponent } from './admin-delete/admin-delete.component';
+import { AdminManageComponent } from './admin-manage/admin-manage.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoansComponent } from './loans/loans.component';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,19 +25,28 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     Product1Component,
     Product2Component,
     ProductComponent,
+    LoansComponent,
     ClientComponent,
     SearchComponent,
     PageNotFoundComponent,
+    AdminComponent,
+    AdminEditComponent,
+    AdminDeleteComponent,
+    AdminManageComponent,
    
   ],
   imports: [
+    HttpClientModule,
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    {provide:HTTP_INTERCEPTORS, useClass:}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

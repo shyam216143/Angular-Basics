@@ -18,6 +18,6 @@ export class CommonInterceptorInterceptor implements HttpInterceptor {
  const  ROLE_KEY='1GJJ234'
   return next.handle(request.clone({setHeaders:{API_KEY, ROLE_KEY}}));
   // return next.handle(request.clone({setHeaders:{API_KEY, ROLE_KEY}})).pipe(retry(2),catchError(error=>{});
-  ));
+  // ));
   }
 }

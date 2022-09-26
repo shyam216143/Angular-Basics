@@ -18,6 +18,8 @@ import { AdminManageComponent } from './admin-manage/admin-manage.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoansComponent } from './loans/loans.component';
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { CommonInterceptorInterceptor } from './common-interceptor.interceptor';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
     AdminEditComponent,
     AdminDeleteComponent,
     AdminManageComponent,
+    UserComponent,
    
   ],
   imports: [
@@ -45,7 +48,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
     ReactiveFormsModule,
   ],
   providers: [
-    {provide:HTTP_INTERCEPTORS, useClass:}
+    {provide:HTTP_INTERCEPTORS, useClass: CommonInterceptorInterceptor,multi:true},
   ],
   bootstrap: [AppComponent]
 })

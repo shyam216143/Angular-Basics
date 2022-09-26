@@ -1,0 +1,60 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { UserRoutingModule } from './user-routing.module';
+import { UserComponent } from './user.component';
+import { UserLoginComponent } from './user-login/user-login.component';
+import {MatToolbarModule} from  '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { UserRegisterComponent } from './user-register/user-register.component';
+import {MatCardModule} from  '@angular/material/card';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule, MatPseudoCheckbox } from '@angular/material/core';
+import { MatSliderModule } from '@angular/material/slider';
+
+import {MatInputModule} from '@angular/material/input';
+import { CustomMaterialModule } from './user.material';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatTabsModule} from '@angular/material/tabs';
+
+@NgModule({
+  declarations: [
+    UserComponent,
+    UserLoginComponent,
+    UserRegisterComponent
+  ],
+  imports: [
+    FormsModule,
+    CommonModule,
+    UserRoutingModule,
+    MatToolbarModule,
+    // MatButtonModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatRadioModule,
+    MatSliderModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatButtonModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    CustomMaterialModule,
+    MatCheckboxModule,
+    MatTabsModule
+  ],
+  exports: [
+    MatButtonModule,
+    MatInputModule,
+    ] 
+
+})
+export class UserModule { }

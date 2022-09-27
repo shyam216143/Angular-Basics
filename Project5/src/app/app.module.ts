@@ -25,6 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
     PAGENOTFOUNDComponent,
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

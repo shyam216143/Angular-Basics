@@ -1,0 +1,33 @@
+.login-page{
+    width: 30%;
+    height: 120vh;
+    justify-content:right;
+    align-items: center;
+    margin-left: 30%;
+    margin-top: 10%;
+    
+  }
+  form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+  }
+  mat-form-field input{
+    display: flex;
+    flex-direction: column;
+  }
+  .btnshape{
+    display: flex;
+    flex-direction: row;
+    margin: 2em;
+   
+    
+  }
+  .login-button{
+    justify-content: space-between;
+    margin-left: 2em;
+
+
+  }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { register } from '../auth';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { AuthService } from '../auth.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -15,11 +16,12 @@ isPasswordMatched:Boolean=true;
     password:'',
     confirm_password:'',
   }
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private fb:FormBuilder) { }
   
 
 
   ngOnInit(): void {
+   
   }
   submitRegisterForm(){
     // alert(this.form.email)

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { UserRoutingModule } from './user-routing.module';
@@ -21,12 +21,17 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTabsModule} from '@angular/material/tabs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import {MatSelectModule} from '@angular/material/select';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatIconModule} from '@angular/material/icon';
+import { ErrorUserComponent } from './error-user/error-user.component';
 
 @NgModule({
   declarations: [
     UserComponent,
     UserLoginComponent,
-    UserRegisterComponent
+    UserRegisterComponent,
+    ErrorUserComponent
   ],
   imports: [
     FormsModule,
@@ -53,13 +58,21 @@ import { HttpClientModule } from '@angular/common/http';
     MatCheckboxModule,
     MatTabsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSelectModule,
+    MatGridListModule,
+    MatInputModule,
+    MatIconModule
     
   ],
   exports: [
     MatButtonModule,
     MatInputModule,
-    ] 
+    ] ,
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })
-export class UserModule { }
+export class UserModule {
+  hide = true;
+
+ }

@@ -10,7 +10,10 @@ export class UserServicesService {
   getData( ){
     return this.http.get('http://127.0.0.1:8000/1')
   }
+  getDataSingle(data:string ){
+    return this.http.get('http://127.0.0.1:8000/1')
+  }
   sendData( data:any){
-    return this.http.post('http://127.0.0.1:8000/post', data)
+    return this.http.post('http://127.0.0.1:8000/modelview/viewmodelset/', data)
   }
 }

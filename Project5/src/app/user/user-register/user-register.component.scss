@@ -37,3 +37,10 @@ mat-form-field input{
   justify-content: space-between;
   margin-left: 2em;
 }
+a{
+  cursor: pointer;
+  box-shadow: 1px black;
+} 
+::shadow a{
+  color: black;
+}

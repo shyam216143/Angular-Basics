@@ -48,56 +48,65 @@
 <!-- </mat-card> -->
 <div class="login-page">
   <mat-card class="mat-elevation-z12">
-    <mat-card-title style="text-align:center;">SignIn/SignUp</mat-card-title>
-    <mat-tab-group mat-stretch-tabs class="example-stretched-tabs">
-    
-      <mat-tab label="Sign Up" routerLink="/user/register">
+    <mat-card-title style="text-align:center;">SignUp</mat-card-title>
+  
         <mat-card-content>
-          <form action="">
+          <form [formGroup]="registerFrom" (submit)="register()">
             <mat-form-field>
-              <input matInput placeholder="User Name" required name="username" ngModel #username="ngModel">
+              <input matInput placeholder="User Name" required name="username" formControlName="username">
               <mat-icon matSuffix>perm_identity</mat-icon>
-              <mat-error *ngIf="username.invalid">
+              <!-- <mat-error *ngIf="username.invalid">
                 Username is required
-              </mat-error>
-
+              </mat-error> -->
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Email" required name="email" ngModel #email="ngModel">
-              <mat-error *ngIf="email.invalid">Email is required</mat-error>
+              <input matInput placeholder="First Name" required name="first_name" formControlName="first_name">
+              <mat-icon matSuffix>perm_identity</mat-icon>
+              <!-- <mat-error *ngIf="username.invalid">
+                Username is required
+              </mat-error> -->
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Last Name" required name="last_name" formControlName="last_name">
+              <mat-icon matSuffix>perm_identity</mat-icon>
+              <!-- <mat-error *ngIf="username.invalid">
+                Username is required
+              </mat-error> -->
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Email" required name="email" formControlName="email">
+              <!-- <mat-error *ngIf="email.invalid">Email is required</mat-error> -->
               <mat-icon matSuffix>email</mat-icon>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Password" type="password" required minlength="6" name="password" ngModel
-                #password="ngModel">
-              <mat-error *ngIf="password.errors && password.errors['required']">
+              <input matInput placeholder="Password" type="password" required minlength="6" name="password" formControlName="password">
+              <!-- <mat-error *ngIf="password.errors && password.errors['required']">
                 Password is required
               </mat-error>
               <mat-error *ngIf="password.errors && password.errors['minlength']">
                 Password must be of length 6
-              </mat-error>
+              </mat-error> -->
               <mat-icon matSuffix>lock</mat-icon>
 
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Password" type="password" required minlength="6" name="repassword" ngModel
-                #repassword="ngModel">
-              <mat-error *ngIf="repassword.errors && repassword.errors['required']">
+              <input matInput placeholder="Confirm Password" type="password" required minlength="6" name="confirm_password" formControlName="confirm_password">
+              <!-- <mat-error *ngIf="confirm_password.errors && confirm_password.errors['required']">
                 Re-Enter Password is required
-              </mat-error>
+              </mat-error> -->
               <mat-icon matSuffix>lock</mat-icon>
             </mat-form-field>
-            <div class="btnshape">
-              <button mat-raised-button color="primary" class="login-button">
+            
+              <button mat-raised-button color="primary" class="login-button" type="submit">
                   Sign Up
                 </button>
-                <button mat-raised-button color="primary" class="login-button" routerLink="">
+                <!-- <button mat-raised-button color="primary" class="login-button" >
                   Sign In
-                </button>
-            </div>
+                </button> -->
+               
+            <a routerLink="/user/login" >Already Have An Account</a>
           </form>
         </mat-card-content>
-      </mat-tab>
-    </mat-tab-group>
+   
   </mat-card>
 </div>

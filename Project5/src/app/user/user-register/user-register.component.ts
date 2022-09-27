@@ -1,50 +1,76 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { UserServicesService } from 'src/app/services/user-services.service';
+ interface user{
+  email: string;
+  username: string;
+  first_name: string;
+  last_name: string;
+  password: string;
+}
 @Component({
   selector: 'app-user-register',
   templateUrl: './user-register.component.html',
   styleUrls: ['./user-register.component.scss']
 })
+
 export class UserRegisterComponent implements OnInit {
 
-  constructor(private fb:FormBuilder, private http:HttpClient, private route:Router) { }
-  gender:string = ''
-  registerFrom!:FormGroup
-  registerFrom1!:FormGroup
-  email:string=''
-  username:string=''
-  password: string=''
-  repassword:string=''
+registerFrom!: FormGroup;
+dup!:user;
+dup1!:user;
+constructor(private router: Router, private fb: FormBuilder, private userService:UserServicesService){}
+
   ngOnInit(): void {
+   console.log("this is already for registration");
     this.registerFrom=this.fb.group({
-      email: new FormControl(''),
-      username: new FormControl(''),
-      password: new FormControl(''),
-      confirm_password: new FormControl(''),
-      
+      username: new FormControl('', [Validators.required, Validators.minLength(8),Validators.maxLength(20)]),
+      first_name: new FormControl('', [Validators.required]),
+      last_name: new FormControl('', [Validators.required]),
+      email: new FormControl("", Validators.required ), 
+      password: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(15)]),  //requiredResponse            
+      confirm_password: new FormControl("", Validators.required), //requiredResponse       
+     })
+     
 
-    })
 
-    this.registerFrom1=this.fb.group({
-      email:this.email,
-      username:this.username,
-      password:this.password,
-      repassword:this.repassword,
-      
-
-    })
   }
-  register(){
-    this.http.post('https://jsonplaceholder.typicode.com/posts', this.registerFrom1.value).subscribe(data=>{
-      alert('successfully registered')
-      this.registerFrom.reset()
-      this.route.navigate(['user/login']);
-    }, err=>{
-      alert("error has occered")
-    })
+  register() {
+    this.dup={
+      'username': this.registerFrom.value.username, 
+      'first_name': this.registerFrom.value.first_name, 
+      'last_name': this.registerFrom.value.last_name,
+      'email': this.registerFrom.value.email,
+      'password': this.registerFrom.value.password,
+    } 
+    if(!this.registerFrom.invalid){
+     
+      if(this.registerFrom.value['password'] === this.registerFrom.value['confirm_password']){
+        console.log("succesfully registered");
+        this.userService.sendData(this.dup).subscribe(data => {
+          this.router.navigate(['/user/login'])
+          console.log(data)
+          this.registerFrom.reset()
+        },err =>{ console.log(err) 
+        console.log("error has occerod")});
+        console.log(this.registerFrom.value['username']);
+      }
+      else {
+       console.log("Pasword Matched")
+
+
+    }
   }
+    else{
+     
+      this.router.navigate(['/user/error'])
+    }
+    
+
+    
+    
+    }
 
 }

@@ -1,62 +1,26 @@
-<!-- 
 
-<mat-card class="example-card">
-    <mat-card-header>
-        <mat-card-title>Login</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <form class="example-form">
-            <table class="example-full-width" cellspacing="0">
-                <tr>
-                    <td>
-                        <mat-form-field class="example-full-width">
-                            <input matInput placeholder="Username" [(ngModel)]="username" name="username" required>
-                        </mat-form-field>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <mat-form-field class="example-full-width">
-                            <input matInput placeholder="Password" [(ngModel)]="password" type="password"
-                                name="password" required>
-                        </mat-form-field>
-                    </td>
-                </tr>
-            </table>
-        </form>
-        <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
-    </mat-card-content>
-    <mat-card-actions>
-        <button mat-raised-button (click)="login()" color="primary">Login</button>
-    </mat-card-actions>
-</mat-card>
-<div [ngStyle]="{'color': 'red'}">
-    {{password1}}
-</div> -->
-
-
+<div class="success" >fenejofiojm</div>
 
 <div class="login-page">
     <mat-card class="mat-elevation-z12">
-      <mat-card-title style="text-align:center;">SignIn/SignUp</mat-card-title>
-      <mat-tab-group mat-stretch-tabs class="example-stretched-tabs">
-        <mat-tab label="Sign In" routerLink="/user/login">
-          <mat-card-content>
+       <div class="signin">
+            <div class="title">
+              <h1>Login</h1>
+            </div>
             <form  [formGroup]="login" (ngSubmit)="loginSubmitForm()"  >
               <mat-form-field>
-                <input matInput placeholder="Email" required name="email" ngModel #email="ngModel"  >
-                <mat-error *ngIf="email.invalid">Email is required</mat-error>
-                <mat-icon matSuffix>email</mat-icon>
+                <input matInput placeholder="Username" required class="form-control" name="username" formControlName="username"  >
+                <!-- <mat-error *ngIf="email.invalid">Email is required</mat-error> -->
+                <mat-icon matSuffix>username</mat-icon>
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Password" type="password" required minlength="6" name="password" ngModel
-                  #password="ngModel">
-                <mat-error *ngIf="password.errors && password.errors['required']">
+                <input matInput placeholder="Password" type="password" required minlength="6" name="password" formControlName="password">
+                <!-- <mat-error *ngIf="password.errors && password.errors['required']">
                   Password is required
                 </mat-error>
                 <mat-error *ngIf="password.errors && password.errors['minlength']">
                   Password must be of length 6
-                </mat-error>
+                </mat-error> -->
                 <mat-icon matSuffix>lock</mat-icon>
               </mat-form-field>
               <mat-checkbox>Remember Me!</mat-checkbox>
@@ -73,10 +37,7 @@
                 Login with Google
               </button>
             </form>
-          </mat-card-content>
-        </mat-tab>
-       
-      </mat-tab-group>
+          </div>
     </mat-card>
   </div>
 

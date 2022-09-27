@@ -50,15 +50,17 @@ login!:FormGroup;
 
   ngOnInit(): void {
   this.login=this.fb.group({
-    Username:new FormControl('', [Validators.required]),
+    username:new FormControl('', [Validators.required]),
     password:new FormControl('', [Validators.required]),
-    
-    
   })
   }
 
   
   loginSubmitForm(){
+    if(this.login.valid){
+       
+    }
+    
 console.log(this.login.value)
   }
 

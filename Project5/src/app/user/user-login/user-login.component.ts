@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserServicesService } from 'src/app/services/user-services.service';
 
 @Component({
@@ -8,6 +9,7 @@ import { UserServicesService } from 'src/app/services/user-services.service';
   styleUrls: ['./user-login.component.scss']
 })
 export class UserLoginComponent implements OnInit {
+  user_data: any;
 
 // showSpinner: any;
   
@@ -45,23 +47,37 @@ export class UserLoginComponent implements OnInit {
   // this.password = "";
   // this.show = true;
   // }
-  constructor(private userService: UserServicesService,private fb:FormBuilder ){}
+  constructor(private userService: UserServicesService,private fb:FormBuilder , private route :Router, private activateRoute: ActivatedRoute){}
 login!:FormGroup;
-
+message:any={}
   ngOnInit(): void {
+    this.activateRoute.queryParams
+    .subscribe((params) => {
+      this.message = params;
+    }
+  );
   this.login=this.fb.group({
-    username:new FormControl('', [Validators.required]),
+    email:new FormControl('', [Validators.required]),
     password:new FormControl('', [Validators.required]),
   })
   }
+  x={
+    "email":"login@gmail.com",
+    "password":"1234"
+}
 
   
   loginSubmitForm(){
     if(this.login.valid){
-       
+       this.userService.login(this.login.value).subscribe(data => { this.user_data = data;
+      console.log(data);
+      this.userService.is_Authenticated = true;
+      this.route.navigate(['/user/Admin']);
+      this.userService.userData=this.user_data;
+      },err => { console.log("error has occured while connectiong"); });
     }
     
-console.log(this.login.value)
+   console.log(this.login.value)
   }
 
 }

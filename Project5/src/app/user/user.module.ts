@@ -25,13 +25,19 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
 import { ErrorUserComponent } from './error-user/error-user.component';
+import { ChangepasswordComponent } from './changepassword/changepassword.component';
+import { UserLogoutComponent } from './user-logout/user-logout.component';
+import { UserForgotpasswordComponent } from './user-forgotpassword/user-forgotpassword.component';
 
 @NgModule({
   declarations: [
     UserComponent,
     UserLoginComponent,
     UserRegisterComponent,
-    ErrorUserComponent
+    ErrorUserComponent,
+    ChangepasswordComponent,
+    UserLogoutComponent,
+    UserForgotpasswordComponent
   ],
   imports: [
     FormsModule,

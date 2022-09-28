@@ -79,7 +79,7 @@
               <mat-icon matSuffix>email</mat-icon>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Password" type="password" required minlength="6" name="password" formControlName="password">
+              <input matInput placeholder="Password" type="password" required minlength="4" name="password" formControlName="password" autocomplete="on">
               <!-- <mat-error *ngIf="password.errors && password.errors['required']">
                 Password is required
               </mat-error>
@@ -90,7 +90,7 @@
 
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Confirm Password" type="password" required minlength="6" name="confirm_password" formControlName="confirm_password">
+              <input matInput placeholder="Confirm Password" type="password" required minlength="4" name="password2" formControlName="password2" autocomplete="on">
               <!-- <mat-error *ngIf="confirm_password.errors && confirm_password.errors['required']">
                 Re-Enter Password is required
               </mat-error> -->

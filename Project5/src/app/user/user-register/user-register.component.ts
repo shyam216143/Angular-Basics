@@ -26,30 +26,24 @@ constructor(private router: Router, private fb: FormBuilder, private userService
   ngOnInit(): void {
    console.log("this is already for registration");
     this.registerFrom=this.fb.group({
-      username: new FormControl('', [Validators.required, Validators.minLength(8),Validators.maxLength(20)]),
+      username: new FormControl('', [Validators.required, Validators.minLength(4),Validators.maxLength(20)]),
       first_name: new FormControl('', [Validators.required]),
       last_name: new FormControl('', [Validators.required]),
       email: new FormControl("", Validators.required ), 
-      password: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(15)]),  //requiredResponse            
-      confirm_password: new FormControl("", Validators.required), //requiredResponse       
+      password: new FormControl("", [Validators.required, Validators.minLength(4), Validators.maxLength(15)]),  //requiredResponse            
+      password2: new FormControl("", Validators.required), //requiredResponse       
      })
      
 
 
   }
   register() {
-    this.dup={
-      'username': this.registerFrom.value.username, 
-      'first_name': this.registerFrom.value.first_name, 
-      'last_name': this.registerFrom.value.last_name,
-      'email': this.registerFrom.value.email,
-      'password': this.registerFrom.value.password,
-    } 
+    
     if(!this.registerFrom.invalid){
      
-      if(this.registerFrom.value['password'] === this.registerFrom.value['confirm_password']){
+      if(this.registerFrom.value['password'] === this.registerFrom.value['password2']){
         console.log("succesfully registered");
-        this.userService.sendData(this.dup).subscribe(data => {
+        this.userService.register(this.registerFrom.value).subscribe(data => {
           this.router.navigate(['/user/login'])
           console.log(data)
           this.registerFrom.reset()

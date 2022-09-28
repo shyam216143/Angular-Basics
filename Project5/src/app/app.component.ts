@@ -25,7 +25,16 @@ is_Authenticated():Boolean {
    return this.userService.is_Authenticated
   }
   logout() {
-    this.userService.logout();
-    return this.router.navigate(['/user/login'],{queryParams:{"msg":"successfully Logged"}});
+    this.userService.logout().subscribe((apiResponse:any)=>{
+      if(apiResponse && apiResponse.id>0){
+        localStorage.removeItem('myToken')
+        this.router.navigate(['/user/login'],{queryParams:{"msg":"successfully Logged"}})
+
+      }
+
+    })
+
+    // this.userService.logout();
+    // return this.router.navigate(['/user/login'],{queryParams:{"msg":"successfully Logged"}});
     }
 }

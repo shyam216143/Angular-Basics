@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { UserServicesService } from '../services/user-services.service';
 
 @Component({
@@ -12,16 +13,16 @@ export class UserComponent implements OnInit {
   show:boolean = true;
   user_data:any
   is_Authenticated=false
-
+  user$:Observable<any>;
   constructor(private userServices:UserServicesService) {
     this.user_data=this.userServices.userData
     this.is_Authenticated=this.userServices.is_Authenticated
-
+    this.user$=this.userServices.loadUser()
    }
-  message:any = "";
+  ApiMessage:any = {};
   password:string = '';
   ngOnInit(): void {
-    
+   this.ApiMessage=this.userServices.userData
   }
   submit(){
     console.log(this.username);

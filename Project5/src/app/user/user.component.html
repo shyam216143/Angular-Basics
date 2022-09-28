@@ -1,5 +1,14 @@
 <p>user works!</p>
-<h1>{{message|json}}</h1>
-<h1>success--->{{user_data.msg}}</h1>
-<div><h1>Refresh Token----></h1>{{user_data.token.refresh|json}}</div>
-<div><h1>Access Token---></h1>{{user_data.token.access|json}}</div>
+<section aria-describedby="Message" *ngIf="ApiMessage.msg">
+    <p [ngClass]="{'text-danger':ApiMessage.user_id<0, 'text-success':ApiMessage.user_id>0}">Message is{{ApiMessage.msg}}</p>
+    <p [ngClass]="{'text-danger':ApiMessage.user_id<0, 'text-success':ApiMessage.user_id>0}">username is:{{ApiMessage.user_name}}</p>
+  </section>
+
+
+
+  <ng-container *ngIf="(user$ | async) as user">
+
+    <h1> token observable is viewing</h1>
+    <b>{{user |json}}</b>
+
+  </ng-container>

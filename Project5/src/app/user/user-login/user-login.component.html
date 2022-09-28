@@ -13,7 +13,7 @@
                 <mat-icon matSuffix>email</mat-icon>
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Password" type="password" required minlength="6" name="password" formControlName="password" autocomplete="on">
+                <input matInput placeholder="Password" type="password" required minlength="4" name="password" formControlName="password" autocomplete="on">
                 <!-- <mat-error *ngIf="password.errors && password.errors['required']">
                   Password is required
                 </mat-error>
@@ -22,10 +22,10 @@
                 </mat-error> -->
                 <mat-icon matSuffix>lock</mat-icon>
               </mat-form-field>
-              <mat-checkbox>Remember Me!</mat-checkbox>
+              <mat-checkbox value="remember_me" type="checkbox" (change)="onCheckboxChange($event)" >Remember Me!</mat-checkbox>
               <div class="btnshape">
-                <button mat-raised-button color="primary" class="login-button">
-                    Sign In
+                <button mat-raised-button color="primary" class="login-button" [disabled]="login.invalid || sending">
+                    {{sending ? 'Loading....':'Sign In'}}
                   </button>
                   <button mat-raised-button color="primary" class="login-button" routerLink="/user/register">
                     Sign Up

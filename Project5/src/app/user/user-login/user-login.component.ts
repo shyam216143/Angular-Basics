@@ -47,9 +47,15 @@ export class UserLoginComponent implements OnInit {
   // this.password = "";
   // this.show = true;
   // }
-  constructor(private userService: UserServicesService,private fb:FormBuilder , private route :Router, private activateRoute: ActivatedRoute){}
+  constructor(private userService: UserServicesService,private fb:FormBuilder , private route :Router, private activateRoute: ActivatedRoute){
+
+  }
 login!:FormGroup;
 message:any={}
+ApiMessage:any={}
+rememberMe!:boolean;
+sending:boolean=false
+
   ngOnInit(): void {
     this.activateRoute.queryParams
     .subscribe((params) => {
@@ -60,21 +66,59 @@ message:any={}
     email:new FormControl('', [Validators.required]),
     password:new FormControl('', [Validators.required]),
   })
+  const dump={
+    'email':localStorage.getItem('email')||'',
+    'password':''
+  
+  }
+  this.login.setValue(dump)
   }
   x={
     "email":"login@gmail.com",
     "password":"1234"
 }
 
+onCheckboxChange(event:any){
+  if(event){
+    this.rememberMe=true
+  }
+}
   
   loginSubmitForm(){
+    this.sending=true
+    
     if(this.login.valid){
        this.userService.login(this.login.value).subscribe(data => { this.user_data = data;
       console.log(data);
       this.userService.is_Authenticated = true;
-      this.route.navigate(['/user/Admin']);
       this.userService.userData=this.user_data;
-      },err => { console.log("error has occured while connectiong"); });
+      this.ApiMessage=this.user_data;
+      if(this.login.value.email){
+        localStorage.setItem('email', this.login.value.email);
+      }else{
+        localStorage.removeItem('email');
+      }
+      if (this.rememberMe){
+        const x = this.login.value.email
+        //store username to browser storage
+        localStorage.setItem('email', this.login.value.email);
+        localStorage.setItem('remember',`${this.rememberMe}`);
+      }
+      else{
+        localStorage.removeItem('remember');
+      }
+      if(this.ApiMessage && this.ApiMessage.user_id){
+        this.userService.setToken(this.ApiMessage.token.access)
+        localStorage.setItem('mytoken', this.ApiMessage.token.access)
+        localStorage.setItem('refresh_token', this.ApiMessage.token.refresh)
+        this.route.navigate(['/user/Admin']);
+
+      }
+     
+      
+      },err => {
+        this.sending=false
+         console.log("error has occured while connectiong"); });
     }
     
    console.log(this.login.value)

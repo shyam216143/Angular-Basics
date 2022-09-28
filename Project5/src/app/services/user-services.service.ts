@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +13,21 @@ export class UserServicesService {
   is_Authenticated=false
   // private _is_loggedin =new BehaviorSubject<boolean>(false);
   // is_loggedin= this._is_loggedin.asObservable();
-  constructor( private http:HttpClient, private route:Router) { }
+  private  headers={
+    headers:{
+      'Authorization':'Bearer '+localStorage.getItem('mytoken'),
+    }
+  }
+  public token:string;
+  public getToken(){
+    return this.token
+  }
+  public setToken(value:string){
+   return this.token=value
+  }
+  constructor( private http:HttpClient, private route:Router) { 
+    this.token=localStorage.getItem('mytoken')||'';
+  }
   getData( ){
     return this.http.get('http://127.0.0.1:8000/1')
   }
@@ -31,8 +45,17 @@ export class UserServicesService {
   register(data:any){
     return this.http.post('http://127.0.0.1:8000/register/',data)
   }
+
+  loadUser(){
+    
+    return this.http.get('http://127.0.0.1:8000/profile/', this.headers).pipe(map((apiResponse:any) =>{
+      console.log(apiResponse)
+      return apiResponse;
+      
+    }))
+  }
   logout() {
-    return this.is_Authenticated=false
+    return this.http.get('http://127.0.0.1:8000/profile/logout', this.headers)
     
   }
 }

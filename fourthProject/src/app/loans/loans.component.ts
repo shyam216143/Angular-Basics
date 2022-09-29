@@ -88,15 +88,16 @@ export class LoansComponent implements OnInit, OnChanges {
         'loanDescription':"Hello fej bro",
 
     }
-    this.addLoanTypesForm.setValue(newLoan)
+    // this.addLoanTypesForm.setValue(newLoan)
     // setting the values in patch way 
     const newLoan1={
       'loanName':"shyam",
         'loanType':"lic",
+        'loanDescription':"Hello fej bro",
         
 
     }
-    // this.addLoanTypesForm.patchValue(newLoan1)
+    this.addLoanTypesForm.patchValue(newLoan1)
     this.addLoanTypesForm.get("loanType")?.statusChanges.subscribe(data=>{
       console.log(data)
     })

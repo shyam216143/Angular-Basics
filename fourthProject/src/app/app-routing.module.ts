@@ -35,9 +35,7 @@ const routes: Routes = [
 
   ]
 },
-  { path: 'loans', component: LoansComponent, resolve:{
-    data: ResolverGuard
-  } },
+  { path: 'loans', component: LoansComponent },
   { path: 'loans/add-loan', component: AddLoansComponent, outlet: 'route1', children: [] },
   { path: 'loan-types', component: LoanTypesComponent , canDeactivate:[UnsavedGuard]},
   {

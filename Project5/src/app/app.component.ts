@@ -25,16 +25,21 @@ is_Authenticated():Boolean {
    return this.userService.is_Authenticated
   }
   logout() {
-    this.userService.logout().subscribe((apiResponse:any)=>{
-      if(apiResponse && apiResponse.id>0){
-        localStorage.removeItem('myToken')
-        this.router.navigate(['/user/login'],{queryParams:{"msg":"successfully Logged"}})
+    localStorage.removeItem('mytoken')
+    localStorage.removeItem('refresh_token')
+    localStorage.removeItem('remember')
+    localStorage.removeItem('email')
 
-      }
 
-    })
+    // this.userService.logout().subscribe((apiResponse:any)=>{
+    //   if(apiResponse && apiResponse.user_id>0){
+    //     this.router.navigate(['/user/login'],{queryParams:{"msg":"successfully Logged"}})
 
-    // this.userService.logout();
-    // return this.router.navigate(['/user/login'],{queryParams:{"msg":"successfully Logged"}});
+    //   }
+
+    // })
+
+    this.userService.logout();
+    return this.router.navigate(['/user/login'],{queryParams:{"msg":"successfully Logged"}});
     }
 }

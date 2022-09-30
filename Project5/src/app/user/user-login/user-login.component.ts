@@ -55,6 +55,10 @@ message:any={}
 ApiMessage:any={}
 rememberMe!:boolean;
 sending:boolean=false
+isAuthorised()
+{
+  return this.userService.hasAccessToken()
+}
 
   ngOnInit(): void {
     this.activateRoute.queryParams
@@ -83,8 +87,11 @@ onCheckboxChange(event:any){
     this.rememberMe=true
   }
 }
+is_Authenticated():Boolean {
+  return this.userService.hasAccessToken()
+ }
   
-  loginSubmitForm(){
+  loginSubmitForm1(){
     this.sending=true
     
     if(this.login.valid){
@@ -124,4 +131,63 @@ onCheckboxChange(event:any){
    console.log(this.login.value)
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  responsedata:any={};
+  loginSubmitForm(){
+    if(this.login.valid){
+      this.userService.login(this.login.value).subscribe(user => {
+        if (user!=null) {
+          this.responsedata=user;
+          
+          localStorage.setItem('mytoken', this.responsedata.token.access)
+          this.userService.is_Authenticated = true
+          this.userService.userData=user;
+          this.ApiMessage=user;
+          if(this.login.value.email){
+            localStorage.setItem('email', this.login.value.email);
+          }else{
+            localStorage.removeItem('email');
+          }
+          if (this.rememberMe){
+            const x = this.login.value.email
+            //store username to browser storage
+            localStorage.setItem('email', this.login.value.email);
+            localStorage.setItem('remember',`${this.rememberMe}`);
+          }
+          else{
+            localStorage.removeItem('remember');
+          }
+          console.log("hello bro")
+          if(this.ApiMessage && this.ApiMessage.user_id){
+            this.userService.setToken(this.ApiMessage.token.access)
+            localStorage.setItem('mytoken', this.ApiMessage.token.access)
+            localStorage.setItem('refresh_token', this.ApiMessage.token.refresh)
+            this.route.navigate(['/user/Admin']);
+    
+          }
+         
+  
+  
+      }
+   
+    },
+    err=>{ 
+      console.log("error has occured while connectiong");
+    })
+    }
+}
 }

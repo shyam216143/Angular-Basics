@@ -22,7 +22,7 @@ export class AppComponent implements OnInit , OnChanges{
    
 }
 is_Authenticated():Boolean {
-   return this.userService.is_Authenticated
+   return this.userService.hasAccessToken()
   }
   logout() {
     localStorage.removeItem('mytoken')

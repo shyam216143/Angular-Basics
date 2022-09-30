@@ -20,7 +20,7 @@ import { CustomMaterialModule } from './user.material';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTabsModule} from '@angular/material/tabs';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatSelectModule} from '@angular/material/select';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
@@ -28,6 +28,7 @@ import { ErrorUserComponent } from './error-user/error-user.component';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
 import { UserLogoutComponent } from './user-logout/user-logout.component';
 import { UserForgotpasswordComponent } from './user-forgotpassword/user-forgotpassword.component';
+import { TokenInterceptorService } from '../Auth/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,10 @@ import { UserForgotpasswordComponent } from './user-forgotpassword/user-forgotpa
     MatInputModule,
     MatIconModule
     
+  ],
+  providers: [
+    {provide:HTTP_INTERCEPTORS, useClass: TokenInterceptorService,multi:true},
+
   ],
   exports: [
     MatButtonModule,

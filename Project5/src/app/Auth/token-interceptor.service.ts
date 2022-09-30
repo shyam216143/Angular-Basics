@@ -1,4 +1,4 @@
-import { HttpHandler, HttpRequest } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { UserServicesService } from '../services/user-services.service';

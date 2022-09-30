@@ -20,7 +20,7 @@ export class UserServicesService {
   }
   public token:string;
   public getToken(){
-    return this.token
+    return localStorage.getItem('mytoken')||'';
   }
   public setToken(value:string){
    return this.token=value
@@ -58,4 +58,33 @@ export class UserServicesService {
     return this.http.get('http://127.0.0.1:8000/profile/logout', this.headers)
     
   }
+  getToken1(){
+    return localStorage.getItem('mytoken')||'';
+  }
+  hasAccessToken(){
+    return  localStorage.getItem('mytoken')!= null;
+    
+  }
+
+
+verifyToken(){
+    return this.http.post('http://127.0.0.1:8000/verifytoken/',this.headers)
+  }
+// login from utube
+//   proceedlogin(usercredential:any){
+//     this.http.post('http://127.0.0.1:8000/
+//   }
+
+
+
+private  headersrefresh={
+    headers:{
+      'Authorization':'Bearer '+localStorage.getItem('refresh_token'),
+    }
+  }
+logout1(){
+  console.log('session got expired');
+  localStorage.clear();
+  this.route.navigate(['user/login']);
+}
 }

@@ -38,9 +38,19 @@ export class UserServicesService {
     return this.http.post('http://127.0.0.1:8000/modelview/viewmodelset/', data)
   }
   login(data:any){
+
     return this.http.post('http://127.0.0.1:8000/login/', data).pipe(tap((response:any)=>{
       console.log(response.token);
     }))
+  }
+
+
+  generateRefreshToken(){
+    let input={
+      "refresh":this.getRefreshToken1()
+    }
+    return this.http.post('http://127.0.0.1:8000/refreshtoken/',input)
+
   }
   register(data:any){
     return this.http.post('http://127.0.0.1:8000/register/',data)
@@ -61,11 +71,17 @@ export class UserServicesService {
   getToken1(){
     return localStorage.getItem('mytoken')||'';
   }
+  getRefreshToken1(){
+    return localStorage.getItem('refresh_token')||'';
+  }
   hasAccessToken(){
     return  localStorage.getItem('mytoken')!= null;
     
   }
-
+saveToken(tokendata:any){
+  localStorage.setItem('mytoken', tokendata.token.access)
+  localStorage.setItem('refresh_token',tokendata.token.refresh)
+}
 
 verifyToken(){
     return this.http.post('http://127.0.0.1:8000/verifytoken/',this.headers)

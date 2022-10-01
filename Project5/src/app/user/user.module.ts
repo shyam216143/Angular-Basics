@@ -73,9 +73,8 @@ import { TokenInterceptorService } from '../Auth/token-interceptor.service';
     
   ],
   providers: [
-    {provide:HTTP_INTERCEPTORS, useClass: TokenInterceptorService,multi:true},
-
-  ],
+   
+  ], 
   exports: [
     MatButtonModule,
     MatInputModule,

@@ -59,11 +59,12 @@ export class ChangepasswordComponent implements OnInit {
           alert(this.success_message)
           this.route
         },
-        catchError((err)=>{
-          alert("error occured while changing", err)
-          return throw
+        (err)=>{
+          alert("error occured while changing")
+          console.log(err)
+          
         })
-        )
+        
 
       })
       console.log(this.changePasswordForm.value)

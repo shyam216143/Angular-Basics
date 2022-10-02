@@ -9,7 +9,7 @@
     </ng-container>
     <div *ngIf="(userprofile?.user_id??0)>0">
 
-      <a mat-button routerLink="/user/profile">{{userprofile?.user_id}}</a>
+      <a mat-button routerLink="/user/profile">{{profiledata.username}}</a>
     </div>
     <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="(userprofile?.user_id??0)>0" >
       <mat-icon>more_vert</mat-icon>

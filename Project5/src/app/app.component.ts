@@ -4,6 +4,7 @@ import { ServicesService } from './services/Auth/services.service';
 import { AuthGuardGuard } from './shared/user-auth/auth-guard.guard';
 import { UserData } from './shared/user-auth/user-data';
 import { UserrProfile } from './shared/user-auth/userr-profile';
+import { Profile } from './user/user-profile/profile';
 import { ProfileService } from './user/user-profile/profile.service';
 
 
@@ -14,13 +15,16 @@ import { ProfileService } from './user/user-profile/profile.service';
 })
 export class AppComponent implements OnInit , OnChanges{
 
-
+  profiledata!:Profile;
 
   title = 'Project5';
   fulluserprofile!:UserData;
   username:string="No username";
   constructor(private userService:ServicesService, private profileServices:ProfileService, private route:Router,) {
-   
+    this.profileServices.getProfileData().subscribe(data=>{
+      this.profiledata=data
+    })
+
      }
      
   

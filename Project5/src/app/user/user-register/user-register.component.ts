@@ -20,8 +20,7 @@ interface user {
 export class UserRegisterComponent implements OnInit {
 
   registerFrom!: FormGroup;
-  dup!: user;
-  dup1!: user;
+
   constructor(private router: Router, private fb: FormBuilder, private userService: ServicesService) { }
 
   ngOnInit(): void {
@@ -52,7 +51,8 @@ export class UserRegisterComponent implements OnInit {
           this.router.navigate(['/user/login'])
         }, err => {
           console.log(err)
-          console.log("error has occerod")
+          alert("error is occured at HTTP connection PLwese check your API")
+          console.log("error has occured")
         });
         console.log(this.registerFrom.value['username']);
       }

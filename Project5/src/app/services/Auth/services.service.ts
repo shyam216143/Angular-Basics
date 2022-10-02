@@ -6,6 +6,7 @@ import { TokenModel } from 'src/app/shared/user-auth/token-model';
 import { UserData } from 'src/app/shared/user-auth/user-data';
 import { UserrProfile } from 'src/app/shared/user-auth/userr-profile';
 import { Changepasswordmodel } from 'src/app/user/changepassword/changepasswordmodel';
+import { Forgotpasswordmodel } from 'src/app/user/user-forgotpassword/forgotpassword';
 import { Loginform } from 'src/app/user/user-login/loginform';
 import { Registrationform } from 'src/app/user/user-register/registrationform';
 
@@ -91,5 +92,9 @@ var  headers: HttpHeaders = new HttpHeaders ({
 });
   return this.http.post('http://127.0.0.1:8000/changepassword/',payload, {responseType: 'text' as const, headers })
   
+}
+
+ForgotPassword(data:Forgotpasswordmodel){
+return this.http.post('http//127.0.0.1:8000/forgotpassword', data)
 }
 }

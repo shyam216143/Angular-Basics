@@ -1,6 +1,11 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserServicesService } from './services/user-services.service';
+import { ServicesService } from './services/Auth/services.service';
+import { AuthGuardGuard } from './shared/user-auth/auth-guard.guard';
+import { UserData } from './shared/user-auth/user-data';
+import { UserrProfile } from './shared/user-auth/userr-profile';
+import { ProfileService } from './user/user-profile/profile.service';
+
 
 @Component({
   selector: 'app-root',
@@ -12,34 +17,34 @@ export class AppComponent implements OnInit , OnChanges{
 
 
   title = 'Project5';
+  fulluserprofile!:UserData;
+  username:string="No username";
+  constructor(private userService:ServicesService, private profileServices:ProfileService, private route:Router,) {
+   
+     }
+     
+  
 
-  constructor(private userService: UserServicesService, private router: Router){
-  }
-  ngOnInit(): void {
-    return
-  }
+  userprofile?:UserrProfile | null;
+  fullUserdata:any
+ ngOnInit(): void {
+  if(localStorage.getItem("tokens")!=null){
+  this.userService.userProfile.subscribe(data=>{
+   this.userprofile=data 
+  })
+}
+   
+ }
   ngOnChanges(changes: SimpleChanges): void {
    
 }
 is_Authenticated():Boolean {
-   return this.userService.hasAccessToken()
+return false
   }
   logout() {
-    localStorage.removeItem('mytoken')
-    localStorage.removeItem('refresh_token')
-    localStorage.removeItem('remember')
-    localStorage.removeItem('email')
-
-
-    // this.userService.logout().subscribe((apiResponse:any)=>{
-    //   if(apiResponse && apiResponse.user_id>0){
-    //     this.router.navigate(['/user/login'],{queryParams:{"msg":"successfully Logged"}})
-
-    //   }
-
-    // })
-
-    this.userService.logout();
-    return this.router.navigate(['/user/login'],{queryParams:{"msg":"successfully Logged"}});
+    localStorage.clear()
+  this.userprofile=null
+    this.route.navigate(['user/login'])
+   
     }
 }

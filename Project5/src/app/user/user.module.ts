@@ -28,7 +28,8 @@ import { ErrorUserComponent } from './error-user/error-user.component';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
 import { UserLogoutComponent } from './user-logout/user-logout.component';
 import { UserForgotpasswordComponent } from './user-forgotpassword/user-forgotpassword.component';
-import { TokenInterceptorService } from '../Auth/token-interceptor.service';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { TokenInterceptorService } from '../Auth/token-interceptor.service';
     ErrorUserComponent,
     ChangepasswordComponent,
     UserLogoutComponent,
-    UserForgotpasswordComponent
+    UserForgotpasswordComponent,
+    UserProfileComponent
   ],
   imports: [
     FormsModule,

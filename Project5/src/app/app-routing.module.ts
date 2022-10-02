@@ -4,8 +4,9 @@ import { PAGENOTFOUNDComponent } from './pagenotfound/pagenotfound.component';
 
 const routes: Routes = [
   { path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule) },
-{ path: 'user-Auth', loadChildren: () => import('./user-auth/user-auth.module').then(m => m.UserAuthModule) },
-{path: '**', component:PAGENOTFOUNDComponent}];
+{path: '', redirectTo:('user/login'), pathMatch:'full'},
+{path: '**', component:PAGENOTFOUNDComponent},
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

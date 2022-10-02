@@ -18,7 +18,19 @@ import { CustomMaterialModule } from './user/user.material';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptorService } from './Auth/token-interceptor.service';
+import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { ServicesService } from './services/Auth/services.service';
+import { AuthTokenInterceptorInterceptor } from './shared/user-auth/auth-token-interceptor.interceptor';
+import { AuthGuardGuard } from './shared/user-auth/auth-guard.guard';
+export function jwtOptionFactoring(userservice:ServicesService){
+  return {
+    tokenGetter:()=>{
+      userservice.getAccessToken();
+    },
+    allowedDomains:['127.0.0.1:8000'],
+    disallowedRoutes:['http://127.0.0.1:8000/register/','http://127.0.0.1:8000/login/','http://127.0.0.1:8000/refreshtoken/']
+  }
+}
 
 
 @NgModule({
@@ -43,6 +55,13 @@ import { TokenInterceptorService } from './Auth/token-interceptor.service';
     MatMenuModule,
     MatIconModule,
     HttpClientModule,
+    JwtModule.forRoot({
+      jwtOptionsProvider:{
+        provide:JWT_OPTIONS,
+        useFactory:jwtOptionFactoring,
+        deps:[ServicesService]
+      }
+    })
    
 
 
@@ -50,7 +69,8 @@ import { TokenInterceptorService } from './Auth/token-interceptor.service';
     
   ],
   providers: [
-    // {provide:HTTP_INTERCEPTORS, useClass:TokenInterceptorService, multi:true}
+  {provide:HTTP_INTERCEPTORS, useClass:AuthTokenInterceptorInterceptor, multi:true},
+  AuthGuardGuard
   ],
   bootstrap: [AppComponent]
 })

@@ -3,15 +3,15 @@
 
     <button mat-button routerLink="/user"><span>HOME</span></button>
     <span class="spacer"></span>
-    <ng-container *ngIf="!is_Authenticated()">
+    <ng-container *ngIf="(userprofile?.user_id??0)==0">
       <a mat-button routerLink="/user/register">Register</a>
     <a mat-button routerLink="/user/login">Login</a>
     </ng-container>
-    <div *ngIf="is_Authenticated()">
-      <a mat-button (click)="logout()">LogoUT</a>
-    
+    <div *ngIf="(userprofile?.user_id??0)>0">
+
+      <a mat-button routerLink="/user/profile">{{userprofile?.user_id}}</a>
     </div>
-    <button mat-icon-button [matMenuTriggerFor]="menu">
+    <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="(userprofile?.user_id??0)>0" >
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
@@ -28,6 +28,10 @@
         <mat-icon>password</mat-icon>
         <span>Change_password</span>
       </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>LogOut</span>
+      </button>
       <button mat-menu-item>
         <mat-icon>notifications_off</mat-icon>
         <span>Disable alerts</span>
@@ -36,3 +40,8 @@
   </mat-toolbar-row>
 </mat-toolbar>
 <router-outlet></router-outlet>
+
+
+
+
+

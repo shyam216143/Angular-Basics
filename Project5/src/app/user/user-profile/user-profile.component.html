@@ -1,0 +1,22 @@
+<p>user-profile works!</p>
+<h1>{{profiledata |json}}</h1>
+<table>
+    <tr><th>key</th>
+        <th>value</th>
+    </tr>
+    
+    
+    <tr>
+        <td>user_id</td>
+        <td>{{profiledata?.id}}</td>
+    </tr>
+    <tr>
+        <td>user name</td>
+        <td>{{profiledata?.username||null}}</td>
+    </tr>
+    <tr>
+        <td>email</td>
+        <td>{{profiledata?.email}}</td>
+    </tr>
+
+</table>

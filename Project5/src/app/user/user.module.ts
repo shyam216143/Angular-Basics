@@ -29,6 +29,7 @@ import { ChangepasswordComponent } from './changepassword/changepassword.compone
 import { UserLogoutComponent } from './user-logout/user-logout.component';
 import { UserForgotpasswordComponent } from './user-forgotpassword/user-forgotpassword.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserResetComponent } from './user-reset/user-reset.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     ChangepasswordComponent,
     UserLogoutComponent,
     UserForgotpasswordComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    UserResetComponent
   ],
   imports: [
     FormsModule,

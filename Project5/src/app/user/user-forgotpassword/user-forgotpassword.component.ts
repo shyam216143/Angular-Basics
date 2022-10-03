@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { catchError } from 'rxjs';
 import { ServicesService } from 'src/app/services/Auth/services.service';
 
 @Component({
@@ -19,9 +20,16 @@ ForgotPasswordForm!:FormGroup
 
   ngOnInit(): void {
   }
-  changepasswoprd() {
+  changepassword() {
     if(this.ForgotPasswordForm.valid){
-      this.userServices
+      this.userServices.ForgotPassword(this.ForgotPasswordForm.value).subscribe(data=>{
+        console.log(data)
+        alert("successfully sed the email")
+        
+      },
+      (error)=>{
+        console.log(error,"error occured to send the data at API")
+      })
     }
     }
 }

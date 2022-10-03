@@ -94,7 +94,9 @@ var  headers: HttpHeaders = new HttpHeaders ({
   
 }
 
-ForgotPassword(data:Forgotpasswordmodel){
-return this.http.post('http//127.0.0.1:8000/forgotpassword', data)
+ForgotPassword(data:any){
+return this.http.post('http://127.0.0.1:8000/sendemail/', data).pipe(map((data=>{
+console.log(data)
+})))
 }
 }

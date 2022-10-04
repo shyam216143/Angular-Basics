@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, catchError, map, of } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { TokenModel } from 'src/app/shared/user-auth/token-model';
 import { UserData } from 'src/app/shared/user-auth/user-data';
 import { UserrProfile } from 'src/app/shared/user-auth/userr-profile';
@@ -94,9 +94,8 @@ var  headers: HttpHeaders = new HttpHeaders ({
   
 }
 
-ForgotPassword(data:any){
-return this.http.post('http://127.0.0.1:8000/sendemail/', data).pipe(map((data=>{
-console.log(data)
-})))
+ForgotPassword(data:Forgotpasswordmodel){
+return this.http.post('http://127.0.0.1:8000/sendemail/', data)
 }
+
 }

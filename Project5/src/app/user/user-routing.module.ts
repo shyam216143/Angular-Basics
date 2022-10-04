@@ -21,6 +21,7 @@ const routes: Routes = [
 {path: 'changepassword', component: ChangepasswordComponent, data:{"requiredAuth":true}, canActivate:[AuthGuardGuard]},
 {path: 'logout', component: UserLogoutComponent},
 {path: 'forgotpassword', component: UserForgotpasswordComponent},
+{path: 'forgotpassword', component: UserForgotpasswordComponent},
 ];
 
 @NgModule({

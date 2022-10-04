@@ -19,7 +19,8 @@ export class AuthTokenInterceptorInterceptor implements HttpInterceptor {
   constructor(private jwtHelper: JwtHelperService, private userService: ServicesService, private route:Router) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    if(request.url.indexOf('login') > -1  || request.url.indexOf('refresh') > -1 || request.url.indexOf('register')>-1){
+    if(request.url.indexOf('login') > -1  || request.url.indexOf('refresh') > -1 || request.url.indexOf('register')>-1||request.url.indexOf('forgotpassword')>=-1){
+      console.log(request.url.indexOf('forgotpassword')); 
       return next.handle(request);
     }
     const localStorageToken = localStorage.getItem('tokens')

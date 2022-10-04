@@ -11,7 +11,9 @@ import { ServicesService } from 'src/app/services/Auth/services.service';
 export class UserForgotpasswordComponent implements OnInit {
 
 ForgotPasswordForm!:FormGroup
-
+message!:any;
+back:boolean=false
+justclicked:boolean = false;
   constructor(private fb:FormBuilder, private userServices:ServicesService) {
     this.ForgotPasswordForm = this.fb.group({
       email:new FormControl('',[Validators.email, Validators.required])
@@ -21,13 +23,20 @@ ForgotPasswordForm!:FormGroup
   ngOnInit(): void {
   }
   changepassword() {
+   
+
     if(this.ForgotPasswordForm.valid){
+    
       this.userServices.ForgotPassword(this.ForgotPasswordForm.value).subscribe(data=>{
         console.log(data)
-        alert("successfully sed the email")
+        this.message = data
+        this.justclicked=true
+        this.back=true
+
         
       },
       (error)=>{
+        this.message="  Error occurred While Sending the data"
         console.log(error,"error occured to send the data at API")
       })
     }

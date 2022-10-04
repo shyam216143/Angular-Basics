@@ -32,6 +32,7 @@ export class AuthGuardGuard implements CanActivate {
         // if(localStorage.length<=0){
         //   this.route.navigate(['/user/login'])
         // }
+        alert()
         this.route.navigate(['/user/Admin'])
         return false
 

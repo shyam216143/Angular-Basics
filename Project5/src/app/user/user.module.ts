@@ -42,7 +42,7 @@ import { UserResetComponent } from './user-reset/user-reset.component';
     UserLogoutComponent,
     UserForgotpasswordComponent,
     UserProfileComponent,
-    UserResetComponent
+    UserResetComponent,
   ],
   imports: [
     FormsModule,

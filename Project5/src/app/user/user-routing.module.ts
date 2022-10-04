@@ -9,6 +9,7 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { UserLogoutComponent } from './user-logout/user-logout.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserRegisterComponent } from './user-register/user-register.component';
+import { UserResetComponent } from './user-reset/user-reset.component';
 import { UserComponent } from './user.component';
 
 const routes: Routes = [
@@ -21,7 +22,7 @@ const routes: Routes = [
 {path: 'changepassword', component: ChangepasswordComponent, data:{"requiredAuth":true}, canActivate:[AuthGuardGuard]},
 {path: 'logout', component: UserLogoutComponent},
 {path: 'forgotpassword', component: UserForgotpasswordComponent},
-{path: 'forgotpassword', component: UserForgotpasswordComponent},
+{path: 'resetpassword/:uid/:token', component: UserResetComponent},
 ];
 
 @NgModule({

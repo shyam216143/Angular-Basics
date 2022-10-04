@@ -9,6 +9,7 @@ import { Changepasswordmodel } from 'src/app/user/changepassword/changepasswordm
 import { Forgotpasswordmodel } from 'src/app/user/user-forgotpassword/forgotpassword';
 import { Loginform } from 'src/app/user/user-login/loginform';
 import { Registrationform } from 'src/app/user/user-register/registrationform';
+import { Resetformmodel } from 'src/app/user/user-reset/resetformmodel';
 
 @Injectable({
   providedIn: 'root'
@@ -96,6 +97,13 @@ var  headers: HttpHeaders = new HttpHeaders ({
 
 ForgotPassword(data:Forgotpasswordmodel){
 return this.http.post('http://127.0.0.1:8000/sendemail/', data)
+}
+resetPassword(data:any){
+  const payload= data['payload']
+  const uid = data['uid']
+  console.log("uid is :",uid)
+  const token= data['token']
+  return this.http.post('http://127.0.0.1:8000/resetpassword/'+uid+'/'+token+'/', payload)
 }
 
 }

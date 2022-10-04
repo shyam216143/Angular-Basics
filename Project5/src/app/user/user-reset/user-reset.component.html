@@ -1,1 +1,28 @@
 <p>user-reset works!</p>
+<div class="login-page">
+    <div class="text-success" *ngIf="success_message" [ngStyle]="{'color':'green','font-size':'22px'}">{{success_message.msg}}</div>
+    <div class="text-error" *ngIf="error_message" [ngStyle]="{'color':'red','font-size':'22px'}">{{error_message}}</div>
+    <mat-card class="mat-elevation-z12">
+       <div class="signin">
+            <div class="title">
+              <h1>change password</h1>
+            </div>
+            <form  [formGroup]="resetForm" (ngSubmit)="resetpassword()" >
+
+              <mat-form-field>
+                <input matInput placeholder="new Password" type="password" required minlength="4" name="password" formControlName="password" autocomplete="on">
+                <mat-icon matSuffix>lock</mat-icon>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="confirm Password" type="password" required minlength="4" name="password2" formControlName="password2" autocomplete="on">
+                <mat-icon matSuffix>lock</mat-icon>
+              </mat-form-field>
+              <div class="btnshape">
+                <button mat-raised-button color="primary" class="login-button" type="submit" >
+                    Reset
+                  </button>
+              </div>
+            </form>
+          </div>
+    </mat-card>
+  </div>

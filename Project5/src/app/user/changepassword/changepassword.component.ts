@@ -15,6 +15,7 @@ import { catchError } from 'rxjs';
 })
 export class ChangepasswordComponent implements OnInit {
   success_message: string = ''
+  error_message: any = ''
 
   private headers = {
     headers: {
@@ -56,12 +57,14 @@ export class ChangepasswordComponent implements OnInit {
         this.userService.changePassword(this.changepasswordData).subscribe(data => {
           console.log(data)
           this.success_message = JSON.parse(data).msg
-          alert(this.success_message)
-          this.route
+          
+          setTimeout(()=>{
+            this.route.navigate(['user/admin'])
+          }, 5000)
         },
         (err)=>{
-          alert("error occured while changing")
-          console.log(err)
+          this.error_message=err
+          
           
         })
         

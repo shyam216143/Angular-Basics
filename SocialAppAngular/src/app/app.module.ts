@@ -55,6 +55,10 @@ import { WaitingDialogComponent } from './component/waiting-dialog/waiting-dialo
 import { CommentLikeDialogComponent } from './component/comment-like-dialog/comment-like-dialog.component';
 import { TagDialogComponent } from './component/tag-dialog/tag-dialog.component';
 import { SearchDialogComponent } from './component/search-dialog/search-dialog.component';
+import { PostDetailComponent } from './component/post-detail/post-detail.component';
+import { PhotoUploadDialogComponent } from './component/photo-upload-dialog/photo-upload-dialog.component';
+import { FollowingFollowerListDialogComponent } from './component/following-follower-list-dialog/following-follower-list-dialog.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,7 +85,11 @@ import { SearchDialogComponent } from './component/search-dialog/search-dialog.c
     WaitingDialogComponent,
     CommentLikeDialogComponent,
     TagDialogComponent,
-    SearchDialogComponent
+    SearchDialogComponent,
+    PostDetailComponent,
+    PhotoUploadDialogComponent,
+    FollowingFollowerListDialogComponent,
+ 
   ],
   imports: [
     BrowserModule,

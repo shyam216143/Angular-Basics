@@ -3,10 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommentLikeDialogComponent } from './component/comment-like-dialog/comment-like-dialog.component';
 import { ConfirmationDialogComponent } from './component/confirmation-dialog/confirmation-dialog.component';
 import { ExampleComponent } from './component/example/example.component';
+import { FollowingFollowerListDialogComponent } from './component/following-follower-list-dialog/following-follower-list-dialog.component';
 import { ForgotPasswordDialogComponent } from './component/forgot-password-dialog/forgot-password-dialog.component';
 import { LoginComponent } from './component/login/login.component';
 import { LogoutComponent } from './component/logout/logout.component';
 import { MessageComponent } from './component/message/message.component';
+import { PhotoUploadDialogComponent } from './component/photo-upload-dialog/photo-upload-dialog.component';
+import { PostDetailComponent } from './component/post-detail/post-detail.component';
 import { PostDialogComponent } from './component/post-dialog/post-dialog.component';
 import { PostLikeDialogComponent } from './component/post-like-dialog/post-like-dialog.component';
 import { PostShareDialogComponent } from './component/post-share-dialog/post-share-dialog.component';
@@ -42,6 +45,10 @@ const routes: Routes = [
   { path: 'confirmation-dialog', component: ConfirmationDialogComponent },
   { path: 'waiting-dialog', component: WaitingDialogComponent },
   { path: 'comment-likes', component: CommentLikeDialogComponent },
+  { path: 'posts/:postId', component: PostDetailComponent },
+  { path: 'photo', component: PhotoUploadDialogComponent },
+  { path: 'following', component: FollowingFollowerListDialogComponent },
+
 
  
 

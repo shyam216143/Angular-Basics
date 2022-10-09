@@ -14,7 +14,7 @@ export class PostService {
   authUser: User | undefined;
 	private host = environment.apiUrl;
   constructor(private httpClient: HttpClient) { }
-  getPostById(postId: number): Observable<PostResponse | HttpErrorResponse> {
+  getPostById(postId: number): Observable<PostResponse|any | HttpErrorResponse> {
 		return this.httpClient.get<PostResponse | HttpErrorResponse>(`${this.host}/posts/${postId}`);
 	}
   getPostsByTag(tagName: string, page: number, size: number): Observable<any> {

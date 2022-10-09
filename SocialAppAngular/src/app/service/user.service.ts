@@ -6,6 +6,7 @@ import { ResetPassword } from '../model/reset-password';
 import { UpdateUserEmail } from '../model/update-user-email';
 import { UpdateUserInfo } from '../model/update-user-info';
 import { UpdateUserPassword } from '../model/update-user-password';
+import { User } from '../model/user';
 import { UserResponse } from '../model/user-response';
 
 @Injectable({
@@ -48,4 +49,23 @@ export class UserService {
 	}
 
 
+	updateProfilePhoto(profilePhoto: File): Observable<User | HttpErrorResponse> {
+		const formData = new FormData();
+		formData.append('profilePhoto', profilePhoto);
+		return this.httpClient.post<User | HttpErrorResponse>(`${this.host}/account/update/profile-photo`, formData);
+	}
+	updateCoverPhoto(coverPhoto: File): Observable<User | HttpErrorResponse> {
+		const formData = new FormData();
+		formData.append('coverPhoto', coverPhoto);
+		return this.httpClient.post<User | HttpErrorResponse>(`${this.host}/account/update/cover-photo`, formData);
+	}
+	getUserFollowingList(userId: number, page: number, size: number): Observable<UserResponse[] |any | HttpErrorResponse> {
+		const reqParams = new HttpParams().set('page', page).set('size', size);
+		return this.httpClient.get<UserResponse[] | HttpErrorResponse>(`${this.host}/users/${userId}/following`, { params: reqParams });
+	}
+
+	getUserFollowerList(userId: number, page: number, size: number): Observable<UserResponse[] |any | HttpErrorResponse> {
+		const reqParams = new HttpParams().set('page', page).set('size', size);
+		return this.httpClient.get<UserResponse[] | HttpErrorResponse>(`${this.host}/users/${userId}/follower`, { params: reqParams });
+	}
 }

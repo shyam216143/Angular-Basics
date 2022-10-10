@@ -30,6 +30,8 @@ import { UserLogoutComponent } from './user-logout/user-logout.component';
 import { UserForgotpasswordComponent } from './user-forgotpassword/user-forgotpassword.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserResetComponent } from './user-reset/user-reset.component';
+import { PostFeedComponent } from './post-feed/post-feed.component';
+import { CreatepostComponent } from './createpost/createpost.component';
 
 
 @NgModule({
@@ -43,6 +45,8 @@ import { UserResetComponent } from './user-reset/user-reset.component';
     UserForgotpasswordComponent,
     UserProfileComponent,
     UserResetComponent,
+    PostFeedComponent,
+    CreatepostComponent,
   ],
   imports: [
     FormsModule,
@@ -73,7 +77,8 @@ import { UserResetComponent } from './user-reset/user-reset.component';
     MatSelectModule,
     MatGridListModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    
     
   ],
   providers: [

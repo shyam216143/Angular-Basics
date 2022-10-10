@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PostFeedComponent } from './post-feed/post-feed.component';
 import { UserDataComponent } from './user-data.component';
 
-<<<<<<< HEAD
-const routes: Routes = [{ path: '', component: UserDataComponent }];
-=======
 const routes: Routes = [
-  { path: '', component: UserDataComponent }];
->>>>>>> 1c38c9ec36559db70d838ca8024739be28396526
+  { path: '', component: UserDataComponent },
+  { path: 'post', component: PostFeedComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

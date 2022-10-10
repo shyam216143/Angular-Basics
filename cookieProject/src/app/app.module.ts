@@ -30,13 +30,26 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+<<<<<<< HEAD
+import { ExampleComponent } from './example/example.component';
+import { AuthenticationComponent } from './authentication/authentication.component';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+=======
 import { HeaderComponent } from './component/header/header.component';
+>>>>>>> 1c38c9ec36559db70d838ca8024739be28396526
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NavbarComponent,
+<<<<<<< HEAD
+    ExampleComponent,
+    AuthenticationComponent
+=======
     HeaderComponent
+>>>>>>> 1c38c9ec36559db70d838ca8024739be28396526
   ],
   imports: [
     BrowserModule,
@@ -49,6 +62,12 @@ import { HeaderComponent } from './component/header/header.component';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+<<<<<<< HEAD
+    MatBottomSheetModule,
+    MatCardModule,
+    MatDialogModule,
+    MatInputModule
+=======
     FormsModule,
 		ReactiveFormsModule,
 		MatToolbarModule,
@@ -98,6 +117,7 @@ import { HeaderComponent } from './component/header/header.component';
 		MatDatepickerModule,
 		MatNativeDateModule,
 	
+>>>>>>> 1c38c9ec36559db70d838ca8024739be28396526
   ],
   providers: [],
   bootstrap: [AppComponent]

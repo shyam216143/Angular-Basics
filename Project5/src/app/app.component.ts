@@ -21,10 +21,11 @@ export class AppComponent implements OnInit , OnChanges{
   fulluserprofile!:UserData;
   username:string="No username";
   constructor(private userService:ServicesService, private profileServices:ProfileService, private route:Router,) {
+    if(localStorage.getItem("tokens")!=null){
     this.profileServices.getProfileData().subscribe(data=>{
       this.profiledata=data
     })
-
+  }
      }
      
   

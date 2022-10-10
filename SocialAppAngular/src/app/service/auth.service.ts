@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { User } from '../model/user';
 import { UserLogin } from '../model/user-login';
 import { UserSignup } from '../model/user-signup';
 
@@ -14,10 +15,10 @@ export class AuthService {
 	loginSubject = new Subject<any>();
   private host = environment.apiUrl;
   constructor(private http:HttpClient, private route:Router) { }
-  login(data:UserLogin):any{
-    this.http.post(`${this.host}/login/`, data)
+  login(data:UserLogin): Observable<HttpResponse<User>|any | HttpErrorResponse>{
+    return this.http.post(`${this.host}/login/`, data);
   }
-  signup(userSignup: UserSignup): Observable<HttpResponse<any> | HttpErrorResponse> {
+  signup(userSignup: UserSignup): Observable<HttpResponse<User>|any | HttpErrorResponse> {
 		return this.http.post<HttpResponse<any> | HttpErrorResponse>(`${this.host}/register/`, userSignup);
 	}
   

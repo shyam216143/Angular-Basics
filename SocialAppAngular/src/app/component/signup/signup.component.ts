@@ -1,8 +1,9 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AppConstants } from 'src/app/common/app-constants';
 import { UserSignup } from 'src/app/model/user-signup';
 import { AuthService } from 'src/app/service/auth.service';
@@ -16,6 +17,7 @@ import { SnakebarComponent } from '../snakebar/snakebar.component';
 export class SignupComponent implements OnInit {
   submittingForm: boolean = false;
 	signupFormGroup!: FormGroup;
+	private subscriptions: Subscription[] = [];
   constructor(private router: Router,
 		private formBuilder: FormBuilder,
 		private matSnackbar: MatSnackBar,
@@ -72,15 +74,15 @@ export class SignupComponent implements OnInit {
 			userSignup.password2 = this.passwordRepeat?.value;
 			console.log(userSignup);
 
-			// this.subscriptions.push(
+			this.subscriptions.push(
 				this.authService.signup(userSignup).subscribe({
-					next: (response: any) => {
+					next: (response: HttpResponse<any>) => {
             alert(response)
-						// localStorage.setItem(AppConstants.messageTypeLabel, AppConstants.successLabel);
-						// localStorage.setItem(AppConstants.messageHeaderLabel, AppConstants.signupSuccessHeader);
-						// localStorage.setItem(AppConstants.messageDetailLabel, AppConstants.signupSuccessDetail);
-						// localStorage.setItem(AppConstants.toLoginLabel, AppConstants.trueLabel);
-						this.submittingForm = true;
+						localStorage.setItem(AppConstants.messageTypeLabel, AppConstants.successLabel);
+						localStorage.setItem(AppConstants.messageHeaderLabel, AppConstants.signupSuccessHeader);
+						localStorage.setItem(AppConstants.messageDetailLabel, AppConstants.signupSuccessDetail);
+						localStorage.setItem(AppConstants.toLoginLabel, AppConstants.trueLabel);
+						this.submittingForm = false;
 						this.router.navigateByUrl('/message');
 						// this.router.navigateByUrl('/profile');
 					},
@@ -108,7 +110,7 @@ export class SignupComponent implements OnInit {
 						this.submittingForm = false;
 					}
 				})
-			// );
+			);
 		}
 	}
 }

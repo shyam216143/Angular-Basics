@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Profile } from './profile';
 import { ProfileService } from './profile.service';
-
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -9,7 +9,7 @@ import { ProfileService } from './profile.service';
 })
 export class UserProfileComponent implements OnInit {
   profiledata?:Profile;
-  constructor(private profileServices:ProfileService) { 
+  constructor(private profileServices:ProfileService,) { 
     this.profileServices.getProfileData().subscribe(data=>{
       this.profiledata=data
     })
@@ -17,6 +17,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     
   }
 

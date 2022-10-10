@@ -7,9 +7,13 @@ import { HomeComponent } from './home/home.component';
 const routes: Routes = [
   { path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule) },
   {path:'', component:HomeComponent},
+<<<<<<< HEAD
   {path:'example', component:ExampleComponent}  ,
   {path:'auth', component:AuthenticationComponent},
   { path: 'user_data', loadChildren: () => import('./user-data/user-data.module').then(m => m.UserDataModule) }
+=======
+  { path: 'user-data', loadChildren: () => import('./user-data/user-data.module').then(m => m.UserDataModule) }
+>>>>>>> 1c38c9ec36559db70d838ca8024739be28396526
 ];
 
 @NgModule({

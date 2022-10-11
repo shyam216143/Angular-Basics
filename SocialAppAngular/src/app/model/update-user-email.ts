@@ -1,5 +1,5 @@
 export class UpdateUserEmail {
    
-        email!: string;
+        newEmail!: string;
         password!: string;
 }

@@ -27,7 +27,7 @@ export class UserService {
 		return this.httpClient.post<any >(`${this.host}/update/`, updateUserInfo);
 	}
   updateUserEmail(updateUserEmail: UpdateUserEmail): Observable<any | HttpErrorResponse> {
-		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/account/update/email`, updateUserEmail);
+		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/change-email/`, updateUserEmail);
 	}
 
 	updateUserPassword(updateUserPassword: UpdateUserPassword): Observable<any | HttpErrorResponse> {

@@ -186,17 +186,17 @@ export class SettingsComponent implements OnInit {
 	handleUpdateEmail(): void {
 		this.submittingForm = true;
 		const updateUserEmail = new UpdateUserEmail();
-		updateUserEmail.email = this.updateEmailFormGroup.get('email')?.value
+		updateUserEmail.newEmail = this.updateEmailFormGroup.get('email')?.value
 		updateUserEmail.password = this.updateEmailFormGroup.get('password')?.value;
 
-		// this.subscriptions.push(
+		this.subscriptions.push(
 			this.userService.updateUserEmail(updateUserEmail).subscribe({
 				next: (result: any) => {
-					// localStorage.setItem(AppConstants.messageTypeLabel, AppConstants.successLabel);
-					// localStorage.setItem(AppConstants.messageHeaderLabel, AppConstants.emailChangeSuccessHeader);
-					// localStorage.setItem(AppConstants.messageDetailLabel, AppConstants.emailChangeSuccessDetail);
-					// localStorage.setItem(AppConstants.toLoginLabel, AppConstants.trueLabel);
-					// this.authService.logout();
+					localStorage.setItem(AppConstants.messageTypeLabel, AppConstants.successLabel);
+					localStorage.setItem(AppConstants.messageHeaderLabel, AppConstants.emailChangeSuccessHeader);
+					localStorage.setItem(AppConstants.messageDetailLabel, AppConstants.emailChangeSuccessDetail);
+					localStorage.setItem(AppConstants.toLoginLabel, AppConstants.trueLabel);
+					this.authService.logout();
 					this.submittingForm = false;
 					this.router.navigateByUrl('/message');
 				},
@@ -222,7 +222,7 @@ export class SettingsComponent implements OnInit {
 					this.submittingForm = false;
 				}
 			})
-		// );
+		);
 	}
 
 

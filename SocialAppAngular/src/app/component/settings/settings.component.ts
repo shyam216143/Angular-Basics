@@ -4,12 +4,16 @@ import { FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Val
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { Subscription } from 'rxjs';
 import { AppConstants } from 'src/app/common/app-constants';
+import { RepeatPasswordMatcher } from 'src/app/common/repeat-password-matcher';
 import { Country } from 'src/app/model/country';
 import { UpdateUserEmail } from 'src/app/model/update-user-email';
 import { UpdateUserInfo } from 'src/app/model/update-user-info';
 import { UpdateUserPassword } from 'src/app/model/update-user-password';
+import { User } from 'src/app/model/user';
 import { AuthService } from 'src/app/service/auth.service';
+import { CountryService } from 'src/app/service/country.service';
 import { UserService } from 'src/app/service/user.service';
 import { SnakebarComponent } from '../snakebar/snakebar.component';
 
@@ -19,19 +23,29 @@ import { SnakebarComponent } from '../snakebar/snakebar.component';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
-  updateInfoFormGroup!: FormGroup;
+	authUser: any;
+	authUserId!: number;
+	submittingForm: boolean = false;
+	countryList: any;
+	updateInfoFormGroup!: FormGroup;
 	updateEmailFormGroup!: FormGroup;
 	updatePasswordFormGroup!: FormGroup;
-  submittingForm!: boolean;
-	
+	repeatPasswordMatcher = new RepeatPasswordMatcher();
+	private subscriptions: Subscription[] = [];
+
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router,
+	private countryService: CountryService,
+
     private userService:UserService,
     private matSnackbar: MatSnackBar,
-  ) { }
+  ) {
+	
+  }
   get updateInfoFirstName() { return this.updateInfoFormGroup.get('firstName') }
+  get updateInfoUsername() { return this.updateInfoFormGroup.get('Username') }
 	get updateInfoLastName() { return this.updateInfoFormGroup.get('lastName') }
 	get updateInfoIntro() { return this.updateInfoFormGroup.get('intro') }
 	get updateInfoGender() { return this.updateInfoFormGroup.get('gender') }
@@ -58,7 +72,35 @@ export class SettingsComponent implements OnInit {
 	// }
 
   ngOnInit(): void {
+	// this.authUser = this.authService.getAuthUserFromCache();
+	this.authService.getuserdata().subscribe(data => {
+		this.authUser=data
+		console.log(this.authUser)
+		const newLoan={
+			'Username':this.authUser.username,
+			  'firstName':this.authUser.first_name,
+			  'lastName':this.authUser.last_name,
+			  "intro":this.authUser.intro,
+			  "hometown":this.authUser.hometown,
+			  "currentCity":this.authUser.current_city,
+			  "eduInstitution":this.authUser.username,
+			  "workplace":this.authUser.edu_institution,
+			  "gender":this.authUser.gender,
+			  "countryName":this.authUser.country,
+			  "birthDate":this.authUser.birth_date
+		  }
+		  this.updateInfoFormGroup.setValue(newLoan)
+	})
+
+	this.countryService.getCountryList().subscribe({
+		next: (countryList: Country[]) => {
+			this.countryList = countryList;
+			console.log(this.countryList)
+		},
+		error: (errorResponse: HttpErrorResponse) => { }
+	});
     this.updateInfoFormGroup = this.formBuilder.group({
+	  Username: new FormControl('', [Validators.required, Validators.maxLength(64)]),
       firstName: new FormControl('', [Validators.required, Validators.maxLength(64)]),
       lastName: new FormControl('', [Validators.required, Validators.maxLength(64)]),
       intro: new FormControl('', [Validators.maxLength(100)]),
@@ -79,6 +121,7 @@ export class SettingsComponent implements OnInit {
       passwordRepeat: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]),
       oldPassword: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(32)])
     });
+
   }
 
 
@@ -86,21 +129,23 @@ export class SettingsComponent implements OnInit {
   handleUpdateInfo(): void {
 		this.submittingForm = true;
 		const updateUserInfo = new UpdateUserInfo();
-		updateUserInfo.firstName = this.updateInfoFirstName?.value;
-		updateUserInfo.lastName = this.updateInfoLastName?.value;
+		updateUserInfo.username = this.updateInfoUsername?.value;
+		updateUserInfo.first_name = this.updateInfoFirstName?.value;
+		updateUserInfo.last_name = this.updateInfoLastName?.value;
 		updateUserInfo.intro = this.updateInfoIntro?.value;
 		updateUserInfo.gender = this.updateInfoGender?.value;
 		updateUserInfo.hometown = this.updateInfoHometown?.value;
-		updateUserInfo.currentCity = this.updateInfoCurrentCity?.value;
-		updateUserInfo.eduInstitution = this.updateInfoEduInstitution?.value;
+		updateUserInfo.current_city = this.updateInfoCurrentCity?.value;
+		updateUserInfo.edu_institution = this.updateInfoEduInstitution?.value;
 		updateUserInfo.workplace = this.updateInfoWorkplace?.value;
-		updateUserInfo.countryName = this.updateInfoCountryName?.value;
-		updateUserInfo.birthDate = moment(this.updateInfoBirthDate?.value).format('YYYY-MM-DD HH:mm:ss').toString();
+		updateUserInfo.country = this.updateInfoCountryName?.value;
+		updateUserInfo.birth_date = moment(this.updateInfoBirthDate?.value).format('YYYY-MM-DD HH:mm:ss').toString();
+		console.log(updateUserInfo);
 
-		// this.subscriptions.push(
+		this.subscriptions.push(
 			this.userService.updateUserInfo(updateUserInfo).subscribe({
 				next: (updatedUser: any) => {
-					// this.authService.storeAuthUserInCache(updatedUser);
+					this.authService.storeAuthUserInCache(updatedUser);
 					this.matSnackbar.openFromComponent(SnakebarComponent, {
 						data: 'Your account has been updated successfully.',
 						panelClass: ['bg-success'],
@@ -131,7 +176,7 @@ export class SettingsComponent implements OnInit {
 					this.submittingForm = false;
 				}
 			})
-		// );
+		);
 	}
 
 

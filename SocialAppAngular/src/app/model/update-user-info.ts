@@ -1,12 +1,13 @@
 export class UpdateUserInfo {
-    firstName!: string;
-    lastName!: string;
+    username!:string
+    first_name!: string;
+    last_name!: string;
     gender!: string;
     intro!: string;
     hometown!: string;
-    currentCity!: string;
-    eduInstitution!: string;
+    current_city!: string;
+    edu_institution!: string;
     workplace!: string;
-    countryName!: string;
-    birthDate!: string;
+    country!: string;
+    birth_date!: string;
 }

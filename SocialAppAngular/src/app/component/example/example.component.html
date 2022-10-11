@@ -107,7 +107,7 @@
                     </mat-tab>
                     <mat-tab label="Update Email">
                         <div class="p-5">
-                        <form  [formGroup]="updateEmailFormGroup" (ngSubmit)="handleUpdateEmail()">
+                        <form  [formGroup]="updateEmailFormGroup" >
                             <mat-form-field class="w-100 pb-2" appearance="outline">
                                 <mat-label>New Email</mat-label>
                                 <input type="text" matInput formControlName="email" placeholder="Ex. John">
@@ -143,7 +143,7 @@
                     </mat-tab>
                     <mat-tab label="Update Password">
 						<div class="p-5">
-							<form [formGroup]="updatePasswordFormGroup" (ngSubmit)="handleUpdatePassword()">
+							<form [formGroup]="updatePasswordFormGroup" >
 								<mat-form-field class="w-100 pb-2" appearance="outline">
 									<mat-label>New Password</mat-label>
 									<input type="password" matInput formControlName="password" placeholder="*************">

@@ -25,6 +25,13 @@
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field class="w-100 pb-2" appearance="outline">
+                                <mat-label>Userame</mat-label>
+                                <input type="text" matInput formControlName="Username" placeholder="Ex. John">
+                                <mat-error *ngIf="updateInfoUsername?.hasError('required') || updateInfoUsername?.hasError('maxlength') || updateInfoUsername?.hasError('serverError')">
+                                    This field is required and cannot exceed 64 characters
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="w-100 pb-2" appearance="outline">
                                 <mat-label>Last Name</mat-label>
                                 <input type="text" matInput formControlName="lastName" placeholder="Ex. Doe">
                                 <mat-error *ngIf="updateInfoLastName?.hasError('required') || updateInfoLastName?.hasError('maxlength') || updateInfoLastName?.hasError('serverError')">
@@ -77,9 +84,8 @@
                             <mat-form-field  appearance="outline" class="d-block pb-2">
                                 <mat-label>Select your country</mat-label>
                                 <mat-select formControlName="countryName">
-                                    <mat-option>
-                                    <!-- {{ country.name }} -->
-                                    india
+                                    <mat-option *ngFor="let country of countryList" [value]="country.text">
+                                    {{ country.text }}
                                     </mat-option>
                                 </mat-select>
                                 <mat-error *ngIf="updateInfoCountryName?.hasError('serverError')">
@@ -88,8 +94,10 @@
                             </mat-form-field>
 
                             <mat-radio-group formControlName="gender" class="d-block mb-2">
-                                <mat-radio-button value="Male" class="me-3">Male</mat-radio-button>
-                                <mat-radio-button value="Female">Female</mat-radio-button>
+                                <mat-radio-button value="1" class="me-3">None</mat-radio-button>
+                                <mat-radio-button value="2" class="me-3">Male</mat-radio-button>
+                                <mat-radio-button value="3">Female</mat-radio-button>
+                                <mat-radio-button value="4">TransGender</mat-radio-button>
                                 <mat-error *ngIf="updateInfoGender?.hasError('serverError')">
                                     Enter a valid gender
                                 </mat-error>

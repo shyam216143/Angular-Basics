@@ -83,147 +83,147 @@ export class ExampleComponent implements OnInit {
 
 
   handleUpdateInfo(): void {
-		this.submittingForm = true;
-		const updateUserInfo = new UpdateUserInfo();
-		updateUserInfo.firstName = this.updateInfoFirstName?.value;
-		updateUserInfo.lastName = this.updateInfoLastName?.value;
-		updateUserInfo.intro = this.updateInfoIntro?.value;
-		updateUserInfo.gender = this.updateInfoGender?.value;
-		updateUserInfo.hometown = this.updateInfoHometown?.value;
-		updateUserInfo.currentCity = this.updateInfoCurrentCity?.value;
-		updateUserInfo.eduInstitution = this.updateInfoEduInstitution?.value;
-		updateUserInfo.workplace = this.updateInfoWorkplace?.value;
-		updateUserInfo.countryName = this.updateInfoCountryName?.value;
-		updateUserInfo.birthDate = moment(this.updateInfoBirthDate?.value).format('YYYY-MM-DD HH:mm:ss').toString();
+// 		this.submittingForm = true;
+// 		const updateUserInfo = new UpdateUserInfo();
+// 		updateUserInfo.firstName = this.updateInfoFirstName?.value;
+// 		updateUserInfo.lastName = this.updateInfoLastName?.value;
+// 		updateUserInfo.intro = this.updateInfoIntro?.value;
+// 		updateUserInfo.gender = this.updateInfoGender?.value;
+// 		updateUserInfo.hometown = this.updateInfoHometown?.value;
+// 		updateUserInfo.currentCity = this.updateInfoCurrentCity?.value;
+// 		updateUserInfo.eduInstitution = this.updateInfoEduInstitution?.value;
+// 		updateUserInfo.workplace = this.updateInfoWorkplace?.value;
+// 		updateUserInfo.countryName = this.updateInfoCountryName?.value;
+// 		updateUserInfo.birthDate = moment(this.updateInfoBirthDate?.value).format('YYYY-MM-DD HH:mm:ss').toString();
 
-		// this.subscriptions.push(
-			this.userService.updateUserInfo(updateUserInfo).subscribe({
-				next: (updatedUser: any) => {
-					// this.authService.storeAuthUserInCache(updatedUser);
-					// this.matSnackbar.openFromComponent(SnackbarComponent, {
-					// 	data: 'Your account has been updated successfully.',
-					// 	panelClass: ['bg-success'],
-					// 	duration: 5000
-					// });
-					this.submittingForm = false;
-					this.router.navigateByUrl('/profile');
-				},
-				error: (errorResponse: HttpErrorResponse) => {
-					const validationErrors = errorResponse.error.validationErrors;
-					if (validationErrors != null) {
-						Object.keys(validationErrors).forEach(key => {
-							const formControl = this.updateInfoFormGroup.get(key);
-							if (formControl) {
-								formControl.setErrors({
-									serverError: validationErrors[key]
-								});
-							}
-						});
-					} else {
-						// this.matSnackbar.openFromComponent(SnackbarComponent, {
-						// 	data: AppConstants.snackbarErrorContent,
-						// 	panelClass: ['bg-danger'],
-						// 	duration: 5000
-						// });
-            alert("error occured")
-					}
-					this.submittingForm = false;
-				}
-			})
-		// );
-	}
+// 		// this.subscriptions.push(
+// 			this.userService.updateUserInfo(updateUserInfo).subscribe({
+// 				next: (updatedUser: any) => {
+// 					// this.authService.storeAuthUserInCache(updatedUser);
+// 					// this.matSnackbar.openFromComponent(SnackbarComponent, {
+// 					// 	data: 'Your account has been updated successfully.',
+// 					// 	panelClass: ['bg-success'],
+// 					// 	duration: 5000
+// 					// });
+// 					this.submittingForm = false;
+// 					this.router.navigateByUrl('/profile');
+// 				},
+// 				error: (errorResponse: HttpErrorResponse) => {
+// 					const validationErrors = errorResponse.error.validationErrors;
+// 					if (validationErrors != null) {
+// 						Object.keys(validationErrors).forEach(key => {
+// 							const formControl = this.updateInfoFormGroup.get(key);
+// 							if (formControl) {
+// 								formControl.setErrors({
+// 									serverError: validationErrors[key]
+// 								});
+// 							}
+// 						});
+// 					} else {
+// 						// this.matSnackbar.openFromComponent(SnackbarComponent, {
+// 						// 	data: AppConstants.snackbarErrorContent,
+// 						// 	panelClass: ['bg-danger'],
+// 						// 	duration: 5000
+// 						// });
+//             alert("error occured")
+// 					}
+// 					this.submittingForm = false;
+// 				}
+// 			})
+// 		// );
+// 	}
 
 
 
 
   
-	handleUpdateEmail(): void {
-		this.submittingForm = true;
-		const updateUserEmail = new UpdateUserEmail();
-		updateUserEmail.email = this.updateEmailFormGroup.get('email')?.value
-		updateUserEmail.password = this.updateEmailFormGroup.get('password')?.value;
+// 	handleUpdateEmail(): void {
+// 		this.submittingForm = true;
+// 		const updateUserEmail = new UpdateUserEmail();
+// 		updateUserEmail.email = this.updateEmailFormGroup.get('email')?.value
+// 		updateUserEmail.password = this.updateEmailFormGroup.get('password')?.value;
 
-		// this.subscriptions.push(
-			this.userService.updateUserEmail(updateUserEmail).subscribe({
-				next: (result: any) => {
-					// localStorage.setItem(AppConstants.messageTypeLabel, AppConstants.successLabel);
-					// localStorage.setItem(AppConstants.messageHeaderLabel, AppConstants.emailChangeSuccessHeader);
-					// localStorage.setItem(AppConstants.messageDetailLabel, AppConstants.emailChangeSuccessDetail);
-					// localStorage.setItem(AppConstants.toLoginLabel, AppConstants.trueLabel);
-					// this.authService.logout();
-					this.submittingForm = false;
-					this.router.navigateByUrl('/message');
-				},
-				error: (errorResponse: HttpErrorResponse) => {
-					const validationErrors = errorResponse.error.validationErrors;
-					if (validationErrors != null) {
-						Object.keys(validationErrors).forEach(key => {
-							const formControl = this.updateInfoFormGroup.get(key);
-							if (formControl) {
-								formControl.setErrors({
-									serverError: validationErrors[key]
-								});
-							}
-						});
-					} else {
-						// this.matSnackbar.openFromComponent(SnackbarComponent, {
-						// 	data: AppConstants.snackbarErrorContent,
-						// 	panelClass: ['bg-danger'],
-						// 	duration: 5000
-						// });
-            console.log("error has occured")
-					}
-					this.submittingForm = false;
-				}
-			})
-		// );
-	}
-
-
+// 		// this.subscriptions.push(
+// 			this.userService.updateUserEmail(updateUserEmail).subscribe({
+// 				next: (result: any) => {
+// 					// localStorage.setItem(AppConstants.messageTypeLabel, AppConstants.successLabel);
+// 					// localStorage.setItem(AppConstants.messageHeaderLabel, AppConstants.emailChangeSuccessHeader);
+// 					// localStorage.setItem(AppConstants.messageDetailLabel, AppConstants.emailChangeSuccessDetail);
+// 					// localStorage.setItem(AppConstants.toLoginLabel, AppConstants.trueLabel);
+// 					// this.authService.logout();
+// 					this.submittingForm = false;
+// 					this.router.navigateByUrl('/message');
+// 				},
+// 				error: (errorResponse: HttpErrorResponse) => {
+// 					const validationErrors = errorResponse.error.validationErrors;
+// 					if (validationErrors != null) {
+// 						Object.keys(validationErrors).forEach(key => {
+// 							const formControl = this.updateInfoFormGroup.get(key);
+// 							if (formControl) {
+// 								formControl.setErrors({
+// 									serverError: validationErrors[key]
+// 								});
+// 							}
+// 						});
+// 					} else {
+// 						// this.matSnackbar.openFromComponent(SnackbarComponent, {
+// 						// 	data: AppConstants.snackbarErrorContent,
+// 						// 	panelClass: ['bg-danger'],
+// 						// 	duration: 5000
+// 						// });
+//             console.log("error has occured")
+// 					}
+// 					this.submittingForm = false;
+// 				}
+// 			})
+// 		// );
+// 	}
 
 
 
-  handleUpdatePassword(): void {
-		this.submittingForm = true;
-		const updateUserPassword = new UpdateUserPassword();
-		updateUserPassword.password = this.updatePasswordFormGroup.get('password')?.value;
-		updateUserPassword.passwordRepeat = this.updatePasswordFormGroup.get('passwordRepeat')?.value;
-		updateUserPassword.oldPassword = this.updatePasswordFormGroup.get('oldPassword')?.value;
 
-		// this.subscriptions.push(
-			this.userService.updateUserPassword(updateUserPassword).subscribe({
-				next: (result: any) => {
-					// localStorage.setItem(AppConstants.messageTypeLabel, AppConstants.successLabel);
-					// localStorage.setItem(AppConstants.messageHeaderLabel, AppConstants.passwordChangeSuccessHeader);
-					// localStorage.setItem(AppConstants.messageDetailLabel, AppConstants.passwordChangeSuccessDetail);
-					// localStorage.setItem(AppConstants.toLoginLabel, AppConstants.trueLabel);
-					// this.authService.logout();
-					this.submittingForm = false;
-					this.router.navigateByUrl('/message');
-				},
-				error: (errorResponse: HttpErrorResponse) => {
-					const validationErrors = errorResponse.error.validationErrors;
-					if (validationErrors != null) {
-						Object.keys(validationErrors).forEach(key => {
-							const formControl = this.updateInfoFormGroup.get(key);
-							if (formControl) {
-								formControl.setErrors({
-									serverError: validationErrors[key]
-								});
-							}
-						});
-					} else {
-						// this.matSnackbar.openFromComponent(SnackbarComponent, {
-						// 	data: AppConstants.snackbarErrorContent,
-						// 	panelClass: ['bg-danger'],
-						// 	duration: 5000
-						// });
-            alert("error hass occured")
-					}
-					this.submittingForm = false;
-				}
-			})
-		// );
+
+//   handleUpdatePassword(): void {
+// 		this.submittingForm = true;
+// 		const updateUserPassword = new UpdateUserPassword();
+// 		updateUserPassword.password = this.updatePasswordFormGroup.get('password')?.value;
+// 		updateUserPassword.passwordRepeat = this.updatePasswordFormGroup.get('passwordRepeat')?.value;
+// 		updateUserPassword.oldPassword = this.updatePasswordFormGroup.get('oldPassword')?.value;
+
+// 		// this.subscriptions.push(
+// 			this.userService.updateUserPassword(updateUserPassword).subscribe({
+// 				next: (result: any) => {
+// 					// localStorage.setItem(AppConstants.messageTypeLabel, AppConstants.successLabel);
+// 					// localStorage.setItem(AppConstants.messageHeaderLabel, AppConstants.passwordChangeSuccessHeader);
+// 					// localStorage.setItem(AppConstants.messageDetailLabel, AppConstants.passwordChangeSuccessDetail);
+// 					// localStorage.setItem(AppConstants.toLoginLabel, AppConstants.trueLabel);
+// 					// this.authService.logout();
+// 					this.submittingForm = false;
+// 					this.router.navigateByUrl('/message');
+// 				},
+// 				error: (errorResponse: HttpErrorResponse) => {
+// 					const validationErrors = errorResponse.error.validationErrors;
+// 					if (validationErrors != null) {
+// 						Object.keys(validationErrors).forEach(key => {
+// 							const formControl = this.updateInfoFormGroup.get(key);
+// 							if (formControl) {
+// 								formControl.setErrors({
+// 									serverError: validationErrors[key]
+// 								});
+// 							}
+// 						});
+// 					} else {
+// 						// this.matSnackbar.openFromComponent(SnackbarComponent, {
+// 						// 	data: AppConstants.snackbarErrorContent,
+// 						// 	panelClass: ['bg-danger'],
+// 						// 	duration: 5000
+// 						// });
+//             alert("error hass occured")
+// 					}
+// 					this.submittingForm = false;
+// 				}
+// 			})
+// 		// );
 	}
 
 }

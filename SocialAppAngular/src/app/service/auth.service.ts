@@ -14,6 +14,10 @@ export class AuthService {
   logoutSubject = new Subject<boolean>();
 	loginSubject = new Subject<any>();
   private host = environment.apiUrl;
+  private authToken!: string;
+  private authUser!: User;
+  private principal!: string;
+
   constructor(private http:HttpClient, private route:Router) { }
   login(data:UserLogin): Observable<HttpResponse<User>|any | HttpErrorResponse>{
     return this.http.post(`${this.host}/login/`, data);
@@ -26,9 +30,38 @@ export class AuthService {
 		// this.authToken = null;
 		// this.authUser = null;
 		// this.principal = 0;
-		// localStorage.removeItem('authUser');
-		// localStorage.removeItem('authToken');
-		// this.logoutSubject.next(true);
+		localStorage.removeItem('authUser');
+		localStorage.removeItem('authToken');
+		this.logoutSubject.next(true);
     this.route.navigate(['/login'])
 	}
+	getuserdata(): Observable<HttpResponse<User>|any> {
+	
+		
+		return this.http.get<HttpResponse<User>|any | HttpErrorResponse>(`${this.host}/profile/`);
+
+	}
+
+	storeTokenInCache(authToken: string): void {
+		if (authToken != null && authToken != '') {
+			this.authToken = authToken;
+			localStorage.setItem('authToken', authToken);
+		}
+	}
+	storeAuthUserInCache(authUser: any): void {
+		if (authUser != null) {
+			this.authUser = authUser;
+			localStorage.setItem('authUser', JSON.stringify(authUser));
+		}
+		this.loginSubject.next(authUser);
+	}
+
+	getAuthTokenFromCache(): any {
+		return localStorage.getItem('authToken');
+	}
+	// getAuthUserFromCache(): any {
+	// 	return localStorage.getItem('authUser');
+	// }
+
+
 }

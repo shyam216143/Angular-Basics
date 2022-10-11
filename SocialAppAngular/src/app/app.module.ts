@@ -58,6 +58,7 @@ import { SearchDialogComponent } from './component/search-dialog/search-dialog.c
 import { PostDetailComponent } from './component/post-detail/post-detail.component';
 import { PhotoUploadDialogComponent } from './component/photo-upload-dialog/photo-upload-dialog.component';
 import { FollowingFollowerListDialogComponent } from './component/following-follower-list-dialog/following-follower-list-dialog.component';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -125,7 +126,11 @@ import { FollowingFollowerListDialogComponent } from './component/following-foll
 		MatSliderModule
 		
   ],
-  providers: [],
+  providers: [
+		
+		{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+		// { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
+	],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

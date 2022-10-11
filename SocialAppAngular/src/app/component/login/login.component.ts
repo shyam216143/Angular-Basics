@@ -50,8 +50,9 @@ export class LoginComponent implements OnInit {
 						console.log(response)
 						const authToken = response.token.access
 						console.log(authToken)
-						// this.authService.storeTokenInCache(authToken);
-						// this.authService.storeAuthUserInCache(response.email);
+						localStorage.setItem('email', response.body.email)
+						this.authService.storeTokenInCache(authToken);
+						this.authService.storeAuthUserInCache(response.body);
 						this.submittingForm = false;
 						this.router.navigate(['/profile'])
 					},

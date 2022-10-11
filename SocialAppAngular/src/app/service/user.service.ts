@@ -31,7 +31,7 @@ export class UserService {
 	}
 
 	updateUserPassword(updateUserPassword: UpdateUserPassword): Observable<any | HttpErrorResponse> {
-		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/account/update/password`, updateUserPassword);
+		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/change-password/`, updateUserPassword);
 	}
   resetPassword(token: string, resetPassword: ResetPassword): Observable<any | HttpErrorResponse> {
 		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/reset-password/${token}`, resetPassword);

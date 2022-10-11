@@ -1,5 +1,5 @@
 export class UpdateUserPassword {
     password!: string;
-	passwordRepeat!: string;
-	oldPassword!: string;
+	password2!: string;
+	oldpassword!: string;
 }

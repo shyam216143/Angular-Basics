@@ -233,17 +233,17 @@ export class SettingsComponent implements OnInit {
 		this.submittingForm = true;
 		const updateUserPassword = new UpdateUserPassword();
 		updateUserPassword.password = this.updatePasswordFormGroup.get('password')?.value;
-		updateUserPassword.passwordRepeat = this.updatePasswordFormGroup.get('passwordRepeat')?.value;
-		updateUserPassword.oldPassword = this.updatePasswordFormGroup.get('oldPassword')?.value;
+		updateUserPassword.password2 = this.updatePasswordFormGroup.get('passwordRepeat')?.value;
+		updateUserPassword.oldpassword = this.updatePasswordFormGroup.get('oldPassword')?.value;
 
-		// this.subscriptions.push(
+		this.subscriptions.push(
 			this.userService.updateUserPassword(updateUserPassword).subscribe({
 				next: (result: any) => {
-					// localStorage.setItem(AppConstants.messageTypeLabel, AppConstants.successLabel);
-					// localStorage.setItem(AppConstants.messageHeaderLabel, AppConstants.passwordChangeSuccessHeader);
-					// localStorage.setItem(AppConstants.messageDetailLabel, AppConstants.passwordChangeSuccessDetail);
-					// localStorage.setItem(AppConstants.toLoginLabel, AppConstants.trueLabel);
-					// this.authService.logout();
+					localStorage.setItem(AppConstants.messageTypeLabel, AppConstants.successLabel);
+					localStorage.setItem(AppConstants.messageHeaderLabel, AppConstants.passwordChangeSuccessHeader);
+					localStorage.setItem(AppConstants.messageDetailLabel, AppConstants.passwordChangeSuccessDetail);
+					localStorage.setItem(AppConstants.toLoginLabel, AppConstants.trueLabel);
+					this.authService.logout();
 					this.submittingForm = false;
 					this.router.navigateByUrl('/message');
 				},
@@ -269,7 +269,7 @@ export class SettingsComponent implements OnInit {
 					this.submittingForm = false;
 				}
 			})
-		// );
+		);
 	}
 
 

@@ -35,7 +35,7 @@ const routes: Routes = [
   { path: 'forgot', component: ForgotPasswordDialogComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'message', component: MessageComponent },
-  { path: 'reset-password/:token', component: ResetPasswordComponent },
+  { path: 'reset-password/:uid/:token', component: ResetPasswordComponent },
   { path: 'verify-email/:token', component: VerifyEmailComponent },
   { path: 'post', component: PostComponent },
   { path: 'post-like-dialog', component: PostLikeDialogComponent },

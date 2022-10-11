@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^14.1.0",
     "@angular/platform-browser-dynamic": "^14.1.0",
     "@angular/router": "^14.1.0",
+    "@auth0/angular-jwt": "^5.1.0",
     "bootstrap": "^4.6.2",
     "countries-list": "^2.6.1",
     "jquery": "^3.6.1",

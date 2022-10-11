@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AppConstants } from 'src/app/common/app-constants';
 import { UserService } from 'src/app/service/user.service';
 import { SnakebarComponent } from '../snakebar/snakebar.component';
@@ -17,6 +18,7 @@ export class ForgotPasswordDialogComponent implements OnInit {
 	forgotPasswordFormGroup!: FormGroup;
  
   fetchingResult: boolean = false;
+  private subscriptions: Subscription[] = [];
 
 
   constructor(
@@ -39,7 +41,7 @@ export class ForgotPasswordDialogComponent implements OnInit {
 		if (this.forgotPasswordFormGroup.valid) {
 			if (!this.fetchingResult) {
 				this.fetchingResult = true;
-				// this.subscriptions.push(
+				this.subscriptions.push(
 					this.userService.forgotPassword(this.email?.value).subscribe({
 						next: (result: any) => {
 							localStorage.setItem(AppConstants.messageTypeLabel, AppConstants.successLabel);
@@ -59,7 +61,7 @@ export class ForgotPasswordDialogComponent implements OnInit {
 							});
 						}
 					})
-				// );
+				);
 			}
 		}
 	}

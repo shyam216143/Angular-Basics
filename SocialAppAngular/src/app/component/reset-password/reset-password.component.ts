@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AppConstants } from 'src/app/common/app-constants';
 import { ResetPassword } from 'src/app/model/reset-password';
 import { UserService } from 'src/app/service/user.service';
@@ -17,7 +18,8 @@ import { SnakebarComponent } from '../snakebar/snakebar.component';
 export class ResetPasswordComponent implements OnInit {
   resetPasswordFormGroup!: FormGroup;
 	fetchingResult: boolean = false;
-  token!: any;
+	token: string|any;
+  uid: any;
   constructor(private userService: UserService,
 		private router: Router,
 		private formBuilder: FormBuilder,
@@ -25,6 +27,7 @@ export class ResetPasswordComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		private matDialog: MatDialog) { }
 
+		private subscriptions: Subscription[] = [];
 
 
 
@@ -32,9 +35,10 @@ export class ResetPasswordComponent implements OnInit {
     get passwordRepeat() { return this.resetPasswordFormGroup.get('passwordRepeat') }
   ngOnInit(): void {
     this.token = this.activatedRoute.snapshot.paramMap.get('token');
+	this.uid = this.activatedRoute.snapshot.paramMap.get('uid');
 
 		this.resetPasswordFormGroup = this.formBuilder.group({
-			password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(32)]),
+			password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]),
 			passwordRepeat: new FormControl('', [Validators.required])
 		});
   }
@@ -52,13 +56,14 @@ export class ResetPasswordComponent implements OnInit {
 				this.fetchingResult = true;
 				const resetPassword = new ResetPassword();
 				resetPassword.password = this.password?.value;
-				resetPassword.passwordRepeat = this.passwordRepeat?.value;
+				resetPassword.password2 = this.passwordRepeat?.value;
 
-				// this.subscriptions.push(
-					this.userService.resetPassword(this.token, resetPassword).subscribe({
+				this.subscriptions.push(
+					this.userService.resetPassword(this.token,this.uid, resetPassword).subscribe({
 						next: (result: any) => {
 							this.matSnackbar.openFromComponent(SnakebarComponent, {
 								data: 'Your password has been changed successfully.',
+								panelClass: ['bg-success'],
 								duration: 5000
 							});
 							this.fetchingResult = false;
@@ -73,7 +78,7 @@ export class ResetPasswordComponent implements OnInit {
 							});
 						}
 					})
-				// );
+				);
 			}
 		}
 	}

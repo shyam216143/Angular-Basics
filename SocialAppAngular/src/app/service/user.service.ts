@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -10,34 +10,37 @@ import { User } from '../model/user';
 import { UserResponse } from '../model/user-response';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class UserService {
-  private host = environment.apiUrl;
+	private host = environment.apiUrl;
 	// private jwtService = new JwtHelperService();
-  constructor(private httpClient: HttpClient) { }
-  forgotPassword(email: string): Observable<any | HttpErrorResponse> {
-	const reqParams = new HttpParams().set('email', email);
-	return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/forgot-password`, null, { params: reqParams });
-}
+	constructor(private httpClient: HttpClient) { }
+	forgotPassword(email: string): Observable<any | HttpErrorResponse> {
 
-
-
-  updateUserInfo(updateUserInfo: any): any {
-		return this.httpClient.post<any >(`${this.host}/update/`, updateUserInfo);
+		return this.httpClient.post<any>(`${this.host}/forgot_password_send_email/`, { "email": email });
 	}
-  updateUserEmail(updateUserEmail: UpdateUserEmail): Observable<any | HttpErrorResponse> {
+	verifyEmail(token: string): Observable<HttpResponse<any> | HttpErrorResponse> {
+		return this.httpClient.post<HttpResponse<any> | HttpErrorResponse>(`${this.host}/verify-email/${token}`, null);
+	}
+
+
+
+	updateUserInfo(updateUserInfo: any): any {
+		return this.httpClient.post<any>(`${this.host}/update/`, updateUserInfo);
+	}
+	updateUserEmail(updateUserEmail: UpdateUserEmail): Observable<any | HttpErrorResponse> {
 		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/change-email/`, updateUserEmail);
 	}
 
 	updateUserPassword(updateUserPassword: UpdateUserPassword): Observable<any | HttpErrorResponse> {
 		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/change-password/`, updateUserPassword);
 	}
-  resetPassword(token: string, resetPassword: ResetPassword): Observable<any | HttpErrorResponse> {
-		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/reset-password/${token}`, resetPassword);
+	resetPassword(token: string,uid:string, resetPassword: ResetPassword): Observable<any | HttpErrorResponse> {
+		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/reset-password/${uid}/${token}/`, resetPassword);
 	}
 
-	getUserSearchResult(key: string, page: number, size: number): Observable<UserResponse[]|any | HttpErrorResponse> {
+	getUserSearchResult(key: string, page: number, size: number): Observable<UserResponse[] | any | HttpErrorResponse> {
 		const reqParams = new HttpParams().set('key', key).set('page', page).set('size', size);
 		return this.httpClient.get<UserResponse[] | HttpErrorResponse>(`${this.host}/users/search`, { params: reqParams });
 	}
@@ -59,12 +62,12 @@ export class UserService {
 		formData.append('coverPhoto', coverPhoto);
 		return this.httpClient.post<User | HttpErrorResponse>(`${this.host}/account/update/cover-photo`, formData);
 	}
-	getUserFollowingList(userId: number, page: number, size: number): Observable<UserResponse[] |any | HttpErrorResponse> {
+	getUserFollowingList(userId: number, page: number, size: number): Observable<UserResponse[] | any | HttpErrorResponse> {
 		const reqParams = new HttpParams().set('page', page).set('size', size);
 		return this.httpClient.get<UserResponse[] | HttpErrorResponse>(`${this.host}/users/${userId}/following`, { params: reqParams });
 	}
 
-	getUserFollowerList(userId: number, page: number, size: number): Observable<UserResponse[] |any | HttpErrorResponse> {
+	getUserFollowerList(userId: number, page: number, size: number): Observable<UserResponse[] | any | HttpErrorResponse> {
 		const reqParams = new HttpParams().set('page', page).set('size', size);
 		return this.httpClient.get<UserResponse[] | HttpErrorResponse>(`${this.host}/users/${userId}/follower`, { params: reqParams });
 	}

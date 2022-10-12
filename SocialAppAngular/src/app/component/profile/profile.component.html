@@ -31,19 +31,16 @@
 
 					<div class="profile-info d-inline-block align-top ps-3" style="margin-top: -30px">
 						<h1 class="mat-display-1 mb-3" style="font-weight: 500;">
-							<!-- {{ profileUser.firstName + ' ' + profileUser.lastName }} -->
-                            shyam kumar
+							{{ profileUser.firstName + ' ' + profileUser.lastName }}
 						</h1>
 
 						<p>
-							<a class="text-decoration-none text-secondary mat-h3 cursor-pointer" style="font-weight: 500;" (click)="openFollowerDialog(profileUser)">
-								<!-- {{ profileUser.followingCount }} -->
-                                0  Following
+							<a class="text-decoration-none text-secondary mat-h3 cursor-pointer" style="font-weight: 500;" (click)="openFollowingDialog(profileUser)">
+								{{ profileUser.followingCount }} Following
 							</a>
 							<span class="ps-2 pe-2 mat-h3 fw-bold">|</span>
 							<a class="text-decoration-none text-secondary mat-h3 cursor-pointer" style="font-weight: 500;" (click)="openFollowerDialog(profileUser)">
-								<!-- {{ profileUser.followerCount }} -->
-                                0 Follower
+								{{ profileUser.followerCount }} Follower
 							</a>
 						</p>
 					</div>
@@ -91,7 +88,7 @@
 								<mat-icon class="text-secondary">school</mat-icon>
 								<span class="fw-500 ps-3 small">Studied At <b>
                                     <!-- {{ profileUser.eduInstitution }} -->
-                                    Kasireddy Narayana Reddy College
+                                    KasiropenFollowingDialogeddy Narayana Reddy College
                                 </b></span>
 							</mat-list-item>
 	
@@ -151,14 +148,15 @@
 
 			<div class="col-6 mb-4">
 				<div class="profile-posts">
-					<app-post></app-post>
+					<app-post *ngFor="let postResponse of profileUserPostResponses" id="{{'profilePost' + postResponse.post.id}}|''" [postResponse]="postResponse" [isDetailedPost]="false" (postDeletedEvent)="handlePostDeletedEvent($event)"></app-post>
 				</div>
 
+
 				<div class="text-center mt-3">
-					<button mat-raised-button color="primary" class="mat-btn-lg rounded-pill" >Load More</button>
-					<mat-spinner style="transform: scale(0.3);" class="text-center ms-auto me-auto"></mat-spinner>
-					<span class="fw-500">No Post</span>
-					<span class="fw-500" >No More Posts</span>
+					<button mat-raised-button color="primary" class="mat-btn-lg rounded-pill" *ngIf="hasMoreResult && !fetchingResult" (click)="loadProfilePosts(resultPage)">Load More</button>
+					<mat-spinner style="transform: scale(0.3);" class="text-center ms-auto me-auto" *ngIf="fetchingResult"></mat-spinner>
+					<span class="fw-500" *ngIf="hasNoPost">No Post</span>
+					<span class="fw-500" *ngIf="!hasMoreResult && !hasNoPost">No More Posts</span>
 				</div>
 			</div>
 		</div>

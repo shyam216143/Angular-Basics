@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from '@angula
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { PostResponse } from '../model/post-response';
 import { ResetPassword } from '../model/reset-password';
 import { UpdateUserEmail } from '../model/update-user-email';
 import { UpdateUserInfo } from '../model/update-user-info';
@@ -15,6 +16,10 @@ import { UserResponse } from '../model/user-response';
 export class UserService {
 	private host = environment.apiUrl;
 	// private jwtService = new JwtHelperService();
+	getUserById(userId: number): Observable<UserResponse|any | HttpErrorResponse> {
+		return this.httpClient.get<UserResponse | HttpErrorResponse>(`${this.host}/users/${userId}`);
+	}
+
 	constructor(private httpClient: HttpClient) { }
 	forgotPassword(email: string): Observable<any | HttpErrorResponse> {
 
@@ -24,7 +29,10 @@ export class UserService {
 		return this.httpClient.post<HttpResponse<any> | HttpErrorResponse>(`${this.host}/verify-email/${token}`, null);
 	}
 
-
+	getUserPosts(userId: number, page: number, size: number): Observable<PostResponse[]|any | HttpErrorResponse> {
+		const reqParams = new HttpParams().set('page', page).set('size', size);
+		return this.httpClient.get<PostResponse[] | HttpErrorResponse>(`${this.host}/users/${userId}/posts`, { params: reqParams });
+	}
 
 	updateUserInfo(updateUserInfo: any): any {
 		return this.httpClient.post<any>(`${this.host}/update/`, updateUserInfo);

@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../model/user';
@@ -14,9 +15,10 @@ export class AuthService {
   logoutSubject = new Subject<boolean>();
 	loginSubject = new Subject<any>();
   private host = environment.apiUrl;
-  private authToken!: string;
-  private authUser!: User;
-  private principal!: string;
+  private authToken!: string|null;
+  private authUser!: any;
+  private principal!: string|null;
+  private jwtService = new JwtHelperService();
 
   constructor(private http:HttpClient, private route:Router) { }
   login(data:UserLogin): Observable<HttpResponse<User>|any | HttpErrorResponse>{
@@ -27,9 +29,9 @@ export class AuthService {
 	}
   
 	logout(): void {
-		// this.authToken = null;
-		// this.authUser = null;
-		// this.principal = 0;
+		this.authToken = null;
+		this.authUser = null;
+		this.principal = null;
 		localStorage.removeItem('authUser');
 		localStorage.removeItem('authToken');
 		this.logoutSubject.next(true);
@@ -55,13 +57,36 @@ export class AuthService {
 		}
 		this.loginSubject.next(authUser);
 	}
+	
 
 	getAuthTokenFromCache(): any {
 		return localStorage.getItem('authToken');
 	}
-	// getAuthUserFromCache(): any {
-	// 	return localStorage.getItem('authUser');
-	// }
+	getAuthUserFromCache(): any {
+		return localStorage.getItem('authUser');
+	}
+	loadAuthTokenFromCache(): void {
+		this.authToken = localStorage.getItem('authToken');
+	}
+	getAuthUserId(): number {
+		return this.getAuthUserFromCache().id;
+	}
 
+	isUserLoggedIn(): boolean {
+		this.loadAuthTokenFromCache();
+
+		if (this.authToken != null && this.authToken != '') {
+		console.log(this.jwtService.decodeToken(this.authToken))
+			if (this.jwtService.decodeToken(this.authToken).user_email != null || '') {
+				if (!this.jwtService.isTokenExpired(this.authToken)) {
+					this.principal = this.jwtService.decodeToken(this.authToken).sub;
+					return true;
+				}
+			}
+		}
+
+		this.logout();
+		return true;
+	}
 
 }

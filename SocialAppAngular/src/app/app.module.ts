@@ -59,6 +59,7 @@ import { PostDetailComponent } from './component/post-detail/post-detail.compone
 import { PhotoUploadDialogComponent } from './component/photo-upload-dialog/photo-upload-dialog.component';
 import { FollowingFollowerListDialogComponent } from './component/following-follower-list-dialog/following-follower-list-dialog.component';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { ViewPhotoDialogComponent } from './component/view-photo-dialog/view-photo-dialog.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
     PostDetailComponent,
     PhotoUploadDialogComponent,
     FollowingFollowerListDialogComponent,
+    ViewPhotoDialogComponent,
  
   ],
   imports: [

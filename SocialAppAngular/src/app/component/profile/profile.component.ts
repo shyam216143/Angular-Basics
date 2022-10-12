@@ -56,45 +56,48 @@ export class ProfileComponent implements OnInit {
 			if (this.activatedRoute.snapshot.paramMap.get('userId') === null) {
 				this.isProfileViewerOwner = true;
 				this.profileUserId = this.authService.getAuthUserId();
+				
 			} else {
+				
 				this.profileUserId = Number(this.activatedRoute.snapshot.paramMap.get('userId'));
 			}
 
-			// this.subscriptions.push(
-			// 	this.userService.getUserById(this.profileUserId).subscribe({
-			// 		next: (foundUserResponse: UserResponse) => {
-			// 			const foundUser: any = foundUserResponse.user;
+			this.subscriptions.push(
+				this.userService.getUserById(this.profileUserId).subscribe({
+					next: (foundUserResponse: any) => {
+						console.log(foundUserResponse);
+						const foundUser: any = foundUserResponse.user;
 
-			// 			if (foundUser.id === this.authUser.id) {
-			// 				this.router.navigateByUrl('/profile');
-			// 			}
+						if (foundUser.id === this.authUser.id) {
+							this.router.navigateByUrl('/profile');
+						}
 
-			// 			this.viewerFollowsProfileUser = foundUserResponse.followedByAuthUser;
+						this.viewerFollowsProfileUser = foundUserResponse.followedByAuthUser;
 
-			// 			if (!foundUser.profilePhoto) {
-			// 				foundUser.profilePhoto = environment.defaultProfilePhotoUrl
-			// 			}
+						if (!foundUser.profilePhoto) {
+							foundUser.profilePhoto = environment.defaultProfilePhotoUrl
+						}
 
-			// 			if (!foundUser.coverPhoto) {
-			// 				foundUser.coverPhoto = environment.defaultCoverPhotoUrl
-			// 			}
+						if (!foundUser.coverPhoto) {
+							foundUser.coverPhoto = environment.defaultCoverPhotoUrl
+						}
 
-			// 			this.profileUser = foundUser;
+						this.profileUser = foundUser;
 
-			// 			this.loadProfilePosts(1);
+						this.loadProfilePosts(1);
 
-			// 			this.loadingProfile = false;
-			// 		},
-			// 		error: (errorResponse: HttpErrorResponse) => {
-			// 			localStorage.setItem(AppConstants.messageTypeLabel, AppConstants.errorLabel);
-			// 			localStorage.setItem(AppConstants.messageHeaderLabel, AppConstants.notFoundErrorHeader);
-			// 			localStorage.setItem(AppConstants.messageDetailLabel, AppConstants.notFoundErrorDetail);
-			// 			localStorage.setItem(AppConstants.toLoginLabel, AppConstants.falseLabel);
-			// 			this.loadingProfile = false;
-			// 			this.router.navigateByUrl('/message');
-			// 		}
-			// 	})
-			// );
+						this.loadingProfile = false;
+					},
+					error: (errorResponse: HttpErrorResponse) => {
+						localStorage.setItem(AppConstants.messageTypeLabel, AppConstants.errorLabel);
+						localStorage.setItem(AppConstants.messageHeaderLabel, AppConstants.notFoundErrorHeader);
+						localStorage.setItem(AppConstants.messageDetailLabel, AppConstants.notFoundErrorDetail);
+						localStorage.setItem(AppConstants.toLoginLabel, AppConstants.falseLabel);
+						this.loadingProfile = false;
+						this.router.navigateByUrl('/message');
+					}
+				})
+			);
 		}
 
 

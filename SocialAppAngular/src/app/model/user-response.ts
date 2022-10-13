@@ -1,6 +1,6 @@
 import { User } from "./user";
 
 export class UserResponse {
-    user!: User;
+    user!: any;
     followedByAuthUser!: boolean;
 }

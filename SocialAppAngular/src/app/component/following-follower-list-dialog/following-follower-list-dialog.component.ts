@@ -38,7 +38,7 @@ export class FollowingFollowerListDialogComponent implements OnInit {
   loadUsers(currentPage: number): void {
 	if (!this.fetchingResult) {
 		if (this.data.type === 'following') {
-			if (this.data.user.followingCount > 0) {
+			if (this.data.user.following_count > 0) {
 				this.fetchingResult = true;
 
 				this.subscriptions.push(

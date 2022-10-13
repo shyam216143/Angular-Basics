@@ -69,15 +69,17 @@ export class ProfileComponent implements OnInit {
 			} else {
 				
 				this.profileUserId = Number(this.activatedRoute.snapshot.paramMap.get('userId'));
+				const currentUserId = localStorage.getItem('id')
+
 			}
 
 			this.subscriptions.push(
 				this.userService.getUserById(this.profileUserId).subscribe({
 					next: (foundUserResponse: any) => {
 						console.log(foundUserResponse);
-						console.log(foundUserResponse.id);
-						const foundUser: any = foundUserResponse;
+						const foundUser: any = foundUserResponse.data;
 						console.log(foundUser.id)
+						this.viewerFollowsProfileUser=foundUserResponse.follower_exists
 
 						if(!this.authUser){   //null verification
 							this.authService.getuserdata().subscribe(data => {
@@ -86,7 +88,7 @@ export class ProfileComponent implements OnInit {
 									this.router.navigateByUrl('/profile');
 								}
 		
-								this.viewerFollowsProfileUser = false;
+								// this.viewerFollowsProfileUser = false;
 		
 								if (!foundUser.profile_photo) {
 									foundUser.profile_photo = environment.defaultProfilePhotoUrl
@@ -109,7 +111,7 @@ export class ProfileComponent implements OnInit {
 								this.router.navigateByUrl('/profile');
 							}
 	
-							this.viewerFollowsProfileUser = false;
+							// this.viewerFollowsProfileUser = false;
 	
 							if (!foundUser.profile_photo) {
 								foundUser.profile_photo = environment.defaultProfilePhotoUrl
@@ -216,7 +218,7 @@ export class ProfileComponent implements OnInit {
 							next: (response: any) => {
 								this.viewerFollowsProfileUser = true;
 								this.matSnackbar.openFromComponent(SnakebarComponent, {
-									data: `You are following ${this.profileUser.firstName + ' ' + this.profileUser.lastName}.`,
+									data: `You are following ${this.profileUser.first_name + ' ' + this.profileUser.last_name}.`,
 									panelClass: ['bg-success'],
 									duration: 5000
 								});
@@ -237,7 +239,7 @@ export class ProfileComponent implements OnInit {
 
 	openUnfollowConfirmDialog(userId: number): void {
 		const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
-			data: `Do you want to stop following ${this.profileUser.firstName + ' ' + this.profileUser.lastName}?`,
+			data: `Do you want to stop following ${this.profileUser.first_name + ' ' + this.profileUser.last_name}?`,
 			autoFocus: false,
 			maxWidth: '500px'
 		});
@@ -250,7 +252,8 @@ export class ProfileComponent implements OnInit {
 							next: (response: any) => {
 								this.viewerFollowsProfileUser = false;
 								this.matSnackbar.openFromComponent(SnakebarComponent, {
-									data: `You no longer follow ${this.profileUser.firstName + ' ' + this.profileUser.lastName}.`,
+									data: `You no longer follow ${this.profileUser.first_name + ' ' + this.profileUser.last_name}.`,
+									panelClass: ['bg-success'],
 									duration: 5000
 								});
 							},

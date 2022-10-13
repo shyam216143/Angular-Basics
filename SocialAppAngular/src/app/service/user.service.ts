@@ -63,7 +63,12 @@ export class UserService {
 		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/follow-user/`, body);
 	}
 	unfollowUser(userId: number): Observable<any | HttpErrorResponse> {
-		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/account/unfollow/${userId}`, null);
+		const body={
+			"follower":localStorage.getItem('id'),
+			"followed": userId
+		}
+		console.log(JSON.stringify(body));
+		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/unfollow-user/`, body);
 	}
 
 

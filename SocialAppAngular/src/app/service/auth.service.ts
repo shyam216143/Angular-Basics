@@ -34,6 +34,7 @@ export class AuthService {
 		this.principal = null;
 		localStorage.removeItem('authUser');
 		localStorage.removeItem('authToken');
+		localStorage.clear();
 		this.logoutSubject.next(true);
     this.route.navigate(['/login'])
 	}
@@ -69,7 +70,7 @@ export class AuthService {
 		this.authToken = localStorage.getItem('authToken');
 	}
 	getAuthUserId(): number {
-		return this.getAuthUserFromCache().id;
+		return parseInt(localStorage.getItem('id')||'');
 	}
 
 	isUserLoggedIn(): boolean {

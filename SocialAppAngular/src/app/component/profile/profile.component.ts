@@ -51,7 +51,16 @@ export class ProfileComponent implements OnInit {
 			this.router.navigateByUrl('/login');
 		} else {
 			this.loadingProfile = true;
-			this.authUser = this.authService.getAuthUserFromCache();
+			// this.authUser = localStorage.getItem('authUser');
+			this.authService.getuserdata().subscribe(data => {
+			console.log(data.email)
+			console.log(data)
+
+			this.authUser=data
+			console.log(this.authUser)
+
+				this.authService.storeAuthUserInCache(data);
+			});
 
 			if (this.activatedRoute.snapshot.paramMap.get('userId') === null) {
 				this.isProfileViewerOwner = true;
@@ -66,27 +75,59 @@ export class ProfileComponent implements OnInit {
 				this.userService.getUserById(this.profileUserId).subscribe({
 					next: (foundUserResponse: any) => {
 						console.log(foundUserResponse);
-						const foundUser: any = foundUserResponse.user;
+						console.log(foundUserResponse.id);
+						const foundUser: any = foundUserResponse;
+						console.log(foundUser.id)
 
-						if (foundUser.id === this.authUser.id) {
-							this.router.navigateByUrl('/profile');
+						if(!this.authUser){   //null verification
+							this.authService.getuserdata().subscribe(data => {
+								this.authUser=data
+								if (foundUser.id === this.authUser.id) {
+									this.router.navigateByUrl('/profile');
+								}
+		
+								this.viewerFollowsProfileUser = false;
+		
+								if (!foundUser.profile_photo) {
+									foundUser.profile_photo = environment.defaultProfilePhotoUrl
+								}
+		
+								if (!foundUser.cover_photo) {
+									foundUser.cover_photo = environment.defaultCoverPhotoUrl
+								}
+		
+								this.profileUser = foundUser;
+								console.log(this.profileUser);
+		
+								// this.loadProfilePosts(1);
+		
+								this.loadingProfile = false;
+							})
+						}
+						else{
+							if (foundUser.id === this.authUser.id) {
+								this.router.navigateByUrl('/profile');
+							}
+	
+							this.viewerFollowsProfileUser = false;
+	
+							if (!foundUser.profile_photo) {
+								foundUser.profile_photo = environment.defaultProfilePhotoUrl
+							}
+	
+							if (!foundUser.cover_photo) {
+								foundUser.cover_photo = environment.defaultCoverPhotoUrl
+							}
+	
+							this.profileUser = foundUser;
+							console.log(this.profileUser);
+	
+							// this.loadProfilePosts(1);
+	
+							this.loadingProfile = false;
 						}
 
-						this.viewerFollowsProfileUser = foundUserResponse.followedByAuthUser;
-
-						if (!foundUser.profilePhoto) {
-							foundUser.profilePhoto = environment.defaultProfilePhotoUrl
-						}
-
-						if (!foundUser.coverPhoto) {
-							foundUser.coverPhoto = environment.defaultCoverPhotoUrl
-						}
-
-						this.profileUser = foundUser;
-
-						this.loadProfilePosts(1);
-
-						this.loadingProfile = false;
+					
 					},
 					error: (errorResponse: HttpErrorResponse) => {
 						localStorage.setItem(AppConstants.messageTypeLabel, AppConstants.errorLabel);
@@ -162,7 +203,7 @@ export class ProfileComponent implements OnInit {
 	}
 	openFollowConfirmDialog(userId: number): void {
 		const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
-			data: `Do you want to follow ${this.profileUser.firstName + ' ' + this.profileUser.lastName}?`,
+			data: `Do you want to follow ${this.profileUser.first_name + ' ' + this.profileUser.last_name}?`,
 			autoFocus: false,
 			maxWidth: '500px'
 		});
@@ -176,6 +217,7 @@ export class ProfileComponent implements OnInit {
 								this.viewerFollowsProfileUser = true;
 								this.matSnackbar.openFromComponent(SnakebarComponent, {
 									data: `You are following ${this.profileUser.firstName + ' ' + this.profileUser.lastName}.`,
+									panelClass: ['bg-success'],
 									duration: 5000
 								});
 							},
@@ -230,9 +272,9 @@ export class ProfileComponent implements OnInit {
 		e.stopPropagation();
 
 		let header: string | any;
-		if (uploadType === 'profilePhoto') {
+		if (uploadType === 'profile_photo') {
 			header = 'Upload Profile Photo';
-		} else if (uploadType === 'coverPhoto') {
+		} else if (uploadType === 'cover_photo') {
 			header = 'Upload Cover Photo';
 		}
 
@@ -246,10 +288,10 @@ export class ProfileComponent implements OnInit {
 
 		dialogRef.afterClosed().subscribe(result => {
 			if (result) {
-				if (uploadType === 'profilePhoto') {
-					this.profileUser.profilePhoto = result.updatedUser.profilePhoto;
-				} else if (uploadType === 'coverPhoto') {
-					this.profileUser.coverPhoto = result.updatedUser.coverPhoto;
+				if (uploadType === 'profile_photo') {
+					this.profileUser.profile_photo = result.updatedUser.profile_photo;
+				} else if (uploadType === 'cover_photo') {
+					this.profileUser.cover_photo = result.updatedUser.cover_photo;
 				}
 			}
 		});

@@ -1,14 +1,13 @@
 <mat-dialog-content>
 	<h2 class="mat-h2 m-0">
-		<!-- {{ data.header }} -->
-        hello photo details
+		{{ data.header }}
 	</h2>
 
 	<hr class="divider">
 
 	<div>
-		<div>
-			<img src="{{'../../../../../assets/images/OIP (2).jpg" alt="" style="max-width: 100%; max-height: 300px;">
+		<div  *ngIf="photoPreviewUrl" >
+			<img [src]="photoPreviewUrl" alt="" style="max-width: 100%; max-height: 300px;">
 		</div>
 		<div class="mt-3">
 			<input type="file" class="d-none visually-hidden" id="photoFile" (change)="previewPhoto($event)">

@@ -28,6 +28,7 @@ const routes: Routes = [
   { path: '', component: TimelineComponent },
   { path: 'posts/tags/:tagName', component: TimelineComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'user/:userId', component: ProfileComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'settings', component: SettingsComponent },

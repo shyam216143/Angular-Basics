@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 import { AppConstants } from 'src/app/common/app-constants';
 import { PostResponse } from 'src/app/model/post-response';
 import { AuthService } from 'src/app/service/auth.service';
@@ -17,33 +18,33 @@ import { SnakebarComponent } from '../snakebar/snakebar.component';
 import { WaitingDialogComponent } from '../waiting-dialog/waiting-dialog.component';
 
 @Component({
-  selector: 'app-post',
-  templateUrl: './post.component.html',
-  styleUrls: ['./post.component.css']
+	selector: 'app-post',
+	templateUrl: './post.component.html',
+	styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
-  @Input() postResponse!: PostResponse;
+	@Input() postResponse!: PostResponse;
 	@Input() isDetailedPost!: boolean;
-	@Output() postDeletedEvent = new EventEmitter<PostResponse|any>();
-  authUserId!: number;
+	@Output() postDeletedEvent = new EventEmitter<PostResponse | any>();
+	authUserId!: number;
 	defaultProfilePhotoUrl = environment.defaultProfilePhotoUrl;
-
-  constructor(private matDialog: MatDialog,
+	private subscriptions: Subscription[] = [];
+	constructor(private matDialog: MatDialog,
 		private matSnackbar: MatSnackBar,
 		private authService: AuthService,
 		private postService: PostService) { }
 
-  ngOnInit(): void {
-    // this.authUserId = this.authService.getAuthUserId();
-  }
-  openLikeDialog(): void {
+	ngOnInit(): void {
+		this.authUserId = this.authService.getAuthUserId();
+	}
+	openLikeDialog(): void {
 		this.matDialog.open(PostLikeDialogComponent, {
 			data: this.postResponse.post,
 			minWidth: '400px',
 			maxWidth: '700px'
 		});
 	}
-  openCommentDialog(): void {
+	openCommentDialog(): void {
 		const dialogRef = this.matDialog.open(PostCommentDialogComponent, {
 			data: this.postResponse.post,
 			autoFocus: false,
@@ -52,10 +53,10 @@ export class PostComponent implements OnInit {
 		});
 
 		dialogRef.componentInstance.updatedCommentCountEvent.subscribe(
-			(data:any) => this.postResponse.post.commentCount = data
+			(data) => this.postResponse.post.commentCount = data
 		);
 	}
-  openShareDialog(): void {
+	openShareDialog(): void {
 		const dialogRef = this.matDialog.open(PostShareDialogComponent, {
 			data: this.postResponse.post,
 			autoFocus: false,
@@ -63,7 +64,7 @@ export class PostComponent implements OnInit {
 			maxWidth: '700px'
 		});
 	}
-  openShareConfirmDialog(): void {
+	openShareConfirmDialog(): void {
 		this.matDialog.open(ShareConfirmDialogComponent, {
 			data: this.postResponse.post,
 			autoFocus: false,
@@ -71,7 +72,7 @@ export class PostComponent implements OnInit {
 			maxWidth: '700px'
 		});
 	}
-  openPostEditDialog(): void {
+	openPostEditDialog(): void {
 		const dialogRef = this.matDialog.open(PostDialogComponent, {
 			data: this.postResponse.post,
 			autoFocus: false,
@@ -79,27 +80,27 @@ export class PostComponent implements OnInit {
 			maxWidth: '900px'
 		});
 	}
-  openPostDeleteConfirmDialog(): void {
+	openPostDeleteConfirmDialog(): void {
 		const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
 			data: 'Do you want to delete this post permanently?',
 			autoFocus: false,
 			width: '500px'
 		});
-    dialogRef.afterClosed().subscribe(
+		dialogRef.afterClosed().subscribe(
 			result => {
 				if (result) this.deletePost(this.postResponse.post.id, this.postResponse.post.isTypeShare);
 			}
 		);
 	}
 
-  deletePost(postId: number, isTypeShare: boolean): void {
+	deletePost(postId: number, isTypeShare: boolean): void {
 		const dialogRef = this.matDialog.open(WaitingDialogComponent, {
 			data: 'Please, wait while we are deleting the post.',
 			width: '500px',
 			disableClose: true
 		});
 
-		// this.subscriptions.push(
+		this.subscriptions.push(
 			this.postService.deletePost(postId, isTypeShare).subscribe({
 				next: (response: any) => {
 					this.postDeletedEvent.emit(this.postResponse);
@@ -119,11 +120,11 @@ export class PostComponent implements OnInit {
 					dialogRef.close();
 				}
 			})
-		// );
+		);
 	}
-  likeOrUnlikePost(likedByAuthUser: boolean) {
+	likeOrUnlikePost(likedByAuthUser: boolean) {
 		if (likedByAuthUser) {
-			// this.subscriptions.push(
+			this.subscriptions.push(
 				this.postService.unlikePost(this.postResponse.post.id).subscribe({
 					next: (response: any) => {
 						this.postResponse.likedByAuthUser = false;
@@ -137,9 +138,9 @@ export class PostComponent implements OnInit {
 						});
 					}
 				})
-			// );
+			);
 		} else {
-			// this.subscriptions.push(
+			this.subscriptions.push(
 				this.postService.likePost(this.postResponse.post.id).subscribe({
 					next: (response: any) => {
 						this.postResponse.likedByAuthUser = true;
@@ -153,7 +154,7 @@ export class PostComponent implements OnInit {
 						});
 					}
 				})
-			// );
+			);
 		}
 	}
 }

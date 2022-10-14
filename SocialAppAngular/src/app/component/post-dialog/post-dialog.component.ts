@@ -149,6 +149,7 @@ export class PostDialogComponent implements OnInit {
 				next: (createdPost: Post) => {
 					this.matDialogRef.close();
 					this.matSnackbar.openFromComponent(SnakebarComponent, {
+						panelClass: ['bg-success'],
 						data: 'Post created successfully.',
 						duration: 5000
 					});
@@ -171,10 +172,10 @@ export class PostDialogComponent implements OnInit {
 	}
 
 	private updatePost(): void {
-		// this.subscriptions.push(
+		this.subscriptions.push(
 		this.postService.updatePost(this.dataPost.id, this.content?.value, this.postPhoto, this.postTags).subscribe({
 			next: (createdPost: Post) => {
-				// this.matDialogRef.close();
+				this.matDialogRef.close();
 				this.matSnackbar.openFromComponent(SnakebarComponent, {
 					data: 'Post updated successfully.',
 					duration: 5000
@@ -189,11 +190,11 @@ export class PostDialogComponent implements OnInit {
 				});
 			}
 		})
-		// );
+		);
 	}
 
 	private deletePostPhoto(): void {
-		// this.subscriptions.push(
+		this.subscriptions.push(
 		this.postService.deletePostPhoto(this.dataPost.id).subscribe({
 			next: (createdPost: Post) => {
 				this.postPhotoPreviewUrl = null;
@@ -210,7 +211,7 @@ export class PostDialogComponent implements OnInit {
 				});
 			}
 		})
-		// );
+		);
 	}
 
 

@@ -1,29 +1,25 @@
-<mat-card class="position-relative mat-elevation-z3 mb-4" style=" margin-left: 32%; top: 12%;" >
+<mat-card class="position-relative mat-elevation-z3 mb-4" *ngIf="postResponse">
 	<mat-card-header>
 		<div mat-card-avatar class="centered-bg-image"
-			style="background-image: url('../../../assets/images/images.jpg'); width: 20%; height: 20%;">
+			style="background-image: url('http://127.0.0.1:8000{{ postResponse.post.author.profilePhoto ? postResponse.post.author.profilePhoto : defaultProfilePhotoUrl }}');">
 		</div>
 		<mat-card-title>
-			<a href="/users/1" class="text-decoration-none text-dark">
-				<!-- {{ postResponse.post.author.firstName + ' ' + postResponse.post.author.lastName }} -->
-                Shyam Kumar
+			<a href="/users/{{ postResponse.post.author.id }}" class="text-decoration-none text-dark">
+				{{ postResponse.post.author.firstName + ' ' + postResponse.post.author.last_name }}
 			</a>
 		</mat-card-title>
 		<mat-card-subtitle>
 			<mat-icon class="align-middle w-auto h-auto" style="font-size: 16px;">watch_later</mat-icon>
-			<span class="align-middle ps-1 small fw-500">
-                <!-- {{ postResponse.post.dateCreated | date:'medium' }} -->
-                12/jun/1999
-            </span>
+			<span class="align-middle ps-1 small fw-500">{{ postResponse.post.dateCreated | date:'medium' }}</span>
 		</mat-card-subtitle>
 	</mat-card-header>
 
 	<div align="end" style="position: absolute; top: 10px; right: 10px"
-		>
-		<button mat-icon-button >
+		*ngIf="postResponse.post.author.id === authUserId">
+		<button mat-icon-button [matMenuTriggerFor]="coverPhotoMenu">
 			<mat-icon>more_vert</mat-icon>
 		</button>
-		<mat-menu>
+		<mat-menu #coverPhotoMenu="matMenu">
 			<button mat-menu-item (click)="openPostEditDialog()">
 				<mat-icon>edit</mat-icon>
 				Edit Post
@@ -35,12 +31,11 @@
 		</mat-menu>
 	</div>
 
-	<img  mat-card-image src="../../../assets/images/images girls.jpg" style=" width: 100%; height: 70%;margin-left:1% " alt="">
+	<img *ngIf="postResponse.post.postPhoto" mat-card-image src="http://127.0.0.1:8000{{ postResponse.post.postPhoto }}" alt="">
 
 	<mat-card-content class="mb-4">
-		<p class="p-2" *ngIf="isDetailedPost && postResponse.post.content.length >= 0">
-			<!-- {{ postResponse.post.content }} -->
-            hello guys ela gunaru
+		<p class="p-2" *ngIf="isDetailedPost && postResponse.post.content.length > 0">
+			{{ postResponse.post.content }}
 		</p>
 
 		<p class="p-2" *ngIf="!isDetailedPost && postResponse.post.content.length > 0">
@@ -48,33 +43,30 @@
 			postResponse.post.content }}
 		</p>
 
-		<a class="text-decoration-none fw-500" href="/posts/1"
-			>
+		<a class="text-decoration-none fw-500" href="/posts/{{postResponse.post.id}}"
+			*ngIf="!isDetailedPost && postResponse.post.content.length > 128">
 			View Full Post
 		</a>
 
 		<div *ngIf="postResponse.post.postTags.length > 0">
-			<a *ngFor="let tag of postResponse.post.postTags" href="/posts/tags/Raju"
-			 class="text-decoration-none d-inline-block ms-0 mt-2 me-2 mb-0">
-             <!-- #{{ tag.name }} -->
-             #Raju
-            </a>
+			<a *ngFor="let tag of postResponse.post.postTags" href="/posts/tags/{{ tag.name }}"
+			 class="text-decoration-none d-inline-block ms-0 mt-2 me-2 mb-0">#{{ tag.name }}</a>
 		</div>	
 
-		<div  class="mt-3 p-3 border border-1 rounded">
-			<div >
+		<div *ngIf="postResponse.post.isTypeShare" class="mt-3 p-3 border border-1 rounded">
+			<div *ngIf="!postResponse.post.sharedPost">
 				<span class="badge rounded-pill bg-secondary">Shared post has been deleted</span>
 			</div>
 
-			<div>
+			<div *ngIf="postResponse.post.sharedPost">
 				<div class="rounded-circle d-inline-block align-middle centered-bg-image"
-					style="width: 35px; height: 35px; background-image: url('../../../assets/images/nice-photography-3_15_266629-157353112543653.jpeg');">
+					style="width: 35px; height: 35px; background-image: url('http://127.0.0.1:8000{{postResponse.post.sharedPost.author.profilePhoto ? postResponse.post.sharedPost.author.profilePhoto : defaultProfilePhotoUrl}}');">
 				</div>
 
 				<div class="ps-5" style="margin-top: -38px;">
 					<a class="d-inline-block text-decoration-none text-dark align-middle fw-500 cursor-pointer"
 						href="/users/{{ postResponse.post.sharedPost.author.id }}">
-						Greeshma
+						{{ postResponse.post.sharedPost.author.first_name + ' ' + postResponse.post.sharedPost.author.last_name }}
 					</a>
 
 					<br>
@@ -82,17 +74,16 @@
 					<span class="text-secondary d-inline-block">
 						<mat-icon class="align-middle w-auto h-auto" style="font-size: 16px;">watch_later</mat-icon>
 						<span class="align-middle ps-1 small fw-500">
-							<!-- {{ postResponse.post.sharedPost.dateCreated | date:'medium' }} -->
-                             14-06-2022
+							{{ postResponse.post.sharedPost.dateCreated | date:'medium' }}
 						</span>
 					</span>
 
 					<div>
-						<img class="mt-3" style="max-width: 100%;" 
-							mat-card-image src="../../../assets/images/images (1).jpg" alt="">
+						<img class="mt-3" style="max-width: 100%;" *ngIf="postResponse.post.sharedPost.postPhoto"
+							mat-card-image src="http://127.0.0.1:8000{{ postResponse.post.sharedPost.postPhoto }}" alt="">
 					</div>
 
-					<p class="pt-2" *ngIf="postResponse.post.sharedPost.content.length >= 0">{{
+					<p class="pt-2" *ngIf="postResponse.post.sharedPost.content.length > 0">{{
 						postResponse.post.sharedPost.content.length > 128 ? (postResponse.post.sharedPost.content |
 						slice:0:128) + '...' : postResponse.post.sharedPost.content }}</p>
 
@@ -112,8 +103,7 @@
 			style="padding: 4px 10px !important; min-height: 28px;" (click)="openLikeDialog()">
 			Likes
 			<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-				<!-- {{ postResponse.post.likeCount }} -->
-                9
+				{{postResponse.post.likeCount }}
 			</span>
 		</mat-chip>
 
@@ -121,8 +111,7 @@
 			style="padding: 4px 10px !important; min-height: 28px;" (click)="openCommentDialog()">
 			Comments
 			<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-				<!-- {{ postResponse.post.commentCount }} -->
-                5
+				2{{ postResponse.post.commentCount }}
 			</span>
 		</mat-chip>
 
@@ -131,8 +120,7 @@
 			(click)="openShareDialog()">
 			Shares
 			<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-				<!-- {{ postResponse.post.shareCount }} -->
-                8
+				{{ postResponse.post.shareCount }}
 			</span>
 		</mat-chip>
 	</mat-chip-list>

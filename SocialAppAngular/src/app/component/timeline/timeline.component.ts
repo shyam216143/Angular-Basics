@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AppConstants } from 'src/app/common/app-constants';
 import { PostResponse } from 'src/app/model/post-response';
 import { Tag } from 'src/app/model/tag';
@@ -24,10 +25,10 @@ export class TimelineComponent implements OnInit {
 	hasMoreResult: boolean = true;
 	fetchingResult: boolean = false;
 	isTaggedPostPage: boolean = false;
-	targetTagName!: string;
+	targetTagName!: any;
 	loadingTimelinePostsInitially: boolean = true;
 	loadingTimelineTagsInitially: boolean = true;
-  // private subscriptions: Subscription[] = [];
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private authService: AuthService,
@@ -40,26 +41,30 @@ export class TimelineComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // if (!this.authService.isUserLoggedIn()) {
-		// 	this.router.navigateByUrl('/login');
-		// } else {
-		// 	if (this.router.url !== '/') {
-		// 		this.targetTagName = this.activatedRoute.snapshot.paramMap.get('tagName');
-		// 		this.isTaggedPostPage = true;
-		// 		this.loadTaggedPosts(this.targetTagName, 1);
-		// 	} else {
-		// 		this.loadTimelinePosts(1);
-		// 	}
+    if (!this.authService.isUserLoggedIn()) {
+			this.router.navigateByUrl('/login');
+		} else {
+			if (this.router.url !== '/') {
+				this.targetTagName = this.activatedRoute.snapshot.paramMap.get('tagName');
+				this.isTaggedPostPage = true;
+				this.loadTaggedPosts(this.targetTagName, 1);
+			} else {
+				this.loadTimelinePosts(1);
+			}
 
-		// 	this.loadTimelineTags();
-		// }
+			this.loadTimelineTags();
+		}
   }
+  ngOnDestroy(): void {
+		this.subscriptions.forEach(sub => sub.unsubscribe());
+	}
   loadTimelinePosts(currentPage: number): void {
 		if (!this.fetchingResult) {
 			this.fetchingResult = true;
-			// this.subscriptions.push(
+			this.subscriptions.push(
 				this.timelineService.getTimelinePosts(currentPage, this.resultSize).subscribe({
 					next: (postResponseList: PostResponse[]) => {
+						console.log(postResponseList)
 						if (postResponseList.length === 0 && currentPage === 1) this.noPost = true;
 						
 						postResponseList.forEach(pR => this.timelinePostResponseList.push(pR));
@@ -83,16 +88,17 @@ export class TimelineComponent implements OnInit {
 						this.fetchingResult = false;
 					}
 				})
-			// );
+			);
 		}
 	}
 
 	loadTaggedPosts(tagName: string, currentPage: number): void {
 		if (!this.fetchingResult) {
 			this.fetchingResult = true;
-			// this.subscriptions.push(
+			this.subscriptions.push(
 				this.postService.getPostsByTag(tagName, currentPage, this.resultSize).subscribe({
 					next: (postResponseList: PostResponse[]) => {
+						console.log(postResponseList)
 						if (postResponseList.length === 0 && currentPage === 1) this.noPost = true;
 						
 						postResponseList.forEach(pR => this.timelinePostResponseList.push(pR));
@@ -113,15 +119,16 @@ export class TimelineComponent implements OnInit {
 						this.fetchingResult = false;
 					}
 				})
-			// );
+			);
 		}
 	}
 
 	loadTimelineTags(): void {
 		this.fetchingResult = true;
-		// this.subscriptions.push(
+		this.subscriptions.push(
 			this.timelineService.getTimelineTags().subscribe({
 				next: (tagList: Tag[]) => {
+					console.log(tagList)
 					tagList.forEach(t => this.timelineTagList.push(t));
 					this.loadingTimelineTagsInitially = false;
 					this.fetchingResult = false;
@@ -135,6 +142,6 @@ export class TimelineComponent implements OnInit {
 					this.fetchingResult = false;
 				}
 			})
-		// );
+		);
 	}
 }

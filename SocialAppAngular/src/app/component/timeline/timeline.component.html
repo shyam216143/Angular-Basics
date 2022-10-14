@@ -1,23 +1,18 @@
-<div class="text-center fully-centered" *ngIf="!loadingTimelinePostsInitially || loadingTimelineTagsInitially">
-	<mat-spinner style="zoom: 0.9;" class="text-center ms-auto me-auto"></mat-spinner>
+<div class="text-center fully-centered" *ngIf="loadingTimelinePostsInitially || loadingTimelineTagsInitially">
+	<mat-spinner style="zoom: 0.5;" class="text-center ms-auto me-auto"></mat-spinner>
 </div>
 
-<div style="margin-top: 100px" *ngIf="loadingTimelinePostsInitially && loadingTimelineTagsInitially">
+<div style="margin-top: 100px" *ngIf="!loadingTimelinePostsInitially && !loadingTimelineTagsInitially">
 	<div class="container">
 		<div class="row justify-content-center mt-5">
 			<div class="col-4">
 				<div class="profile-sidebar position-sticky bg-white rounded mat-elevation-z3 p-3" style="top: 64px;">
-					<div *ngIf="timelineTagList.length >= 0">
+					<div *ngIf="timelineTagList.length > 0">
 						<h2 class="mat-h2">Most Used Tags</h2>
 						<a class="d-block p-3 text-decoration-none fw-500 border border-1 border-start-0 border-end-0"
 						 style=" font-size: 14px;"
-						 *ngFor="let tag of timelineTagList; let last = last;" href="/posts/tags/goodluckshyam" [ngClass]="last ? '' : 'border-bottom-0'">
-							<!-- #{{ tag.name }} -->
-                            goodluckshyam
-                             <span class="badge rounded-pill text-dark float-end" style="background-color: rgba(0,0,0,0.15);">
-                                <!-- {{ tag.tagUseCounter }} -->
-                                2
-                            </span>
+						 *ngFor="let tag of timelineTagList; let last = last;" href="/posts/tags/{{ tag.name }}" [ngClass]="last ? '' : 'border-bottom-0'">
+							#{{ tag.name }} <span class="badge rounded-pill text-dark float-end" style="background-color: rgba(0,0,0,0.15);">{{ tag.tagUseCounter }}</span>
 						</a>
 					</div>
 					<div *ngIf="timelineTagList.length === 0">
@@ -27,10 +22,7 @@
 			</div>
 
 			<div class="col-6">
-				<h3 class="mat-h3 fw-500" *ngIf="!isTaggedPostPage">Posts with tag <i>
-                    <!-- #{{ targetTagName }} -->
-                    #shyam
-                </i></h3>
+				<h3 class="mat-h3 fw-500" *ngIf="isTaggedPostPage">Posts with tag <i>#{{ targetTagName }}</i></h3>
 
 				<div class="timeline-posts">
 					<p class="fw-500 text-center" *ngIf="noPost">No Post Found</p>

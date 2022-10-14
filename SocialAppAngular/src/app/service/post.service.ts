@@ -61,7 +61,7 @@ export class PostService {
 		formData.append('content', content);
 		formData.append('postPhoto', postPhoto);
 		formData.append('postTags', JSON.stringify(postTags));
-		return this.httpClient.post<Post | HttpErrorResponse>(`${this.host}/posts/create`, formData);
+		return this.httpClient.post<Post | HttpErrorResponse>(`${this.host}/user/createpost/`, formData);
 	}
 	updatePost(postId: number, content: string, postPhoto: File, postTags: any[]): Observable<Post |any | HttpErrorResponse> {
 		const formData = new FormData();

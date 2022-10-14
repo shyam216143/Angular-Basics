@@ -2,7 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 import { AppConstants } from 'src/app/common/app-constants';
+import { Notification } from 'src/app/model/notification';
 import { User } from 'src/app/model/user';
 import { AuthService } from 'src/app/service/auth.service';
 import { NotificationService } from 'src/app/service/notification.service';
@@ -17,17 +19,17 @@ import { SnakebarComponent } from '../snakebar/snakebar.component';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
-  authUser!: User;
-	isUserLoggedIn: boolean = true;
-	isProfilePage: boolean = true;
+	authUser: any;
+	isUserLoggedIn: boolean = false;
+	isProfilePage: boolean = false;
 	notifications: Notification[] = [];
-	hasUnseenNotification: boolean = true;
+	hasUnseenNotification: boolean = false;
 	resultPage: number = 1;
 	resultSize: number = 5;
-	hasMoreNotifications: boolean = true;
-	fetchingResult: boolean = true;
+	hasMoreNotifications: boolean = false;
+	fetchingResult: boolean = false;
 	defaultProfilePhotoUrl = environment.defaultProfilePhotoUrl;
+	private subscriptions: Subscription[] = [];
 
   constructor(
     private authService: AuthService,
@@ -37,30 +39,41 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // if (this.authService.isUserLoggedIn()) {
-		// 	this.isUserLoggedIn = true;
-		// 	this.authUser = this.authService.getAuthUserFromCache();
-		// } else {
-		// 	this.isUserLoggedIn = false;
-		// }
+	if (this.authService.isUserLoggedIn()) {
+		this.isUserLoggedIn = true;
+		this.authUser = JSON.parse(this.authService.getAuthUserFromCache());
+		console.log(this.authUser);
+		if (this.authUser.profile_photo) {
+			console.log('User logged in Successfully')
 
-		// if (this.isUserLoggedIn) {
-		// 	this.loadNotifications(1);
-		// }
-    this.authService.logoutSubject.subscribe(loggedOut => {
-			if (loggedOut) {
-				this.isUserLoggedIn = false;
-			}
-		});
+		}
+		console.log(this.authUser.profile_photo);
+	} else {
+		this.isUserLoggedIn = false;
+	}
 
-		this.authService.loginSubject.subscribe(loggedInUser => {
-			if (loggedInUser) {
-				this.authUser = loggedInUser;
-				this.isUserLoggedIn = true;
-			}
-		});
+	if (this.isUserLoggedIn) {
+		// this.loadNotifications(1);
+	}
+
+	this.authService.logoutSubject.subscribe(loggedOut => {
+		if (loggedOut) {
+			this.isUserLoggedIn = false;
+		}
+	});
+
+	this.authService.loginSubject.subscribe(loggedInUser => {
+		if (loggedInUser) {
+			this.authUser = loggedInUser;
+			this.isUserLoggedIn = true;
+		}
+	});
+	console.log(this.isUserLoggedIn);
 
   }
+  ngOnDestroy(): void {
+	this.subscriptions.forEach(sub => sub.unsubscribe());
+}
   openPostDialog(): void {
 		this.matDialog.open(PostDialogComponent, {
 			data: null,
@@ -79,12 +92,12 @@ export class HeaderComponent implements OnInit {
 	loadNotifications(page: number): void {
 		this.fetchingResult = true;
 
-		// this.subscriptions.push(
+		this.subscriptions.push(
 			this.notificationService.getNotifications(page,  this.resultSize).subscribe({
 				next: (notifications: Notification[]) => {
 					this.fetchingResult = false;
 
-					notifications.forEach((n:any) => {
+					notifications.forEach(n => {
 						this.notifications.push(n);
 						if (!n.isSeen) this.hasUnseenNotification = true;
 					});
@@ -106,12 +119,12 @@ export class HeaderComponent implements OnInit {
 					this.fetchingResult = false;
 				}
 			})
-		// );
+		);
 	}
 
 	handleUnseenNotifications(): void {
 		if (this.hasUnseenNotification) {
-			// this.subscriptions.push(
+			this.subscriptions.push(
 				this.notificationService.markAllSeen().subscribe({
 					next: (response: any) => {
 						this.hasUnseenNotification = false;
@@ -124,7 +137,7 @@ export class HeaderComponent implements OnInit {
 						});
 					}
 				})
-			// );
+			);
 		}
 	}
 

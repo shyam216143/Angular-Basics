@@ -1,8 +1,7 @@
 <mat-dialog-content>
 	<div class="position-relative">
 		<h2 class="mat-h2 m-0">
-			<!-- {{ dataPost ? 'Edit This Post' : 'Create New Post' }} -->
-			create new Post
+			{{ dataPost ? 'Edit This Post' : 'Create New Post' }}
 		</h2>
 	
 		<hr class="divider">
@@ -19,7 +18,7 @@
 				</mat-error>
 			</mat-form-field>
 	
-			<div class="pb-3">
+			<div *ngIf="postPhotoPreviewUrl" class="pb-3">
 				<img [src]="postPhotoPreviewUrl" alt="" style="max-width: 100%;">
 			</div>
 	
@@ -27,22 +26,19 @@
 				<div class="mb-3" *ngIf="postTags.length > 0">
 					<span class="badge rounded-pill text-dark fw-normal d-inline-block position-relative text-center m-2"
 					 style="font-size: 16px; background-color: rgba(0,0,0,0.1);" *ngFor="let tag of postTags" [ngClass]="tag.action === 'remove' ? 'd-none visually-hidden' : ''">
-						<!-- {{ tag.tagName }} -->
-
+						{{ tag.tagName }}
 						<span class="position-absolute top-0 start-100 translate-middle bg-danger fw-bold text-white rounded-circle text-center cursor-pointer"
 						 style="width: 20px; height: 20px; line-height: 20px;" matTooltip="Remove Tag" matTooltipPosition="above" (click)="removeTag(tag)">-</span>
 					</span>
 				</div>
 	
-				<input type="file" class="d-none visually-hidden" id="postPhotoFile" (change)="previewPostPhoto($event)">
+				<input type="file" class="d-none visually-hidden" id="postPhotoFile" *ngIf="!dataPost || (dataPost && !dataPost.isTypeShare)" (change)="previewPostPhoto($event)">
 				
-				<label for="postPhotoFile" >
+				<label for="postPhotoFile" *ngIf="!dataPost || (dataPost && !dataPost.isTypeShare)">
 					<div class="border border-1 rounded-pill ps-3 pt-1 pe-3 pb-1 cursor-pointer">
 						<mat-icon class="align-middle">camera_alt</mat-icon>
 						<span class="align-middle fw-500 ps-2">
-							<!-- {{ (dataPost && dataPost.postPhoto) ? 'Update Photo' : 'Add Photo' }} -->
-							Add Photo
-
+							{{ (dataPost && dataPost.postPhoto) ? 'Update Photo' : 'Add Photo' }}
 						</span>
 					</div>
 				</label>
@@ -55,12 +51,11 @@
 			</div>
 			
 			<button mat-raised-button color="primary" type="submit" class="position-absolute" style="top: 4px; right: 0;">
-				<!-- {{ dataPost ? 'Update' : 'Post' }} -->
-				Post
+				{{ dataPost ? 'Update' : 'Post' }}
 			</button>
 		</form>
 	
-		<div  class="position-absolute" style="transform: scale(0.3); top: -35px; right: -35px;">
+		<div *ngIf="creatingPost" class="position-absolute" style="transform: scale(0.3); top: -35px; right: -35px;">
 			<mat-spinner></mat-spinner>
 		</div>
 	</div>

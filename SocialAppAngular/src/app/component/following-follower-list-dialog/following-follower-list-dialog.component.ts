@@ -20,7 +20,7 @@ export class FollowingFollowerListDialogComponent implements OnInit {
 	resultSize: number = 5;
 	hasMoreResult: boolean = false;
 	fetchingResult: boolean = false;
-	defaultProfilePhotoUrl = environment.defaultProfilePhotoUrl;
+	defaultProfilePhotoUrl = environment.defaultProfilePhotoUrl1;
 	private subscriptions: Subscription[] = [];
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -43,9 +43,13 @@ export class FollowingFollowerListDialogComponent implements OnInit {
 
 				this.subscriptions.push(
 					this.userService.getUserFollowingList(this.data.user.id, currentPage, this.resultSize).subscribe({
-						next: (followingList: UserResponse[]) => {
-							followingList.forEach(uR => this.userResponseList.push(uR));
-							if (currentPage * this.resultSize < this.data.user.followingCount) {
+						next: (followingList: UserResponse[]|any) => {
+							console.log(followingList);
+							followingList.list.forEach((uR:any) =>{
+								console.log(uR);
+								this.userResponseList.push(uR)
+							});
+							if (currentPage * this.resultSize < this.data.user.following_count) {
 								this.hasMoreResult = true;
 							} else {
 								this.hasMoreResult = false;
@@ -65,14 +69,15 @@ export class FollowingFollowerListDialogComponent implements OnInit {
 				);
 			}
 		} else if (this.data.type === 'follower') {
-			if (this.data.user.followerCount > 0) {
+			if (this.data.user.follower_count > 0) {
 				this.fetchingResult = true;
 
 				this.subscriptions.push(
 					this.userService.getUserFollowerList(this.data.user.id, currentPage, this.resultSize).subscribe({
-						next: (followerList: UserResponse[]) => {
-							followerList.forEach(uR => this.userResponseList.push(uR));
-							if (currentPage * this.resultSize < this.data.user.followerCount) {
+						next: (followerList: UserResponse[]|any) => {
+							followerList.list.forEach((uR:any) => this.userResponseList.push(uR));
+							console.log(followerList.list)
+							if (currentPage * this.resultSize < this.data.user.follower_count) {
 								this.hasMoreResult = true;
 							} else {
 								this.hasMoreResult = false;

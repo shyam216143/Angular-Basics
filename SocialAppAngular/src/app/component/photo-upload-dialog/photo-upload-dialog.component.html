@@ -7,7 +7,7 @@
 
 	<div>
 		<div  *ngIf="photoPreviewUrl" >
-			<img [src]="photoPreviewUrl" alt="" style="max-width: 100%; max-height: 300px;">
+			<img src="http://127.0.0.1:8000{{photoPreviewUrl}}" alt="" style="max-width: 100%; max-height: 300px;">
 		</div>
 		<div class="mt-3">
 			<input type="file" class="d-none visually-hidden" id="photoFile" (change)="previewPhoto($event)">

@@ -36,7 +36,6 @@ export class AuthService {
 		localStorage.removeItem('authToken');
 		localStorage.clear();
 		this.logoutSubject.next(true);
-    this.route.navigate(['/login'])
 	}
 	getuserdata(): Observable<HttpResponse<User>|any> {
 	
@@ -64,7 +63,7 @@ export class AuthService {
 		return localStorage.getItem('authToken');
 	}
 	getAuthUserFromCache(): any {
-		return localStorage.getItem('authUser');
+		return (localStorage.getItem('authUser'));
 	}
 	loadAuthTokenFromCache(): void {
 		this.authToken = localStorage.getItem('authToken');
@@ -80,14 +79,14 @@ export class AuthService {
 		console.log(this.jwtService.decodeToken(this.authToken))
 			if (this.jwtService.decodeToken(this.authToken).user_email != null || '') {
 				if (!this.jwtService.isTokenExpired(this.authToken)) {
-					this.principal = this.jwtService.decodeToken(this.authToken).sub;
+					this.principal = this.jwtService.decodeToken(this.authToken).user_email;
 					return true;
 				}
 			}
 		}
 
 		this.logout();
-		return true;
+		return false;
 	}
 
 }

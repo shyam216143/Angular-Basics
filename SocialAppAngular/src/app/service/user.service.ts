@@ -84,11 +84,11 @@ export class UserService {
 	}
 	getUserFollowingList(userId: number, page: number, size: number): Observable<UserResponse[] | any | HttpErrorResponse> {
 		const reqParams = new HttpParams().set('page', page).set('size', size);
-		return this.httpClient.get<UserResponse[] | HttpErrorResponse>(`${this.host}/users/${userId}/following`, { params: reqParams });
+		return this.httpClient.get<UserResponse[] | HttpErrorResponse>(`${this.host}/user/following/`, { params: reqParams });
 	}
 
 	getUserFollowerList(userId: number, page: number, size: number): Observable<UserResponse[] | any | HttpErrorResponse> {
 		const reqParams = new HttpParams().set('page', page).set('size', size);
-		return this.httpClient.get<UserResponse[] | HttpErrorResponse>(`${this.host}/users/${userId}/follower`, { params: reqParams });
+		return this.httpClient.get<UserResponse[] | HttpErrorResponse>(`${this.host}/user/follower/`, { params: reqParams });
 	}
 }

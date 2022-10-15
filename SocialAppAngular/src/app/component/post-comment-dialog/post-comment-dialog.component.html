@@ -25,30 +25,22 @@
 		<ul class="list-group list-group-flush">
 			<li class="list-group-item ps-0 pt-3 pe-0 pb-3" *ngFor="let commentResponse of commentResponseList">
 				<div class="rounded-circle d-inline-block align-middle centered-bg-image"
-					style="width: 35px; height: 35px; background-image: url('../../../assets/images/download.jpg');">
+					style="width: 35px; height: 35px; background-image: url('{{commentResponse.comment.author.profile_photo ? commentResponse.comment.author.profile_photo : defaultProfilePhotoUrl}}');">
 				</div>
 				<div class="ps-5" style="margin-top: -38px;">
 					<a class="d-inline-block text-decoration-none text-dark align-middle fw-500 cursor-pointer"
-						 href="/users/1">
-                         <!-- {{commentResponse.comment.author.firstName + ' ' +commentResponse.comment.author.lastName}} -->
-                         vamshi
-                        </a>
+						 href="/user/{{commentResponse.comment.author.id}}">{{commentResponse.comment.author.first_name + ' ' +
+						 commentResponse.comment.author.last_name}}</a>
 					<br>
 					<span class="text-secondary d-inline-block">
 						<mat-icon class="align-middle w-auto h-auto" style="font-size: 16px;">watch_later</mat-icon>
-						<span class="align-middle ps-1 small fw-500">
-                            <!-- {{ commentResponse.comment.dateCreated | date:'medium' }} -->
-                            12-jan-2022
-                        </span>
+						<span class="align-middle ps-1 small fw-500">{{ commentResponse.comment.dateCreated | date:'medium' }}</span>
 					</span>
 	
-					<p class="pt-2 pb-3">
-                        <!-- {{ commentResponse.comment.content }} -->
-                        Hello very nice to See you this like
-                    </p>
+					<p class="pt-2 pb-3">{{ commentResponse.comment.content }}</p>
 	
 					<mat-chip-list aria-label="Fish selection">
-						<mat-chip class="me-3 cursor-pointer" style="padding: 4px 10px !important; min-height: 24px;" (click)="google()">
+						<mat-chip class="me-3 cursor-pointer" style="padding: 4px 10px !important; min-height: 24px;" (click)="openCommentLikeDialog(commentResponse.comment)">
 							Likes
 							<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
 								{{ commentResponse.comment.likeCount }}
@@ -60,7 +52,7 @@
 						<button mat-icon-button matTooltip="{{commentResponse.likedByAuthUser ? 'Unlike' : 'Like'}}" (click)="likeOrUnlikeComment(commentResponse)">
 							<mat-icon [ngClass]="commentResponse.likedByAuthUser ? 'text-danger' : 'text-secondary'">favorite</mat-icon>
 						</button>
-						<button mat-icon-button matTooltip="Delete"   (click)="openCommentDeleteConfirmDialog(commentResponse)">
+						<button mat-icon-button matTooltip="Delete" *ngIf="commentResponse.comment.author.id === authUserId"  (click)="openCommentDeleteConfirmDialog(commentResponse)">
 							<mat-icon class="text-secondary">delete_sweep</mat-icon>
 						</button>
 					</div>

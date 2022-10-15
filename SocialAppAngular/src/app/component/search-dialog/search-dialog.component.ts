@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AppConstants } from 'src/app/common/app-constants';
 import { UserResponse } from 'src/app/model/user-response';
 import { UserService } from 'src/app/service/user.service';
@@ -17,7 +18,7 @@ import { SnakebarComponent } from '../snakebar/snakebar.component';
   styleUrls: ['./search-dialog.component.css']
 })
 export class SearchDialogComponent implements OnInit {
-  searchResult: Response[] = [];
+  searchResult: UserResponse[] = [];
 	searchUserFormGroup!: FormGroup;
 	resultPage: number = 1;
 	resultSize: number = 5;
@@ -25,7 +26,8 @@ export class SearchDialogComponent implements OnInit {
 	noResult: boolean = false;
 	fetchingResult: boolean = false;
 	defaultProfilePhotoUrl: string = environment.defaultProfilePhotoUrl;
-  constructor(
+	private subscriptions: Subscription[] = [];
+	constructor(
     private userService: UserService,
 		private formBuilder: FormBuilder,
 		private matSnackbar: MatSnackBar,
@@ -38,6 +40,9 @@ export class SearchDialogComponent implements OnInit {
 			key: new FormControl('', [Validators.minLength(3), Validators.maxLength(64)])
 		});
   }
+  ngOnDestroy(): void {
+	this.subscriptions.forEach(sub => sub.unsubscribe());
+}
   searchUser(currentPage: number): void {
 		if (!this.fetchingResult) {
 			if (this.key?.value.length >= 3) {
@@ -45,7 +50,7 @@ export class SearchDialogComponent implements OnInit {
 	
 				if (currentPage === 1) this.searchResult = [];
 	
-				// this.subscriptions.push(
+				this.subscriptions.push(
 					this.userService.getUserSearchResult(this.key?.value, currentPage, this.resultSize).subscribe({
 						next: (resultList: UserResponse[]) => {
 							if (resultList.length <= 0 && currentPage === 1) {
@@ -74,7 +79,7 @@ export class SearchDialogComponent implements OnInit {
 							});
 						}
 					})
-				// );
+				);
 			} else {
 				this.matSnackbar.openFromComponent(SnakebarComponent, {
 					data: 'Search key must be between 3 to 64 characters long.',
@@ -95,11 +100,11 @@ export class SearchDialogComponent implements OnInit {
 		dialogRef.afterClosed().subscribe(
 			(result) => {
 				if (result) {
-					// this.subscriptions.push(
+					this.subscriptions.push(
 						this.userService.followUser(userResponse.user.id).subscribe({
 							next: (response: any) => {
-								const targetResult = this.searchResult.find((uR:any) => uR === userResponse);
-								// targetResult.followedByAuthUser = true;
+								const targetResult:any = this.searchResult.find((uR:any) => uR === userResponse);
+								targetResult.followedByAuthUser = true;
 
 								this.matSnackbar.openFromComponent(SnakebarComponent, {
 									data: `You are now following 
@@ -115,7 +120,7 @@ export class SearchDialogComponent implements OnInit {
 								});
 							}
 						})
-					// );
+					);
 				}
 			}
 		);
@@ -131,11 +136,11 @@ export class SearchDialogComponent implements OnInit {
 		dialogRef.afterClosed().subscribe(
 			(result) => {
 				if (result) {
-					// this.subscriptions.push(
+					this.subscriptions.push(
 						this.userService.unfollowUser(userResponse.user.id).subscribe({
 							next: (response: any) => {
-								const targetResult = this.searchResult.find(uR => uR === userResponse);
-								// targetResult.followedByAuthUser = false;
+								const targetResult:any = this.searchResult.find(uR => uR === userResponse);
+								targetResult.followedByAuthUser = false;
 
 								this.matSnackbar.openFromComponent(SnakebarComponent, {
 									data: `You no longer follow ${userResponse.user.firstName + ' ' + userResponse.user.lastName}.`,
@@ -150,7 +155,7 @@ export class SearchDialogComponent implements OnInit {
 								});
 							}
 						})
-					// );
+					);
 				}
 			}
 		);

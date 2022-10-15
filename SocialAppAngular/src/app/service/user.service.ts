@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PostResponse } from '../model/post-response';
@@ -15,7 +16,7 @@ import { UserResponse } from '../model/user-response';
 })
 export class UserService {
 	private host = environment.apiUrl;
-	// private jwtService = new JwtHelperService();
+	private jwtService = new JwtHelperService();
 	getUserById(userId: number): Observable<UserResponse|any | HttpErrorResponse> {
 		console.log("user id is ",userId)
 		return this.httpClient.post<UserResponse|any | HttpErrorResponse>(`${this.host}/profile/${userId}/`,{});
@@ -33,7 +34,7 @@ export class UserService {
 
 	getUserPosts(userId: number, page: number, size: number): Observable<PostResponse[]|any | HttpErrorResponse> {
 		const reqParams = new HttpParams().set('page', page).set('size', size);
-		return this.httpClient.get<PostResponse[] | HttpErrorResponse>(`${this.host}/users/${userId}/posts`, { params: reqParams });
+		return this.httpClient.get<PostResponse[] | HttpErrorResponse>(`${this.host}/users/posts/`, { params: reqParams });
 	}
 
 	updateUserInfo(updateUserInfo: any): any {

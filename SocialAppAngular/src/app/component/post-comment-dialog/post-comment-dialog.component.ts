@@ -3,6 +3,7 @@ import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 import { AppConstants } from 'src/app/common/app-constants';
 import { CommentResponse } from 'src/app/model/comment-response';
 import { Post } from 'src/app/model/post';
@@ -34,7 +35,8 @@ throw new Error('Method not implemented.');
 	creatingComment: boolean = false;
 	commentFormGroup!: FormGroup;
 	defaultProfilePhotoUrl = environment.defaultProfilePhotoUrl;
-  constructor(
+	private subscriptions: Subscription[] = [];
+	constructor(
     @Inject(MAT_DIALOG_DATA) public dataPost: Post,
 		private authService: AuthService,
 		private postService: PostService,
@@ -46,7 +48,7 @@ throw new Error('Method not implemented.');
   get content() { return this.commentFormGroup.get('content') }
 
   ngOnInit(): void {
-    // this.authUserId = this.authService.getAuthUserId();
+    this.authUserId = this.authService.getAuthUserId();
 
 		this.commentFormGroup = this.formBuilder.group({
 			content: new FormControl('', [Validators.required, Validators.maxLength(1024)])
@@ -63,7 +65,7 @@ throw new Error('Method not implemented.');
 			if (this.dataPost.commentCount > 0) {
 				this.fetchingResult = true;
 	
-				// this.subscriptions.push(
+				this.subscriptions.push(
 					this.postService.getPostComments(this.dataPost.id, currentPage, this.resultSize).subscribe({
 						next: (resultList: CommentResponse[]) => {
 							resultList.forEach(commentResponse => this.commentResponseList.push(commentResponse));
@@ -84,14 +86,14 @@ throw new Error('Method not implemented.');
 							this.fetchingResult = false;
 						}
 					})
-				// );
+				);
 			} 
 		}
 	}
 
 	createNewComment(): void {
 		this.creatingComment = true;
-		// this.subscriptions.push(
+		this.subscriptions.push(
 			this.postService.createPostComment(this.dataPost.id, this.content?.value).subscribe({
 				next: (newComment: CommentResponse) => {
 					this.commentFormGroup.reset();
@@ -112,10 +114,10 @@ throw new Error('Method not implemented.');
 					this.creatingComment = false;
 				}
 			})
-		// );
+		);
 	}
 
-	openCommentLikeDialog(comment: Comment): void {
+	openCommentLikeDialog(comment: any): void {
 		this.matDialog.open(CommentLikeDialogComponent, {
 			data: comment,
 			minWidth: '500px',
@@ -125,12 +127,12 @@ throw new Error('Method not implemented.');
 
 	likeOrUnlikeComment(commentResponse: CommentResponse) {
 		if (commentResponse.likedByAuthUser) {
-			// this.subscriptions.push(
+			this.subscriptions.push(
 				this.commentService.unlikeComment(commentResponse.comment.id).subscribe({
 					next: (response: any) => {
-						const targetCommentResponse = this.commentResponseList.find(cR => cR === commentResponse);
-						// targetCommentResponse.likedByAuthUser = false;
-						// targetCommentResponse.comment.likeCount--;
+						const targetCommentResponse:any = this.commentResponseList.find(cR => cR === commentResponse);
+						targetCommentResponse.likedByAuthUser = false;
+						targetCommentResponse.comment.likeCount--;
 					},
 					error: (errorResponse: HttpErrorResponse) => {
 						this.matSnackbar.openFromComponent(SnakebarComponent, {
@@ -140,14 +142,14 @@ throw new Error('Method not implemented.');
 						});
 					}
 				})
-			// );
+			);
 		} else {
-			// this.subscriptions.push(
+			this.subscriptions.push(
 				this.commentService.likeComment(commentResponse.comment.id).subscribe({
 					next: (response: any) => {
-						const targetCommentResponse = this.commentResponseList.find(cR => cR === commentResponse);
-						// targetCommentResponse.likedByAuthUser = true;
-						// targetCommentResponse.comment.likeCount++;
+						const targetCommentResponse:any = this.commentResponseList.find(cR => cR === commentResponse);
+						targetCommentResponse.likedByAuthUser = true;
+						targetCommentResponse.comment.likeCount++;
 					},
 					error: (errorResponse: HttpErrorResponse) => {
 						this.matSnackbar.openFromComponent(SnakebarComponent, {
@@ -157,7 +159,7 @@ throw new Error('Method not implemented.');
 						});
 					}
 				})
-			// );
+			);
 		}
 	}
 
@@ -176,7 +178,7 @@ throw new Error('Method not implemented.');
 	}
 
 	private deleteComment(commentResponse: CommentResponse) {
-		// this.subscriptions.push(
+		this.subscriptions.push(
 			this.commentService.deleteComment(this.dataPost.id, commentResponse.comment.id).subscribe({
 				next: (response: any) => {
 					const targetIndex = this.commentResponseList.indexOf(commentResponse);
@@ -196,7 +198,7 @@ throw new Error('Method not implemented.');
 					});
 				}
 			})
-		// );
+		);
 	}
 
 

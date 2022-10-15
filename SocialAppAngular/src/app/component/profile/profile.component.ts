@@ -51,7 +51,7 @@ export class ProfileComponent implements OnInit {
 			this.router.navigateByUrl('/login');
 		} else {
 			this.loadingProfile = true;
-			// this.authUser = localStorage.getItem('authUser');
+			this.authUser = localStorage.getItem('authUser');
 			this.authService.getuserdata().subscribe(data => {
 			console.log(data.email)
 			console.log(data)
@@ -88,7 +88,7 @@ export class ProfileComponent implements OnInit {
 									this.router.navigateByUrl('/profile');
 								}
 		
-								// this.viewerFollowsProfileUser = false;
+								this.viewerFollowsProfileUser = false;		
 		
 								if (!foundUser.profile_photo) {
 									foundUser.profile_photo = environment.defaultProfilePhotoUrl
@@ -101,7 +101,7 @@ export class ProfileComponent implements OnInit {
 								this.profileUser = foundUser;
 								console.log(this.profileUser);
 		
-								// this.loadProfilePosts(1);
+								this.loadProfilePosts(1);
 		
 								this.loadingProfile = false;
 							})
@@ -111,7 +111,7 @@ export class ProfileComponent implements OnInit {
 								this.router.navigateByUrl('/profile');
 							}
 	
-							// this.viewerFollowsProfileUser = false;
+							this.viewerFollowsProfileUser = false;
 	
 							if (!foundUser.profile_photo) {
 								foundUser.profile_photo = environment.defaultProfilePhotoUrl
@@ -124,7 +124,7 @@ export class ProfileComponent implements OnInit {
 							this.profileUser = foundUser;
 							console.log(this.profileUser);
 	
-							// this.loadProfilePosts(1);
+							this.loadProfilePosts(1);
 	
 							this.loadingProfile = false;
 						}
@@ -154,6 +154,7 @@ export class ProfileComponent implements OnInit {
 			this.subscriptions.push(
 				this.userService.getUserPosts(this.profileUserId, currentPage, this.resultSize).subscribe({
 					next: (postResponses: PostResponse[]) => {
+						console.log(postResponses)
 						postResponses.forEach(post => this.profileUserPostResponses.push(post));
 						if (postResponses.length <= 0 && this.resultPage === 1) this.hasNoPost = true;
 						if (postResponses.length <= 0) this.hasMoreResult = false;

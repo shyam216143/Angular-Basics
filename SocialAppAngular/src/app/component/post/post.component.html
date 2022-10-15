@@ -1,11 +1,12 @@
 <mat-card class="position-relative mat-elevation-z3 mb-4" *ngIf="postResponse">
+	
 	<mat-card-header>
 		<div mat-card-avatar class="centered-bg-image"
-			style="background-image: url('http://127.0.0.1:8000{{ postResponse.post.author.profilePhoto ? postResponse.post.author.profilePhoto : defaultProfilePhotoUrl }}');">
+			style="background-image: url('http://127.0.0.1:8000{{ postResponse.post.author.profile_photo ? postResponse.post.author.profile_photo : defaultProfilePhotoUrl }}');">
 		</div>
 		<mat-card-title>
-			<a href="/users/{{ postResponse.post.author.id }}" class="text-decoration-none text-dark">
-				{{ postResponse.post.author.firstName + ' ' + postResponse.post.author.last_name }}
+			<a href="/user/{{ postResponse.post.author.id }}" class="text-decoration-none text-dark">
+				{{ postResponse.post.author.first_name + ' ' + postResponse.post.author.last_name }}
 			</a>
 		</mat-card-title>
 		<mat-card-subtitle>
@@ -65,7 +66,7 @@
 
 				<div class="ps-5" style="margin-top: -38px;">
 					<a class="d-inline-block text-decoration-none text-dark align-middle fw-500 cursor-pointer"
-						href="/users/{{ postResponse.post.sharedPost.author.id }}">
+						href="/user/{{ postResponse.post.sharedPost.author.id }}">
 						{{ postResponse.post.sharedPost.author.first_name + ' ' + postResponse.post.sharedPost.author.last_name }}
 					</a>
 

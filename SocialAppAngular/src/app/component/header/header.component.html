@@ -3,7 +3,7 @@
 
 	<span class="example-spacer"></span>
 
-	<a routerLink="profile" class="rounded-pill ps-2 pt-1 pe-3 pb-1 text-white text-decoration-none" *ngIf="isUserLoggedIn">
+	<a href="/profile" class="rounded-pill ps-2 pt-1 pe-3 pb-1 text-white text-decoration-none" *ngIf="isUserLoggedIn">
 		<span class="rounded-circle d-inline-block align-middle centered-bg-image"
 			style="width: 30px; height: 30px; background-color: white; background-image: url('http://127.0.0.1:8000{{authUser.profile_photo}}');"></span>
 		<span class="mat-body-strong d-inline-block align-middle ps-2">
@@ -36,7 +36,7 @@
 			 	<mat-icon color="primary" style="margin-right: 5px;" *ngIf="notification.type === 'POST_COMMENT'">comment</mat-icon>
 			 	<mat-icon color="primary" style="margin-right: 5px;" *ngIf="notification.type === 'POST_SHARE'">share</mat-icon>
 
-			 	<span class="fw-500" *ngIf="notification.sender">{{ notification.sender.firstName + ' ' + notification.sender.lastName }}</span>
+			 	<span class="fw-500" *ngIf="notification.sender">{{ notification.sender.first_name + ' ' + notification.sender.last_name }}</span>
 			 	<span class="fw-500 text-danger" *ngIf="!notification.sender">An App User</span>
 
 				<span *ngIf="notification.type === 'POST_LIKE'">

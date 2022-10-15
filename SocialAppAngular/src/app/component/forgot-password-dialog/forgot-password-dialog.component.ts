@@ -36,6 +36,10 @@ export class ForgotPasswordDialogComponent implements OnInit {
 			email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(64)])
 		});
   }
+  ngOnDestroy(): void {
+	this.subscriptions.forEach(sub => sub.unsubscribe());
+}
+
   
 	sendForgotPasswordEmail(): void {
 		if (this.forgotPasswordFormGroup.valid) {

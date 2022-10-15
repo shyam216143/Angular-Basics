@@ -68,7 +68,7 @@ export class HeaderComponent implements OnInit {
 			this.isUserLoggedIn = true;
 		}
 	});
-	console.log(this.isUserLoggedIn);
+	
 
   }
   ngOnDestroy(): void {

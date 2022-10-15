@@ -6,7 +6,7 @@
 	
 		<hr class="divider">
 	
-		<form [formGroup]="searchUserFormGroup" class="position-relative" autocomplete="off" (ngSubmit)="searchUser(1)">
+		<form [formGroup]="searchUserFormGroup" class="position-relative" autocomplete="off" (keyup)="searchUser(1)">
 			<mat-form-field appearance="outline" class="w-100" style="padding-right: 90px;">
 				<mat-label>Who do you want to find?</mat-label>
 				<input matInput formControlName="key" placeholder="Who do you want to find?">

@@ -19,7 +19,7 @@ export class PostService {
 	}
   getPostsByTag(tagName: string, page: number, size: number): Observable<any> {
 		const reqParams = new HttpParams().set('page', page).set('size', size);
-		return this.httpClient.get<PostResponse[] | HttpErrorResponse>(`${this.host}/posts/tags/${tagName}/`, { params: reqParams });
+		return this.httpClient.get<PostResponse[]|any | HttpErrorResponse>(`${this.host}/posts/tags/${tagName}/`, { params: reqParams });
 	}
   deletePost(postId: number, isTypeShare: boolean): Observable<any | HttpErrorResponse> {
 		if (isTypeShare) {
@@ -73,4 +73,9 @@ export class PostService {
 	deletePostPhoto(postId: number): Observable<any | HttpErrorResponse> {
 		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/posts/${postId}/photo/delete`, null);
 	}
+	
+	likePostComment(commentId: number): Observable<any | HttpErrorResponse> {
+		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/posts/comments/${commentId}/like`, null);
+	}
+
 }

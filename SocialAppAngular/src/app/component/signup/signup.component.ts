@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -43,7 +43,7 @@ export class SignupComponent implements OnInit {
 				password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]),
 				passwordRepeat: new FormControl('', [Validators.required])
 			})
-		});
+		}, { validators: this.matchPasswords });
 
   }
   get firstName() { return this.signupFormGroup.get('infoGroup.firstName') }
@@ -58,7 +58,11 @@ export class SignupComponent implements OnInit {
 
 
 
-
+	matchPasswords: ValidatorFn |any= (group: FormGroup): ValidationErrors | null => {
+		const password = group.get('passwordGroup.password')?.value;
+		const passwordRepeat = group.get('passwordGroup.passwordRepeat')?.value;
+		return password === passwordRepeat ? null : { passwordMissMatch: true }
+	}
 
 
 

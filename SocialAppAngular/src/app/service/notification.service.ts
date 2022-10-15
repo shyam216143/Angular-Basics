@@ -20,5 +20,11 @@ export class NotificationService {
 		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/notifications/mark-seen`, null);
 	}
 
+	markAsRead(notificationId: number):  Observable<any | HttpErrorResponse> {
+		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/notifications/${notificationId}/mark-read`, null);
+	}
 
+	markAllRead():  Observable<any | HttpErrorResponse> {
+		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/notifications/mark-read`, null);
+}
 }

@@ -58,7 +58,9 @@ throw new Error('Method not implemented.');
   }
 
 
-
+  ngOnDestroy(): void {
+	this.subscriptions.forEach(sub => sub.unsubscribe());
+}
 
 	loadComments(currentPage: number): void {
 		if (!this.fetchingResult) {

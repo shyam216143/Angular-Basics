@@ -88,7 +88,7 @@ export class ProfileComponent implements OnInit {
 									this.router.navigateByUrl('/profile');
 								}
 		
-								this.viewerFollowsProfileUser = false;		
+									
 		
 								if (!foundUser.profile_photo) {
 									foundUser.profile_photo = environment.defaultProfilePhotoUrl
@@ -111,7 +111,7 @@ export class ProfileComponent implements OnInit {
 								this.router.navigateByUrl('/profile');
 							}
 	
-							this.viewerFollowsProfileUser = false;
+							
 	
 							if (!foundUser.profile_photo) {
 								foundUser.profile_photo = environment.defaultProfilePhotoUrl
@@ -154,7 +154,6 @@ export class ProfileComponent implements OnInit {
 			this.subscriptions.push(
 				this.userService.getUserPosts(this.profileUserId, currentPage, this.resultSize).subscribe({
 					next: (postResponses: PostResponse[]|any) => {
-						console.log(typeof(postResponses[0].post.author))
 						postResponses.forEach((post:any) => this.profileUserPostResponses.push(post));
 						if (postResponses.length <= 0 && this.resultPage === 1) this.hasNoPost = true;
 						if (postResponses.length <= 0) this.hasMoreResult = false;

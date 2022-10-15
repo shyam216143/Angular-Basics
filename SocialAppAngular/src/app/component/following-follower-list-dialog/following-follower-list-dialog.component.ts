@@ -32,7 +32,9 @@ export class FollowingFollowerListDialogComponent implements OnInit {
     this.loadUsers(1);
   }
 
-
+  ngOnDestroy(): void {
+	this.subscriptions.forEach(sub => sub.unsubscribe());
+}
   
 	
   loadUsers(currentPage: number): void {

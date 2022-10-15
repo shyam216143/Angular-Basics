@@ -53,7 +53,7 @@ export class UserService {
 
 	getUserSearchResult(key: string, page: number, size: number): Observable<UserResponse[] | any | HttpErrorResponse> {
 		const reqParams = new HttpParams().set('key', key).set('page', page).set('size', size);
-		return this.httpClient.get<UserResponse[] | HttpErrorResponse>(`${this.host}/users/search`, { params: reqParams });
+		return this.httpClient.get<UserResponse[] | HttpErrorResponse>(`${this.host}/users/search/`, { params: reqParams });
 	}
 	followUser(userId: number): Observable<any | HttpErrorResponse> {
 		const body={
@@ -85,11 +85,11 @@ export class UserService {
 	}
 	getUserFollowingList(userId: number, page: number, size: number): Observable<UserResponse[] | any | HttpErrorResponse> {
 		const reqParams = new HttpParams().set('page', page).set('size', size);
-		return this.httpClient.get<UserResponse[] | HttpErrorResponse>(`${this.host}/user/following/`, { params: reqParams });
+		return this.httpClient.get<UserResponse[] | HttpErrorResponse>(`${this.host}/user/following/${userId}/`, { params: reqParams });
 	}
 
 	getUserFollowerList(userId: number, page: number, size: number): Observable<UserResponse[] | any | HttpErrorResponse> {
 		const reqParams = new HttpParams().set('page', page).set('size', size);
-		return this.httpClient.get<UserResponse[] | HttpErrorResponse>(`${this.host}/user/follower/`, { params: reqParams });
+		return this.httpClient.get<UserResponse[] | HttpErrorResponse>(`${this.host}/user/follower/${userId}/`, { params: reqParams });
 	}
 }

@@ -5,8 +5,8 @@ import { User } from "./user";
 export class Notification {
     id!: number;
 	type!: string;
-	receiver!: any;
-	sender!: any;
+	receiver!: User;
+	sender!: User;
 	owningPost!: Post;
 	owningComment!: Comment;
 	isSeen!: boolean;

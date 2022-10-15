@@ -7,7 +7,7 @@
 		<ul class="list-group list-group-flush" *ngFor="let like of likeList">
 			<li class="list-group-item ps-0 pt-2 pe-0 pb-2">
 				<span class="rounded-circle d-inline-block align-middle centered-bg-image"
-					style="width: 30px; height: 30px; background-image: url('{{like.profile_photo ? like.profile_photo : defaultProfilePhotoUrl}}');">
+					style="width: 30px; height: 30px; background-image: url('{{like.profile_photo ? 'http://127.0.0.1:8000'+like.profile_photo : defaultProfilePhotoUrl}}');">
 				</span>
 				<a class="d-inline-block text-decoration-none text-dark align-middle ps-2 fw-500 cursor-pointer"
 					href="/user/{{like.id}}">{{like.first_name + ' ' + like.last_name}}</a>

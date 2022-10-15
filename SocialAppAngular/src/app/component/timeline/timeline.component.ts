@@ -69,7 +69,10 @@ export class TimelineComponent implements OnInit {
 						// console.log(postResponseList[0].post.author,"helloi")
 						if (postResponseList.length === 0 && currentPage === 1) this.noPost = true;
 						
-						postResponseList.forEach(pR => this.timelinePostResponseList.push(pR));
+						postResponseList.forEach(pR =>{ 
+							console.log(pR)
+							this.timelinePostResponseList.push(pR)
+						});
 
 						if (postResponseList.length > 0) {
 							this.hasMoreResult = true;
@@ -103,7 +106,10 @@ export class TimelineComponent implements OnInit {
 						console.log(postResponseList)
 						if (postResponseList.length === 0 && currentPage === 1) this.noPost = true;
 						
-						postResponseList.forEach((pR) => this.timelinePostResponseList.push(pR));
+						postResponseList.forEach((pR:any) =>{
+							console.log(pR)
+							 this.timelinePostResponseList.push(pR)
+						});
 						if (postResponseList.length > 0) {
 							this.hasMoreResult = true;
 						} else {
@@ -111,6 +117,7 @@ export class TimelineComponent implements OnInit {
 						}
 						this.resultPage++;
 						this.fetchingResult = false;
+						this.loadingTimelinePostsInitially = false;
 					},
 					error: (errorResponse: HttpErrorResponse) => {
 						this.matSnackbar.openFromComponent(SnakebarComponent, {

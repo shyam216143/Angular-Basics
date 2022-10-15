@@ -37,7 +37,7 @@ export class SearchDialogComponent implements OnInit {
   get key() { return this.searchUserFormGroup.get('key'); }
   ngOnInit(): void {
     this.searchUserFormGroup = this.formBuilder.group({
-			key: new FormControl('', [Validators.minLength(3), Validators.maxLength(64)])
+			key: new FormControl('', [Validators.minLength(1), Validators.maxLength(64)])
 		});
   }
   ngOnDestroy(): void {
@@ -45,21 +45,21 @@ export class SearchDialogComponent implements OnInit {
 }
   searchUser(currentPage: number): void {
 		if (!this.fetchingResult) {
-			if (this.key?.value.length >= 3) {
+			if (this.key?.value.length >= 1) {
 				this.fetchingResult = true;
 	
 				if (currentPage === 1) this.searchResult = [];
 	
 				this.subscriptions.push(
 					this.userService.getUserSearchResult(this.key?.value, currentPage, this.resultSize).subscribe({
-						next: (resultList: UserResponse[]) => {
+						next: (resultList: any[]) => {
 							if (resultList.length <= 0 && currentPage === 1) {
 								this.noResult = true;
 							} else {
 								this.noResult = false;
 							}
 	
-							resultList.forEach((uR:any) => this.searchResult.push(uR));
+							resultList.forEach((uR) => this.searchResult.push(uR));
 							this.resultPage++;
 							this.fetchingResult = false;
 	
@@ -82,7 +82,7 @@ export class SearchDialogComponent implements OnInit {
 				);
 			} else {
 				this.matSnackbar.openFromComponent(SnakebarComponent, {
-					data: 'Search key must be between 3 to 64 characters long.',
+					data: 'Search key must be between 1 to 64 characters long.',
 					panelClass: ['bg-danger'],
 					duration: 5000
 				});
@@ -90,9 +90,9 @@ export class SearchDialogComponent implements OnInit {
 		}
 	} 
 
-  openFollowConfirmDialog(userResponse: UserResponse|any): void {
+  openFollowConfirmDialog(userResponse: UserResponse): void {
 		const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
-			data: `Do you want to follow this ${userResponse.user.firstName + ' ' + userResponse.user.lastName}?`,
+			data: `Do you want to follow this ${userResponse.user.first_name + ' ' + userResponse.user.last_name}?`,
 			autoFocus: false,
 			maxWidth: '500px'
 		});
@@ -126,9 +126,9 @@ export class SearchDialogComponent implements OnInit {
 		);
 	}
 
-	openUnfollowConfirmDialog(userResponse: UserResponse|any): void {
+	openUnfollowConfirmDialog(userResponse: UserResponse): void {
 		const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
-			data: `Do you want to stop following ${userResponse.user.firstName + ' ' + userResponse.user.lastName}?`,
+			data: `Do you want to stop following ${userResponse.user.first_name + ' ' + userResponse.user.last_name}?`,
 			autoFocus: false,
 			maxWidth: '500px'
 		});
@@ -143,7 +143,7 @@ export class SearchDialogComponent implements OnInit {
 								targetResult.followedByAuthUser = false;
 
 								this.matSnackbar.openFromComponent(SnakebarComponent, {
-									data: `You no longer follow ${userResponse.user.firstName + ' ' + userResponse.user.lastName}.`,
+									data: `You no longer follow ${userResponse.user.first_name + ' ' + userResponse.user.last_name}.`,
 									duration: 5000
 								});
 							},

@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AppConstants } from 'src/app/common/app-constants';
 import { Post } from 'src/app/model/post';
 import { PostService } from 'src/app/service/post.service';
@@ -17,13 +18,16 @@ import { SnakebarComponent } from '../snakebar/snakebar.component';
 })
 export class ShareConfirmDialogComponent implements OnInit {
   targetPostId!: number;
-  dataPost!: Post
+
 	shareFormGroup!: FormGroup;
 	creatingShare: boolean = false;
 	defaultProfilePhotoUrl = environment.defaultProfilePhotoUrl;
+
+	private subscriptions: Subscription[] = [];
+
   constructor(
-    // @Inject(MAT_DIALOG_DATA) public dataPost: Post,
-		// private thisMatDialogRef: MatDialogRef<ShareConfirmDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public dataPost: Post,
+		private thisMatDialogRef: MatDialogRef<ShareConfirmDialogComponent>,
 		private router: Router,
 		private postService: PostService,
 		private formBuilder: FormBuilder,
@@ -35,16 +39,16 @@ export class ShareConfirmDialogComponent implements OnInit {
     this.shareFormGroup = this.formBuilder.group({
 			content: new FormControl('', [Validators.maxLength(4096)])
 		});
-		// this.targetPostId = this.dataPost.isTypeShare ? this.dataPost.sharedPost.id : this.dataPost.id;
+		this.targetPostId = this.dataPost.isTypeShare ? this.dataPost.sharedPost.id : this.dataPost.id;
 
   }
   createNewPostShare(): void {
 		if (!this.creatingShare) {
 			this.creatingShare = true;
-			// this.subscriptions.push(
+			this.subscriptions.push(
 				this.postService.createPostShare(this.targetPostId, this.content?.value).subscribe({
 					next: (newPostShare: Post) => {
-						// this.thisMatDialogRef.close();
+						this.thisMatDialogRef.close();
 						this.matSnackbar.openFromComponent(SnakebarComponent, {
 							data: 'Post shared successfully.',
 							panelClass: ['bg-success'],
@@ -62,7 +66,7 @@ export class ShareConfirmDialogComponent implements OnInit {
 						this.creatingShare = false;
 					}
 				})
-			// );
+			);
 		}
 	}
 }

@@ -25,7 +25,7 @@
 		<ul class="list-group list-group-flush">
 			<li class="list-group-item ps-0 pt-3 pe-0 pb-3" *ngFor="let commentResponse of commentResponseList">
 				<div class="rounded-circle d-inline-block align-middle centered-bg-image"
-					style="width: 35px; height: 35px; background-image: url('{{commentResponse.comment.author.profile_photo ? commentResponse.comment.author.profile_photo : defaultProfilePhotoUrl}}');">
+					style="width: 35px; height: 35px; background-image: url('{{commentResponse.comment.author.profile_photo ? 'http://127.0.0.1:8000'+commentResponse.comment.author.profile_photo : defaultProfilePhotoUrl}}');">
 				</div>
 				<div class="ps-5" style="margin-top: -38px;">
 					<a class="d-inline-block text-decoration-none text-dark align-middle fw-500 cursor-pointer"

@@ -65,14 +65,14 @@ export class SettingsComponent implements OnInit {
 
 
 
-  // matchPasswords: ValidatorFn = (group: FormGroup): ValidationErrors | null => {
-	// 	const password = group.get('password').value;
-	// 	const passwordRepeat = group.get('passwordRepeat').value;
-	// 	return password === passwordRepeat ? null : { passwordMissMatch: true }
-	// }
+  matchPasswords:any| ValidatorFn = (group: FormGroup): ValidationErrors | null => {
+		const password = group.get('password')?.value;
+		const passwordRepeat = group.get('passwordRepeat')?.value;
+		return password === passwordRepeat ? null : { passwordMissMatch: true }
+	}
 
   ngOnInit(): void {
-	// this.authUser = this.authService.getAuthUserFromCache();
+	this.authUser = this.authService.getAuthUserFromCache();
 	this.authService.getuserdata().subscribe(data => {
 		this.authUser=data
 		console.log(this.authUser)
@@ -120,7 +120,7 @@ export class SettingsComponent implements OnInit {
       password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]),
       passwordRepeat: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]),
       oldPassword: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(32)])
-    });
+    }, { validators: this.matchPasswords });
 
   }
 

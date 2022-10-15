@@ -2,11 +2,12 @@
 	
 	<mat-card-header>
 		<div mat-card-avatar class="centered-bg-image"
-			style="background-image: url('http://127.0.0.1:8000{{ postResponse.post.author.profile_photo ? postResponse.post.author.profile_photo : defaultProfilePhotoUrl }}');">
+			style="background-image: url('{{ postResponse.post.author.profile_photo ? 'http://127.0.0.1:8000'+ postResponse.post.author.profile_photo : defaultProfilePhotoUrl }}');">
 		</div>
 		<mat-card-title>
 			<a href="/user/{{ postResponse.post.author.id }}" class="text-decoration-none text-dark">
-				{{ postResponse.post.author.first_name + ' ' + postResponse.post.author.last_name }}
+				<!-- {{ postResponse.post.author.first_name + ' ' + postResponse.post.author.last_name }} -->
+				Shyam Kumar
 			</a>
 		</mat-card-title>
 		<mat-card-subtitle>
@@ -15,8 +16,7 @@
 		</mat-card-subtitle>
 	</mat-card-header>
 
-	<div align="end" style="position: absolute; top: 10px; right: 10px"
-		*ngIf="postResponse.post.author.id === authUserId">
+	<div align="end" style="position: absolute; top: 10px; right: 10px">
 		<button mat-icon-button [matMenuTriggerFor]="coverPhotoMenu">
 			<mat-icon>more_vert</mat-icon>
 		</button>
@@ -61,13 +61,13 @@
 
 			<div *ngIf="postResponse.post.sharedPost">
 				<div class="rounded-circle d-inline-block align-middle centered-bg-image"
-					style="width: 35px; height: 35px; background-image: url('http://127.0.0.1:8000{{postResponse.post.sharedPost.author.profile_photo ? postResponse.post.sharedPost.author.profile_photo : defaultProfilePhotoUrl}}');">
+					style="width: 35px; height: 35px; background-image: url('{{postResponse.post.sharedPost.author.profile_photo ? 'http://127.0.0.1:8000'+postResponse.post.sharedPost.author.profile_photo : defaultProfilePhotoUrl}}');">
 				</div>
 
 				<div class="ps-5" style="margin-top: -38px;">
 					<a class="d-inline-block text-decoration-none text-dark align-middle fw-500 cursor-pointer"
 						href="/user/{{ postResponse.post.sharedPost.author.id }}">
-						{{ postResponse.post.sharedPost.author.first_name + ' ' + postResponse.post.sharedPost.author}}
+						{{ postResponse.post.sharedPost.author.first_name + 'j ' + postResponse.post.sharedPost.author}}
 					</a>
 
 					<br>

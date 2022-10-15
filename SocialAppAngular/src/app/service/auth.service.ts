@@ -17,7 +17,7 @@ export class AuthService {
   private host = environment.apiUrl;
   private authToken!: string|null;
   private authUser!: any;
-  private principal!: string|null;
+  private principal!: any;
   private jwtService = new JwtHelperService();
 
   constructor(private http:HttpClient, private route:Router) { }
@@ -31,7 +31,7 @@ export class AuthService {
 	logout(): void {
 		this.authToken = null;
 		this.authUser = null;
-		this.principal = null;
+		this.principal = 0;
 		localStorage.removeItem('authUser');
 		localStorage.removeItem('authToken');
 		localStorage.clear();
@@ -59,7 +59,7 @@ export class AuthService {
 	}
 	
 
-	getAuthTokenFromCache(): any {
+	getAuthTokenFromCache(): string|null {
 		return localStorage.getItem('authToken');
 	}
 	getAuthUserFromCache(): any {

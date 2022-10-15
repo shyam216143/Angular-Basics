@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 import { AppConstants } from 'src/app/common/app-constants';
 import { Post } from 'src/app/model/post';
 import { PostResponse } from 'src/app/model/post-response';
@@ -23,6 +24,7 @@ export class PostShareDialogComponent implements OnInit {
 	hasMoreResult: boolean = false;
 	fetchingResult: boolean = false;
 	defaultProfilePhotoUrl = environment.defaultProfilePhotoUrl;
+	private subscriptions: Subscription[] = [];
   constructor(
   @Inject(MAT_DIALOG_DATA) public dataPost: Post,
   private postService: PostService,
@@ -35,12 +37,14 @@ export class PostShareDialogComponent implements OnInit {
 		}
   }
 
-
+  ngOnDestroy(): void {
+	this.subscriptions.forEach(sub => sub.unsubscribe());
+}
 
   loadPostShares(currentPage: number): void {
 		if (!this.fetchingResult) {
 			this.fetchingResult = true;
-			// this.subscriptions.push(
+			this.subscriptions.push(
 				this.postService.getPostShares(this.dataPost.id, currentPage, this.resultSize).subscribe({
 					next: (resultList: PostResponse[]) => {
 						resultList.forEach(postShareResponse => this.postShareResponseList.push(postShareResponse));
@@ -60,13 +64,13 @@ export class PostShareDialogComponent implements OnInit {
 						});
 					}
 				})
-			// );
+			);
 		}
 	}
 
 	likeOrUnlikePostShare(likedByAuthUser: boolean, postResponse: PostResponse) {
 		if (likedByAuthUser) {
-			// this.subscriptions.push(
+			this.subscriptions.push(
 				this.postService.unlikePost(postResponse.post.id).subscribe({
 					next: (response: any) => {
 						postResponse.likedByAuthUser = false;
@@ -80,9 +84,9 @@ export class PostShareDialogComponent implements OnInit {
 						});
 					}
 				})
-			// );
+			);
 		} else {
-			// this.subscriptions.push(
+			this.subscriptions.push(
 				this.postService.likePost(postResponse.post.id).subscribe({
 					next: (response: any) => {
 						postResponse.likedByAuthUser = true;
@@ -96,7 +100,7 @@ export class PostShareDialogComponent implements OnInit {
 						});
 					}
 				})
-			// );
+			);
 		}
 	}
 

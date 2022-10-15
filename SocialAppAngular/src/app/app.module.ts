@@ -47,6 +47,7 @@ import { TimelineComponent } from './component/timeline/timeline.component';
 import { PostComponent } from './component/post/post.component';
 import { PostLikeDialogComponent } from './component/post-like-dialog/post-like-dialog.component';
 import { PostCommentDialogComponent } from './component/post-comment-dialog/post-comment-dialog.component';
+import { APP_DATE_FORMATS } from './common/app-date-formats';
 import { PostShareDialogComponent } from './component/post-share-dialog/post-share-dialog.component';
 import { ShareConfirmDialogComponent } from './component/share-confirm-dialog/share-confirm-dialog.component';
 import { PostDialogComponent } from './component/post-dialog/post-dialog.component';
@@ -60,6 +61,7 @@ import { PhotoUploadDialogComponent } from './component/photo-upload-dialog/phot
 import { FollowingFollowerListDialogComponent } from './component/following-follower-list-dialog/following-follower-list-dialog.component';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { ViewPhotoDialogComponent } from './component/view-photo-dialog/view-photo-dialog.component';
+import { AuthGuard } from './guard/auth.guard';
 
 @NgModule({
   declarations: [
@@ -129,9 +131,9 @@ import { ViewPhotoDialogComponent } from './component/view-photo-dialog/view-pho
 		
   ],
   providers: [
-		
+		AuthGuard,
 		{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-		// { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
+		{ provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
 	],
   bootstrap: [AppComponent]
 })

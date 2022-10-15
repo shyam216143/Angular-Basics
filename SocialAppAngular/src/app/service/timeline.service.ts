@@ -19,6 +19,6 @@ export class TimelineService {
 	}
 
 	getTimelineTags(): Observable<any> {
-		return this.httpClient.get<Tag[] | HttpErrorResponse>(`${this.host}/tags/`);
+		return this.httpClient.get<Tag[]|any | HttpErrorResponse>(`${this.host}/tags/`);
 	}
 }

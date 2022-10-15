@@ -10,24 +10,24 @@ import { ForgotPasswordDialogComponent } from '../forgot-password-dialog/forgot-
 import { SnakebarComponent } from '../snakebar/snakebar.component';
 import { Subscription } from 'rxjs';
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+	selector: 'app-login',
+	templateUrl: './login.component.html',
+	styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 	private subscriptions: Subscription[] = [];
 
-  loginFormGroup!: FormGroup;
+	loginFormGroup!: FormGroup;
 	submittingForm: boolean = false;
-  constructor(private formBuilder: FormBuilder,
-    private router: Router,
-	private matSnackbar: MatSnackBar,
-    private authService:AuthService,
-	private matDialog: MatDialog) { }
-    get email() { return this.loginFormGroup.get('email') }
-    get password() { return this.loginFormGroup.get('password') }
-  ngOnInit(): void {
-    this.loginFormGroup = this.formBuilder.group({
+	constructor(private formBuilder: FormBuilder,
+		private router: Router,
+		private matSnackbar: MatSnackBar,
+		private authService: AuthService,
+		private matDialog: MatDialog) { }
+	get email() { return this.loginFormGroup.get('email') }
+	get password() { return this.loginFormGroup.get('password') }
+	ngOnInit(): void {
+		this.loginFormGroup = this.formBuilder.group({
 			email: new FormControl('',
 				[Validators.required, Validators.email]
 			),
@@ -35,8 +35,10 @@ export class LoginComponent implements OnInit {
 				[Validators.required, Validators.minLength(4), Validators.maxLength(32)]
 			)
 		});
-  }
-
+	}
+	ngOnDestroy(): void {
+		this.subscriptions.forEach(sub => sub.unsubscribe());
+	}
 	handleLogin(): void {
 		if (this.loginFormGroup.valid) {
 			this.submittingForm = true;
@@ -50,13 +52,13 @@ export class LoginComponent implements OnInit {
 						console.log(response)
 						const authToken = response.token.access
 						console.log(authToken)
-						console.log("user_id",response.body.id)
+						console.log("user_id", response.body.id)
 						localStorage.setItem('email', response.body.email)
 						localStorage.setItem('id', response.body.id)
 						this.authService.storeTokenInCache(authToken);
 						this.authService.storeAuthUserInCache(response.body);
 						this.submittingForm = false;
-						this.router.navigate(['/profile'])
+						this.router.navigate(['/'])
 					},
 					error: (errorResponse: HttpErrorResponse) => {
 						const validationErrors = errorResponse.error.validationErrors;
@@ -77,7 +79,7 @@ export class LoginComponent implements OnInit {
 							});
 						}
 						this.submittingForm = false;
-            console.log("error occured ")
+						console.log("error occured ")
 					}
 				})
 			);

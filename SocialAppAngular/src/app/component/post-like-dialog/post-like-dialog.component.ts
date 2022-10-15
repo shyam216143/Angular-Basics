@@ -43,7 +43,7 @@ export class PostLikeDialogComponent implements OnInit {
 				this.fetchingResult = true;
 				this.subscriptions.push(
 					this.postService.getPostLikes(this.dataPost.id, currentPage, this.resultSize).subscribe({
-						next: (resultList: any[]) => {
+						next: (resultList: User[]) => {
 							resultList.forEach((like) => this.likeList.push(like));
 							if (currentPage * this.resultSize < this.dataPost.likeCount) {
 								this.hasMoreResult = true;

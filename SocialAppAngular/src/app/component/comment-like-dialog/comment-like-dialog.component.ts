@@ -2,11 +2,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 import { AppConstants } from 'src/app/common/app-constants';
 import { User } from 'src/app/model/user';
 import { CommentService } from 'src/app/service/comment.service';
 import { environment } from 'src/environments/environment';
 import { SnakebarComponent } from '../snakebar/snakebar.component';
+import { Comment } from 'src/app/model/comment';
 
 @Component({
   selector: 'app-comment-like-dialog',
@@ -20,17 +22,23 @@ export class CommentLikeDialogComponent implements OnInit {
 	hasMoreResult: boolean = false;
 	fetchingResult: boolean = false;
 	defaultProfilePhotoUrl = environment.defaultProfilePhotoUrl;
-  constructor(@Inject(MAT_DIALOG_DATA) public dataComment: Comment|any,
+
+	private subscriptions: Subscription[] = [];
+
+  constructor(@Inject(MAT_DIALOG_DATA) public dataComment: Comment,
   private commentService: CommentService,
   private matSnackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.loadCommentLikes(1);
   }
+  ngOnDestroy(): void {
+	this.subscriptions.forEach(sub => sub.unsubscribe());
+}
   loadCommentLikes(currentPage: number): void {
 		if (this.dataComment.likeCount > 0) {
 			this.fetchingResult = true;
-			// this.subscriptions.push(
+			this.subscriptions.push(
 				this.commentService.getCommentLikes(this.dataComment.id, currentPage, this.resultSize).subscribe({
 					next: (resultList: User[]) => {
 						resultList.forEach(like => this.likeList.push(like));
@@ -51,7 +59,7 @@ export class CommentLikeDialogComponent implements OnInit {
 						this.fetchingResult = false;
 					}
 				})
-			// );
+			);
 		}
 	}
 }

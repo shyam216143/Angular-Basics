@@ -11,7 +11,7 @@ export class Post {
 	dateCreated!: string;
 	dateLastModified!: string;
 	isTypeShare!: boolean;
-	author: any;//user
+	author!: User;//user
 	sharedPost!: Post;
 	postTags!: Tag[]
 }

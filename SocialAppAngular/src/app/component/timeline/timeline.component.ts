@@ -64,7 +64,9 @@ export class TimelineComponent implements OnInit {
 			this.subscriptions.push(
 				this.timelineService.getTimelinePosts(currentPage, this.resultSize).subscribe({
 					next: (postResponseList: PostResponse[]) => {
-						console.log(postResponseList)
+						const x=postResponseList[0]
+						// console.log(JSON.parse(postResponseList[0]))
+						// console.log(postResponseList[0].post.author,"helloi")
 						if (postResponseList.length === 0 && currentPage === 1) this.noPost = true;
 						
 						postResponseList.forEach(pR => this.timelinePostResponseList.push(pR));
@@ -101,7 +103,7 @@ export class TimelineComponent implements OnInit {
 						console.log(postResponseList)
 						if (postResponseList.length === 0 && currentPage === 1) this.noPost = true;
 						
-						postResponseList.forEach(pR => this.timelinePostResponseList.push(pR));
+						postResponseList.forEach((pR) => this.timelinePostResponseList.push(pR));
 						if (postResponseList.length > 0) {
 							this.hasMoreResult = true;
 						} else {

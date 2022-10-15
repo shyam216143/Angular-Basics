@@ -36,6 +36,8 @@ export class PostComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.authUserId = this.authService.getAuthUserId();
+		console.log(this.postResponse)
+		console.log(this.postResponse.post.author.id)
 	}
 	openLikeDialog(): void {
 		this.matDialog.open(PostLikeDialogComponent, {

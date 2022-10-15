@@ -18,13 +18,13 @@ import { SnakebarComponent } from '../snakebar/snakebar.component';
 export class PostShareDialogComponent implements OnInit {
   postShareResponseList: PostResponse[] = [];
 	resultPage: number = 1;
-  dataPost:any
+//   dataPost:any
 	resultSize: number = 5;
 	hasMoreResult: boolean = false;
 	fetchingResult: boolean = false;
 	defaultProfilePhotoUrl = environment.defaultProfilePhotoUrl;
   constructor(
-  // @Inject(MAT_DIALOG_DATA) public dataPost: Post,
+  @Inject(MAT_DIALOG_DATA) public dataPost: Post,
   private postService: PostService,
   private matDialog: MatDialog,
   private matSnackbar: MatSnackBar) { }

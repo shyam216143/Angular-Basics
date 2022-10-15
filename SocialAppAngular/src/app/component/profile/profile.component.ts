@@ -153,9 +153,9 @@ export class ProfileComponent implements OnInit {
 			this.fetchingResult = true;
 			this.subscriptions.push(
 				this.userService.getUserPosts(this.profileUserId, currentPage, this.resultSize).subscribe({
-					next: (postResponses: PostResponse[]) => {
-						console.log(postResponses)
-						postResponses.forEach(post => this.profileUserPostResponses.push(post));
+					next: (postResponses: PostResponse[]|any) => {
+						console.log(typeof(postResponses[0].post.author))
+						postResponses.forEach((post:any) => this.profileUserPostResponses.push(post));
 						if (postResponses.length <= 0 && this.resultPage === 1) this.hasNoPost = true;
 						if (postResponses.length <= 0) this.hasMoreResult = false;
 						this.fetchingResult = false;

@@ -61,13 +61,13 @@
 
 			<div *ngIf="postResponse.post.sharedPost">
 				<div class="rounded-circle d-inline-block align-middle centered-bg-image"
-					style="width: 35px; height: 35px; background-image: url('http://127.0.0.1:8000{{postResponse.post.sharedPost.author.profilePhoto ? postResponse.post.sharedPost.author.profilePhoto : defaultProfilePhotoUrl}}');">
+					style="width: 35px; height: 35px; background-image: url('http://127.0.0.1:8000{{postResponse.post.sharedPost.author.profile_photo ? postResponse.post.sharedPost.author.profile_photo : defaultProfilePhotoUrl}}');">
 				</div>
 
 				<div class="ps-5" style="margin-top: -38px;">
 					<a class="d-inline-block text-decoration-none text-dark align-middle fw-500 cursor-pointer"
 						href="/user/{{ postResponse.post.sharedPost.author.id }}">
-						{{ postResponse.post.sharedPost.author.first_name + ' ' + postResponse.post.sharedPost.author.last_name }}
+						{{ postResponse.post.sharedPost.author.first_name + ' ' + postResponse.post.sharedPost.author}}
 					</a>
 
 					<br>

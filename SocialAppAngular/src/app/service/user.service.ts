@@ -78,7 +78,7 @@ export class UserService {
 		formData.append('profile_photo', profilePhoto);
 		return this.httpClient.post<User | HttpErrorResponse>(`${this.host}/update/profile-photo/`, formData);
 	}
-	updateCoverPhoto(coverPhoto: File): Observable<User | HttpErrorResponse> {
+	updateCoverPhoto(coverPhoto: File): Observable<User|any | HttpErrorResponse> {
 		const formData = new FormData();
 		formData.append('cover_photo', coverPhoto);
 		return this.httpClient.post<User | HttpErrorResponse>(`${this.host}/update/cover-photo/`, formData);

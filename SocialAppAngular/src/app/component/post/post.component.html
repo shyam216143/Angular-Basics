@@ -127,7 +127,7 @@
 	</mat-chip-list>
 
 	<mat-card-actions align="end" style="margin-top: -50px !important; padding-bottom: 20px;">
-		<button class="me-2" mat-icon-button matTooltip="{{postResponse.likedByAuthUser ? 'Unlike' : 'Like'}}"
+		<button class="me-2" *ngIf="postResponse.post.author.id !== authUserId " mat-icon-button matTooltip="{{postResponse.likedByAuthUser ? 'Unlike' : 'Like'}}"
 			(click)="likeOrUnlikePost(postResponse.likedByAuthUser)">
 			<mat-icon [ngClass]="postResponse.likedByAuthUser ? 'text-danger' : 'text-secondary'">favorite</mat-icon>
 		</button>

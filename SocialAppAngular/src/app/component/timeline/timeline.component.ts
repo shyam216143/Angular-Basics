@@ -68,7 +68,15 @@ export class TimelineComponent implements OnInit {
 						if (postResponseList.length === 0 && currentPage === 1) this.noPost = true;
 						
 						postResponseList.forEach(pR =>{ 
-							console.log(pR)
+							console.log("this is post 1",pR.post.dateCreated)
+							console.log("this is post 1",)
+							let datePost = new Date(pR.post.dateCreated)
+							let dateNow = new Date();
+							if(datePost >= dateNow){
+								console.log('suucess to date');
+								
+							}
+
 							this.timelinePostResponseList.push(pR)
 						});
 

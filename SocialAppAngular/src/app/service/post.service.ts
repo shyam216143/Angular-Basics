@@ -29,10 +29,10 @@ export class PostService {
 		}
 	}
   unlikePost(postId: number): Observable<any | HttpErrorResponse> {
-		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/posts/${postId}/unlike`, null);
+		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/posts/${postId}/unlike/`, null);
 	}
   likePost(postId: number): Observable<any | HttpErrorResponse> {
-		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/posts/${postId}/like`, null);
+		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/posts/${postId}/like/`, null);
 	}
   getPostComments(postId: number, page: number, size: number): Observable<any> {
 		const reqParams = new HttpParams().set('page', page).set('size', size);
@@ -41,7 +41,7 @@ export class PostService {
   createPostComment(postId: number, content: string): Observable<any> {
 		const formData = new FormData();
 		formData.append('content', content);
-		return this.httpClient.post<CommentResponse | HttpErrorResponse>(`${this.host}/posts/${postId}/comments/create`, formData);
+		return this.httpClient.post<CommentResponse | HttpErrorResponse>(`${this.host}/posts/${postId}/comments/create/`, formData);
 	}
 	getPostLikes(postId: number, page: number, size: number): Observable<User[] |any| HttpErrorResponse> {
 		const reqParams = new HttpParams().set('page', page).set('size', size);
@@ -68,10 +68,10 @@ export class PostService {
 		formData.append('content', content);
 		formData.append('postPhoto', postPhoto);
 		formData.append('postTags', JSON.stringify(postTags));
-		return this.httpClient.post<Post | HttpErrorResponse>(`${this.host}/posts/${postId}/update`, formData);
+		return this.httpClient.post<Post | HttpErrorResponse>(`${this.host}/posts/${postId}/update/`, formData);
 	}
 	deletePostPhoto(postId: number): Observable<any | HttpErrorResponse> {
-		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/posts/${postId}/photo/delete`, null);
+		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/posts/${postId}/photo/delete/`, null);
 	}
 	
 	likePostComment(commentId: number): Observable<any | HttpErrorResponse> {

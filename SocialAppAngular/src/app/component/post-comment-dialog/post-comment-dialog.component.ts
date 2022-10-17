@@ -98,6 +98,7 @@ throw new Error('Method not implemented.');
 		this.subscriptions.push(
 			this.postService.createPostComment(this.dataPost.id, this.content?.value).subscribe({
 				next: (newComment: CommentResponse) => {
+					console.log(newComment)
 					this.commentFormGroup.reset();
 					Object.keys(this.commentFormGroup.controls).forEach(key => {
 						this.commentFormGroup.get(key)?.setErrors(null) ;

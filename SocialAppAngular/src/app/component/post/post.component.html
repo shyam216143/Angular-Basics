@@ -6,8 +6,7 @@
 		</div>
 		<mat-card-title>
 			<a href="/user/{{ postResponse.post.author.id }}" class="text-decoration-none text-dark">
-				<!-- {{ postResponse.post.author.first_name + ' ' + postResponse.post.author.last_name }} -->
-				Shyam Kumar
+				{{ postResponse.post.author.first_name + ' ' + postResponse.post.author.last_name }}
 			</a>
 		</mat-card-title>
 		<mat-card-subtitle>
@@ -16,7 +15,8 @@
 		</mat-card-subtitle>
 	</mat-card-header>
 
-	<div align="end" style="position: absolute; top: 10px; right: 10px">
+	<div align="end" style="position: absolute; top: 10px; right: 10px"
+	*ngIf="postResponse.post.author.id === authUserId">
 		<button mat-icon-button [matMenuTriggerFor]="coverPhotoMenu">
 			<mat-icon>more_vert</mat-icon>
 		</button>
@@ -112,7 +112,7 @@
 			style="padding: 4px 10px !important; min-height: 28px;" (click)="openCommentDialog()">
 			Comments
 			<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-				2{{ postResponse.post.commentCount }}
+				{{ postResponse.post.commentCount }}
 			</span>
 		</mat-chip>
 

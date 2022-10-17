@@ -65,8 +65,6 @@ export class TimelineComponent implements OnInit {
 				this.timelineService.getTimelinePosts(currentPage, this.resultSize).subscribe({
 					next: (postResponseList: PostResponse[]) => {
 						const x=postResponseList[0]
-						// console.log(JSON.parse(postResponseList[0]))
-						// console.log(postResponseList[0].post.author,"helloi")
 						if (postResponseList.length === 0 && currentPage === 1) this.noPost = true;
 						
 						postResponseList.forEach(pR =>{ 

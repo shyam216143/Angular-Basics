@@ -113,7 +113,7 @@ export class HeaderComponent implements OnInit {
 				error: (errorResponse: HttpErrorResponse) => {
 					this.matSnackbar.openFromComponent(SnakebarComponent, {
 						data: AppConstants.snackbarErrorContent,
-						panelClass: ['bg-danger'],
+						panelClass: ['bg-danger'],	
 						duration: 5000
 					});
 					this.fetchingResult = false;

@@ -11,7 +11,7 @@ export class User {
     current_city!: string;
     edu_institution!: string;
     workplace!: string;
-    country!: Country;
+    country!: any;
     profile_photo!: string;
     cover_photo!: string;
     role!: string;

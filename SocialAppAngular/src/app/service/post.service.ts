@@ -25,7 +25,7 @@ export class PostService {
 		if (isTypeShare) {
 			return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/posts/${postId}/share/delete`, null);
 		} else {
-			return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/posts/${postId}/delete`, null);
+			return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/posts/${postId}/delete/`, null);
 		}
 	}
   unlikePost(postId: number): Observable<any | HttpErrorResponse> {
@@ -36,7 +36,7 @@ export class PostService {
 	}
   getPostComments(postId: number, page: number, size: number): Observable<any> {
 		const reqParams = new HttpParams().set('page', page).set('size', size);
-		return this.httpClient.get<CommentResponse[] | HttpErrorResponse>(`${this.host}/posts/${postId}/comments`, { params: reqParams });
+		return this.httpClient.get<CommentResponse[] | HttpErrorResponse>(`${this.host}/posts/${postId}/comments/`, { params: reqParams });
 	}
   createPostComment(postId: number, content: string): Observable<any> {
 		const formData = new FormData();
@@ -54,12 +54,12 @@ export class PostService {
 	createPostShare(postId: number, content: string): Observable<Post|any | HttpErrorResponse> {
 		const formData = new FormData();
 		formData.append('content', content);
-		return this.httpClient.post<Post | HttpErrorResponse>(`${this.host}/posts/${postId}/share/create`, formData);
+		return this.httpClient.post<Post | HttpErrorResponse>(`${this.host}/posts/${postId}/share/create/`, formData);
 	}
 	createNewPost(content: string, postPhoto: File, postTags: any[]): Observable<Post |any| HttpErrorResponse> {
 		const formData = new FormData();
 		formData.append('content', content);
-		formData.append('postPhoto', postPhoto);
+		formData.append('postPhoto', postPhoto||null);
 		formData.append('postTags', JSON.stringify(postTags));
 		return this.httpClient.post<Post | HttpErrorResponse>(`${this.host}/user/createpost/`, formData);
 	}
@@ -75,7 +75,7 @@ export class PostService {
 	}
 	
 	likePostComment(commentId: number): Observable<any | HttpErrorResponse> {
-		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/posts/comments/${commentId}/like`, null);
+		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/posts/comments/${commentId}/like/`, null);
 	}
 
 }

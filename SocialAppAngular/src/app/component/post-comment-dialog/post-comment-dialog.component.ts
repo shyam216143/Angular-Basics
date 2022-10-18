@@ -189,6 +189,7 @@ throw new Error('Method not implemented.');
 					this.dataPost.commentCount--;
 
 					this.matSnackbar.openFromComponent(SnakebarComponent, {
+						panelClass: ['bg-success'],
 						data: 'Comment deleted successfully.',
 						duration: 5000
 					});

@@ -31,8 +31,11 @@
 			</button>
 		</mat-menu>
 	</div>
+    <div *ngIf="postResponse.post.postPhoto">
+		<img  mat-card-image src="http://127.0.0.1:8000{{ postResponse.post.postPhoto }}" alt="">
 
-	<img *ngIf="postResponse.post.postPhoto" mat-card-image src="http://127.0.0.1:8000{{ postResponse.post.postPhoto }}" alt="">
+	</div>
+	
 
 	<mat-card-content class="mb-4">
 		<p class="p-2" *ngIf="isDetailedPost && postResponse.post.content.length > 0">

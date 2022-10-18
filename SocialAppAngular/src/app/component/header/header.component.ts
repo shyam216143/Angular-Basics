@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit {
 	}
 
 	if (this.isUserLoggedIn) {
-		// this.loadNotifications(1);
+		this.loadNotifications(1);
 	}
 
 	this.authService.logoutSubject.subscribe(loggedOut => {
@@ -95,6 +95,7 @@ export class HeaderComponent implements OnInit {
 		this.subscriptions.push(
 			this.notificationService.getNotifications(page,  this.resultSize).subscribe({
 				next: (notifications: Notification[]) => {
+					console.log(notifications);
 					this.fetchingResult = false;
 
 					notifications.forEach(n => {

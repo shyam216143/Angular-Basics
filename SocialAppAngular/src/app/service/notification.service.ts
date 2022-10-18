@@ -14,7 +14,7 @@ export class NotificationService {
 	constructor(private httpClient: HttpClient) { }
   getNotifications(page: number, size: number): Observable<Notification[]|any | HttpErrorResponse> {
 		const reqParams = new HttpParams().set('page', page).set('size', size);
-		return this.httpClient.get<Notification[] | HttpErrorResponse>(`${this.host}/notifications`, { params: reqParams });
+		return this.httpClient.get<Notification[] | HttpErrorResponse>(`${this.host}/notifications/`, { params: reqParams });
 	}
   markAllSeen():  Observable<any | HttpErrorResponse> {
 		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/notifications/mark-seen`, null);

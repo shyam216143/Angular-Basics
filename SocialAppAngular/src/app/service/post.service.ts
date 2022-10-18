@@ -23,7 +23,7 @@ export class PostService {
 	}
   deletePost(postId: number, isTypeShare: boolean): Observable<any | HttpErrorResponse> {
 		if (isTypeShare) {
-			return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/posts/${postId}/share/delete`, null);
+			return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/posts/${postId}/share/delete/`, null);
 		} else {
 			return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/posts/${postId}/delete/`, null);
 		}

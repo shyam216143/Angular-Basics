@@ -26,6 +26,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { MatSliderModule } from '@angular/material/slider';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -62,7 +63,8 @@ import { FollowingFollowerListDialogComponent } from './component/following-foll
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { ViewPhotoDialogComponent } from './component/view-photo-dialog/view-photo-dialog.component';
 import { AuthGuard } from './guard/auth.guard';
-import{HomeComponent} from './component/home/home.component'
+import { HomeComponent } from './component/home/home.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,6 +89,7 @@ import{HomeComponent} from './component/home/home.component'
     PostDialogComponent,
     ConfirmationDialogComponent,
     WaitingDialogComponent,
+    HomeComponent,
     CommentLikeDialogComponent,
     TagDialogComponent,
     SearchDialogComponent,
@@ -94,8 +97,7 @@ import{HomeComponent} from './component/home/home.component'
     PhotoUploadDialogComponent,
     FollowingFollowerListDialogComponent,
     ViewPhotoDialogComponent,
-    HomeComponent
- 
+    
   ],
   imports: [
     BrowserModule,
@@ -128,8 +130,9 @@ import{HomeComponent} from './component/home/home.component'
 		MatDatepickerModule,
 		MatNativeDateModule,
 		MatMomentDateModule,
-		MatSliderModule
-		
+		MatSliderModule,
+    MatAutocompleteModule,
+    MatDividerModule,
   ],
   providers: [
 		AuthGuard,

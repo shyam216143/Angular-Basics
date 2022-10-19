@@ -5,6 +5,7 @@ import { ConfirmationDialogComponent } from './component/confirmation-dialog/con
 import { ExampleComponent } from './component/example/example.component';
 import { FollowingFollowerListDialogComponent } from './component/following-follower-list-dialog/following-follower-list-dialog.component';
 import { ForgotPasswordDialogComponent } from './component/forgot-password-dialog/forgot-password-dialog.component';
+import { HomeComponent } from './component/home/home.component';
 import { LoginComponent } from './component/login/login.component';
 import { LogoutComponent } from './component/logout/logout.component';
 import { MessageComponent } from './component/message/message.component';
@@ -38,6 +39,8 @@ const routes: Routes = [
   { path: 'message', component: MessageComponent },
   { path: 'reset-password/:uid/:token', component: ResetPasswordComponent },
   { path: 'verify-email/:token', component: VerifyEmailComponent },
+  { path: 'home', component: HomeComponent },
+  
   // { path: 'post', component: PostComponent },
   // { path: 'post-like-dialog', component: PostLikeDialogComponent },
   // { path: 'post-share-dialog', component: PostShareDialogComponent },

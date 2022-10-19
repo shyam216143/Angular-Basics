@@ -62,7 +62,7 @@ import { FollowingFollowerListDialogComponent } from './component/following-foll
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { ViewPhotoDialogComponent } from './component/view-photo-dialog/view-photo-dialog.component';
 import { AuthGuard } from './guard/auth.guard';
-
+import{HomeComponent} from './component/home/home.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -94,6 +94,7 @@ import { AuthGuard } from './guard/auth.guard';
     PhotoUploadDialogComponent,
     FollowingFollowerListDialogComponent,
     ViewPhotoDialogComponent,
+    HomeComponent
  
   ],
   imports: [

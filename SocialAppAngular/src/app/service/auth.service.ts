@@ -16,6 +16,7 @@ export class AuthService {
 	loginSubject = new Subject<any>();
   private host = environment.apiUrl;
   private authToken!: string|null;
+  private authRefreshToken!: string|null;
   private authUser!: any;
   private principal!: any;
   private jwtService = new JwtHelperService();
@@ -30,6 +31,7 @@ export class AuthService {
   
 	logout(): void {
 		this.authToken = null;
+		this.authRefreshToken = null;
 		this.authUser = null;
 		this.principal = 0;
 		localStorage.removeItem('authUser');
@@ -51,6 +53,12 @@ export class AuthService {
 		if (authToken != null && authToken != '') {
 			this.authToken = authToken;
 			localStorage.setItem('authToken', authToken);
+		}
+	}
+	storeRefreshTokenInCache(authRefreshToken: string): void {
+		if (authRefreshToken != null && authRefreshToken != '') {
+			this.authRefreshToken = authRefreshToken;
+			localStorage.setItem('authRefreshToken', authRefreshToken);
 		}
 	}
 	storeAuthUserInCache(authUser: any): void {

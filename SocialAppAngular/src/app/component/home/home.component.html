@@ -1,69 +1,53 @@
 <h1>hellojvjnj</h1>
-<h1>hellojvjnj</h1>
 <div class="container">
   <div class="chat-list mat-elevation-z5">
     <div class="search-input">
       <mat-form-field>
-        <input
-          matInput
-          placeholder="Search for users and start a chat"
-          [matAutocomplete]="users"
-          [formControl]="searchControl"
-        />
+        <input matInput placeholder="Search for users and start a chat" [matAutocomplete]="users"
+          [formControl]="searchControl" />
       </mat-form-field>
       <mat-autocomplete #users="matAutocomplete">
-        <mat-option
-          
-          [value]="''"
-          
-        >
-         
+        <mat-option [value]="'afafsdfdsa'">
+
         </mat-option>
       </mat-autocomplete>
     </div>
-    <mat-selection-list [multiple]="false" [formControl]="chatListControl">
+    <mat-selection-list [multiple]="false" [formControl]="chatListControl" *ngFor="let x of users_data">
       <mat-divider></mat-divider>
-      <mat-list-option >
-        <img
-          matListAvatar
-          [src]="
-            'assets/images/image-placeholder.png'
-          "
-        />
+      <mat-list-option (click)="createChat(x)">
+        <img matListAvatar src=
+           "http://127.0.0.1:8000{{x.profile_photo}}"
+           />
         <p mat-line class="chat-title">
-          <span class="chat-name">bfdhj</span
-          ><span class="chat-date">njdjkn</span>
+          <span class="chat-name">{{x.username}}</span><span class="chat-date">{{x.birth_date}}</span>
         </p>
-        <p mat-line>ddd</p>
-        <mat-divider></mat-divider>
+        <p mat-line>hello bro</p>
+        <mat-divider></mat-divider> 
       </mat-list-option>
+      
     </mat-selection-list>
   </div>
   <div class="messages mat-elevation-z5">
-    <div
-      class="messages-header"
-      
-    >
-      <img
-        [src]="
-         'assets/images/image-placeholder.png'
-        "
-      />
-      <h2>shyam</h2>
+    <div *ngIf="!selectedUserData" >
+     
+      <h1 style="align-items: center; margin-top: 11em; margin-left: 5em; font-size:xx-large;">Select a  person to chat</h1>
+    </div>
+    <div  *ngIf="selectedUserData">
+    <div class="messages-header">
+      <img src=
+      "http://127.0.0.1:8000{{selectedUserData.profile_photo}}" />
+      <h2>{{selectedUserData.username}}</h2>
     </div>
     <ng-template #noChatSelected>
       <h2>Messages</h2>
     </ng-template>
     <mat-divider></mat-divider>
     <div class="chat-area">
-      <ng-container >
-        <ng-container >
-          <div
-            class="chat-bubble-container"
-          
-          >
+      <ng-container>
+        <ng-container>
+          <div class="chat-bubble-container">
             <div class="chat-bubble">
-            
+
               <span class="chat-time"></span>
             </div>
           </div>
@@ -73,16 +57,13 @@
     </div>
     <div class="input-area">
       <mat-form-field appearance="outline">
-        <input
-          matInput
-          placeholder="Enter your message..."
-          [formControl]="messageControl"
-          (keydown.enter)="sendMessage()"
-        />
+        <input matInput placeholder="Enter your message..." [formControl]="messageControl"
+          (keydown.enter)="sendMessage()" />
         <button mat-icon-button matSuffix (click)="sendMessage()">
           <mat-icon>send</mat-icon>
         </button>
       </mat-form-field>
     </div>
+  </div>
   </div>
 </div>

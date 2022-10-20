@@ -43,6 +43,9 @@ export class AuthService {
 		return this.http.get<HttpResponse<User>|any | HttpErrorResponse>(`${this.host}/profile/`);
 
 	}
+	getUserFollowersData(user_id:number): Observable<any>{
+		return this.http.get<HttpResponse<User[]> | HttpErrorResponse>(`${this.host}/${user_id}/followers_data/`);
+	}
 
 	storeTokenInCache(authToken: string): void {
 		if (authToken != null && authToken != '') {

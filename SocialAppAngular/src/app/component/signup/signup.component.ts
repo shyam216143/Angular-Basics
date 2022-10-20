@@ -80,7 +80,8 @@ export class SignupComponent implements OnInit {
 
 			this.subscriptions.push(
 				this.authService.signup(userSignup).subscribe({
-					next: (response: HttpResponse<any>) => {
+					next: (response: HttpResponse<any>|UserSignup) => {
+						localStorage.setItem('authUser', JSON.stringify(response));
             alert(response)
 						localStorage.setItem(AppConstants.messageTypeLabel, AppConstants.successLabel);
 						localStorage.setItem(AppConstants.messageHeaderLabel, AppConstants.signupSuccessHeader);

@@ -38,29 +38,17 @@
       "http://127.0.0.1:8000{{selectedUserData.profile_photo}}" />
       <h2>{{selectedUserData.username}}</h2>
     </div>
-    <ng-template #noChatSelected>
-      <h2>Messages</h2>
-    </ng-template>
+    
     <mat-divider></mat-divider>
-    <div class="chat-area">
-      <ng-container>
-        <ng-container>
-          <div class="chat-bubble-container">
-            <div class="chat-bubble">
-              <img src=
-              "http://127.0.0.1:8000{{selectedUserData.cover_photo}}" />
-              <span class="chat-time"></span>
-            </div>
-          </div>
-        </ng-container>
-      </ng-container>
-      <div #endOfChat></div>
+    <div class="chat-area" id="chat-area">
+      
+      <!-- <div #endOfChat></div> -->
     </div>
     <div class="input-area">
       <mat-form-field appearance="outline">
         <input matInput placeholder="Enter your message..." [formControl]="messageControl"
-          (keydown.enter)="sendMessage()" />
-        <button mat-icon-button matSuffix (click)="sendMessage()">
+          (keydown.enter)="sendMessage(selectedUserData)" />
+        <button mat-icon-button matSuffix (click)="sendMessage(selectedUserData)" type="submit">
           <mat-icon>send</mat-icon>
         </button>
       </mat-form-field>

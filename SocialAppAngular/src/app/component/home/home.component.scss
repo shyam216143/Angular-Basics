@@ -57,22 +57,10 @@
         .chat-area {
             height: calc(100vh - 270px);
             display: block;
-            
+
             overflow-y: auto;
 
-            // h5 {
-            //     background-color: grey;
-                // display: block;
-                // margin-right: 0%;
-                // text-align: right;
-                // width: max-content;
-                // justify-content: right;
-                // border-radius: 12px;
-                // height: auto;
-                // max-width: 50%;
-                // padding: 0px 10px;
-        //     }
-
+           
 
         }
 
@@ -88,9 +76,24 @@ mat-form-field {
 }
 
 .message-receiver {
+    width: 100%;
     display: flex;
-    margin-bottom: 8px;
+    flex-direction: row
+}
 
+.message-receiver img {
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 12px;
+    height: 35px;
+    padding-left: 0%;
+}
+
+.message-receiver h5 {
+    background-color: grey;
+    max-width: 40%;
+    padding: 0px 10px;
+    border-radius: 10px;
 }
 
 .image1 {
@@ -101,3 +104,15 @@ mat-form-field {
 
 }
 
+.message-sender {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.message-sender h5 {
+    background-color: grey;
+    max-width: 40%;
+    padding: 0px 10px;
+    border-radius: 10px;
+}

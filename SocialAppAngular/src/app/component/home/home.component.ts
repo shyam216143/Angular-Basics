@@ -1,4 +1,4 @@
-import {  Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import {
   combineLatest,
@@ -66,10 +66,10 @@ export class HomeComponent implements OnInit {
     this.selectedUserData = user
   }
 
-  sendMessage(selectedUserData:any) {
+  sendMessage(selectedUserData: any) {
     const message = "shyam fbjkhfehguirhjuhgkojehguhg  nbfnjm jhbgvf mnjhbvf jhbjhnjkn unbkjnkj  nkjn njk nb implements"
     const message1 = 'bfjkswddsd'
-    
+
     function countWords(message: string) {
       const arr = message.split(' ');
 
@@ -89,14 +89,14 @@ export class HomeComponent implements OnInit {
 
 
     let ele = document.getElementById('chat-area')
-    if (ele != null){
+    if (ele != null) {
       ele.innerHTML += "<div style=\"width:100%;display:flex;flex-direction:row-reverse\"><p style=\"background-color:grey;max-width:40%;padding:0px 10px;border-radius:10px;\">" + output + message.length + "</p></div>"
-      ele.innerHTML += "<div style=\"width:100%;display:flex;flex-direction:row\"><img src=\"http://127.0.0.1:8000${selectedUserData.cover_photo}\"><p style=\"background-color:grey;max-width:40%;padding:0px 10px;border-radius:10px;\">" + output + message.length + "</p></div>"
-      let pixels= ele.clientHeight;
-     
-      ele.scrollBy(0,pixels);
-      
-    }   
+      ele.innerHTML += "<div style=\"width:100%;display:flex;flex-direction:row\"><img src='http://127.0.0.1:8000{{selectedUserData.cover_photo}}\'/><p style=\"background-color:grey;max-width:40%;padding:0px 10px;border-radius:10px;\">" + output + message.length + "</p></div>"
+      let pixels = ele.clientHeight;
+
+      ele.scrollBy(0, pixels);
+
+    }
 
 
   }

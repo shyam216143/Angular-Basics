@@ -222,6 +222,7 @@ export class ProfileComponent implements OnInit {
 									panelClass: ['bg-success'],
 									duration: 5000
 								});
+								window.location.reload();
 							},
 							error: (errorResponse: HttpErrorResponse) => {
 								this.matSnackbar.openFromComponent(SnakebarComponent, {

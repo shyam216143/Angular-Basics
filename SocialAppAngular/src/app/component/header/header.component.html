@@ -124,6 +124,10 @@
 			<a mat-menu-item routerLink="profile">Profile</a>
 			<a mat-menu-item routerLink="/settings">Settings</a>
 			<a mat-menu-item routerLink="logout">Logout</a>
+			<div class="dark-mode" aria-disabled="true">
+				<mat-slide-toggle value="false" (toggleChange)="togglechange(true)">Mode</mat-slide-toggle>
+			</div>
+			
 		</mat-menu>
 	</div>
 </mat-toolbar>

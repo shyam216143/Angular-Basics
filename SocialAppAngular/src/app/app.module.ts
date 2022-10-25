@@ -27,6 +27,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { MatSliderModule } from '@angular/material/slider';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -133,6 +134,7 @@ import { HomeComponent } from './component/home/home.component';
 		MatSliderModule,
     MatAutocompleteModule,
     MatDividerModule,
+    MatSlideToggleModule
   ],
   providers: [
 		AuthGuard,

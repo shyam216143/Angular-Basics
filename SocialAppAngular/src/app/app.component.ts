@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'SocialAppAngular';
+  brightness:boolean=false
+  brightness_mode(brightness:boolean){
+   this.brightness=brightness
+
+  }
 }

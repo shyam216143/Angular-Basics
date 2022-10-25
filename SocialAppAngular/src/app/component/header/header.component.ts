@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
@@ -19,6 +19,7 @@ import { SnakebarComponent } from '../snakebar/snakebar.component';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+	@Output() brightnewwMode=new EventEmitter<boolean>();
 	authUser: any;
 	isUserLoggedIn: boolean = false;
 	isProfilePage: boolean = false;
@@ -142,5 +143,7 @@ export class HeaderComponent implements OnInit {
 		}
 	}
 
-
+	togglechange(i:boolean){
+		this.brightnewwMode.emit(i)
+	}
 }

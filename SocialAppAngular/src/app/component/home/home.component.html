@@ -54,7 +54,7 @@
       <div class="input-area">
         <mat-form-field appearance="outline" [formGroup]="chatInputMessage" >
           <input matInput placeholder="Enter your message..." formControlName="selectedUserData" />
-          <button mat-icon-button matSuffix type="submit" (click)="sendMessage(selectedUserData)">
+          <button mat-icon-button matSuffix (click)="sendMessage(selectedUserData)" type="submit" >
             <mat-icon>send</mat-icon>
           </button>
         </mat-form-field>

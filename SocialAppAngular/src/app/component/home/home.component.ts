@@ -23,12 +23,13 @@ import { UserService } from 'src/app/service/user.service';
 export class HomeComponent implements OnInit {
   @ViewChild('endOfChat')
   endOfChat!: ElementRef;
-  userData!: any
+  userData!: User
   selectedUserData!: User
   users_data: User[] = []
-ws=new WebSocket('ws://127.0.0.1:8000/ws/sc/')
+
+  ws = new WebSocket('ws://127.0.0.1:8000/ws/as/')
   private subscriptions: Subscription[] = [];
-  chatInputMessage!:FormGroup
+  chatInputMessage!: FormGroup
   searchControl = new FormControl('');
   messageControl = new FormControl('');
   chatListControl = new FormControl('');
@@ -41,23 +42,23 @@ ws=new WebSocket('ws://127.0.0.1:8000/ws/sc/')
 
   constructor(private userService: UserService,
     private authService: AuthService,
-    private fb:FormBuilder
+    private fb: FormBuilder
 
   ) { }
 
   ngOnInit(): void {
-    this.chatInputMessage=this.fb.group({
-      selectedUserData:new FormControl('', Validators.required)
+    this.chatInputMessage = this.fb.group({
+      selectedUserData: new FormControl('', Validators.required)
     })
-    this.ws.onopen=function(event){
-console.log("websocket is opened...",event)
+    this.ws.onopen = function (event) {
+      console.log("websocket is opened...", event)
     }
-    
-    this.ws.onerror=function(event){
-      console.log("websocket is receiving error...",event)
+
+    this.ws.onerror = function (event) {
+      console.log("websocket is receiving error...", event)
     }
-    this.ws.onclose=function(event){
-      console.log("websocket is closed...",event)
+    this.ws.onclose = function (event) {
+      console.log("websocket is closed...", event)
     }
     this.userData = JSON.parse(this.authService.getAuthUserFromCache())
     console.log("hello world")
@@ -74,15 +75,59 @@ console.log("websocket is opened...",event)
       console.log(this.users_data)
     })
   }
+  wordWrap(str: string, maxWidth: number): any {
+    var newLineStr = "\n";
+    const done = false;
+    let res = '';
+    while (str.length > maxWidth) {
+      let found = false;
+      // Inserts new line at first whitespace of the line
+      for (let i = maxWidth - 1; i >= 0; i--) {
+        if (this.testWhite(str.charAt(i))) {
+          res = res + [str.slice(0, i), newLineStr].join('');
+          str = str.slice(i + 1);
+          found = true;
+          break;
+        }
+      }
+      // Inserts new line at maxWidth position, the word is too long to wrap
+      if (!found) {
+        res += [str.slice(0, maxWidth), newLineStr].join('');
+        str = str.slice(maxWidth);
+      }
 
+    }
+
+    return res + str;
+  }
+
+  testWhite(x: any) {
+    var white = new RegExp(/^\s$/);
+    return white.test(x.charAt(0));
+  };
   createChat(user: User) {
     this.selectedUserData = user
   }
 
-  sendMessage(selectedUserData:User) {
-
-   
-    this.ws.send(this.chatInputMessage.value.selectedUserData)
+  sendMessage(selectedUserData: User) {
+    let str = this.wordWrap(this.chatInputMessage.value.selectedUserData, 10);
+    let send_to;  
+    console.log(selectedUserData.id,"user id is")
+    console.log(this.userData.id,"user id is")
+    if (this.userData.id==5){
+      send_to=8
+    }
+    else{
+      send_to=5
+    }
+    let data={
+      "message":str,
+      "sent_by":this.userData.id,
+      "send_to":selectedUserData.id
+    }
+    let data1= JSON.stringify(data)
+    console.log(data1)
+    this.ws.send(data1)
     const message = "shyam fbjkhfehguirhjuhgkojehguhg  nbfnjm jhbgvf mnjhbvf jhbjhnjkn unbkjnkj  nkjn njk nb implements"
     const message1 = 'bfjkswddsd'
     function countWords(message: string) {
@@ -91,12 +136,18 @@ console.log("websocket is opened...",event)
       return arr
 
     }
-   
-    this.ws.onmessage=function(event){
-      console.log("websocket is receiving message from server...",event)
-      console.log("websocket is receiving message from server actual data is...",event.data)
+
+    this.ws.onmessage = async function (event) {
+      console.log("websocket is receiving message from server...", event)
+      console.log("websocket is receiving message from server actual data is...", event.data)
       let ele = document.getElementById('chat-area')
-      let arr = countWords(event.data)
+      let data= JSON.parse(event.data)
+      let  message=data.message
+      let sent_by = data.sent_by
+      console.log(message)
+      console.log(sent_by, "sent_by")
+     
+      let arr = countWords(message)
       for (let i = 0; i < arr.length; i++) {
         if (arr[i].length > 10) {
           arr[i] = arr[i].slice(0, arr[i].length / 2) + " " + arr[i].slice(arr[i].length / 2);
@@ -106,29 +157,40 @@ console.log("websocket is opened...",event)
       for (let i of arr) {
         output += i + " "
       }
-      if (ele != null) {
-        ele.innerHTML += "<div style=\"width:100%;display:flex;flex-direction:row-reverse\"><p style=\"background-color:grey;max-width:40%;padding:0px 10px;border-radius:10px;\">" + output + "</p></div>"
-        let pixels = ele.clientHeight;
-  
-        ele.scrollBy(0, pixels);
-  
-      }
+      let str1:string=event.data
+      // this.userData = JSON.parse(this.authService.getAuthUserFromCache()) 
+      let user:any= localStorage.getItem('authUser')
+      console.log(JSON.parse(user).id)
+      let current_user_id= JSON.parse(user).id
       
+      if(current_user_id==sent_by){
+        if (ele != null) {
+          ele.innerHTML += "<div style=\"width:100%;display:flex;flex-direction:row-reverse\"><p style=\"background-color:grey;max-width:40%;padding:0px 10px;border-radius:10px;\">" + output + "</p></div>"
+          let pixels = ele.clientHeight;
+  
+          ele.scrollBy(0, pixels);
+  
+        }
+      }
+      else{
+        if (ele != null) {
+          ele.innerHTML += "<div style=\"width:100%;display:flex;flex-direction:row\"><p style=\"background-color:grey;max-width:40%;padding:0px 10px;border-radius:10px;\">" + output + "</p></div>"
+          let pixels = ele.clientHeight;
+  
+          ele.scrollBy(0, pixels);
+  
+        }
+      }
+    
+
     }
     this.chatInputMessage.reset()
 
-    // let ele = document.getElementById('chat-area')
-    // if (ele != null) {
-    //   ele.innerHTML += "<div style=\"width:100%;display:flex;flex-direction:row-reverse\"><p style=\"background-color:grey;max-width:40%;padding:0px 10px;border-radius:10px;\">" + output + message.length + "</p></div>"
-    //   ele.innerHTML += "<div style=\"width:100%;display:flex;flex-direction:row\"><img src='http://127.0.0.1:8000{{selectedUserData.cover_photo}}\'/><p style=\"background-color:grey;max-width:40%;padding:0px 10px;border-radius:10px;\">" + output + message.length + "</p></div>"
-    //   let pixels = ele.clientHeight;
 
-    //   ele.scrollBy(0, pixels);
-
-    // }
 
 
   }
 
- 
+
+
 }

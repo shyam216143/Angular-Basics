@@ -1,5 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   combineLatest,
   map,
@@ -10,9 +12,13 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
+import { AppConstants } from 'src/app/common/app-constants';
+import { ChatMessage } from 'src/app/model/chat-message';
 import { User } from 'src/app/model/user';
 import { AuthService } from 'src/app/service/auth.service';
+import { ChatMessageService } from 'src/app/service/chat-message.service';
 import { UserService } from 'src/app/service/user.service';
+import { SnakebarComponent } from '../snakebar/snakebar.component';
 
 
 @Component({
@@ -23,11 +29,14 @@ import { UserService } from 'src/app/service/user.service';
 export class HomeComponent implements OnInit {
   @ViewChild('endOfChat')
   endOfChat!: ElementRef;
-  userData!: User
+  userData: User=JSON.parse(this.authService.getAuthUserFromCache())
   selectedUserData!: User
   users_data: User[] = []
+  chatMessageList:ChatMessage[]=[]
+  url:string = 'ws://127.0.0.1:8000/ws/as/'+JSON.stringify(this.userData.id)+'/'
 
-  ws = new WebSocket('ws://127.0.0.1:8000/ws/as/')
+
+  ws = new WebSocket(this.url)
   private subscriptions: Subscription[] = [];
   chatInputMessage!: FormGroup
   searchControl = new FormControl('');
@@ -42,7 +51,9 @@ export class HomeComponent implements OnInit {
 
   constructor(private userService: UserService,
     private authService: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private chatService:ChatMessageService,
+    private matSnackbar: MatSnackBar,
 
   ) { }
 
@@ -53,7 +64,7 @@ export class HomeComponent implements OnInit {
     this.ws.onopen = function (event) {
       console.log("websocket is opened...", event)
     }
-
+  
     this.ws.onerror = function (event) {
       console.log("websocket is receiving error...", event)
     }
@@ -106,7 +117,27 @@ export class HomeComponent implements OnInit {
     return white.test(x.charAt(0));
   };
   createChat(user: User) {
+    // this.selectedUserData = {}
+    this.chatMessageList=[]
+
     this.selectedUserData = user
+    this.chatService.getChatData(user.id).subscribe({
+    next:(data:ChatMessage[])=>{
+      console.log(data)
+     data.forEach(pR=>{
+      this.chatMessageList.push(pR)
+     })
+    },
+    error: (errorResponse: HttpErrorResponse) => {
+      this.matSnackbar.openFromComponent(SnakebarComponent, {
+        data: AppConstants.snackbarErrorContent,
+        panelClass: ['bg-danger'],
+        duration: 5000
+      });
+      
+    }
+    })
+
   }
 
   sendMessage(selectedUserData: User) {

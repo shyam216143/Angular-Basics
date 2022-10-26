@@ -38,23 +38,25 @@
       </div>
 
       <mat-divider></mat-divider>
-      <div class="chat-area" id="chat-area">
+      <div class="chat-area" id="chat-area"*ngIf="selectedUserData">
+        <div *ngFor="let chat of chatMessageList">
+          <div class="message-sender" *ngIf="chat.user.id==userData.id">
+            <p> {{chat.message}}..</p>
 
-        <div class="message-sender">
-          <!-- <img src="http://127.0.0.1:8000{{selectedUserData.profile_photo}}" alt=""> -->
-          <h5> This is sender message..........</h5>
-          
-        </div>
-        <div class="message-receiver">
+          </div>
+          <div class="message-receiver" *ngIf="chat.user.id!==userData.id">
 
-          <h5> <img src="http://127.0.0.1:8000{{selectedUserData.profile_photo}}" alt="">This is receiver message</h5>
+            <p>{{chat.message}}</p>
+          </div>
         </div>
+
         <!-- <div #endOfChat></div> -->
       </div>
       <div class="input-area">
-        <mat-form-field appearance="outline" [formGroup]="chatInputMessage" >
-          <input matInput placeholder="Enter your message..." formControlName="selectedUserData" />
-          <button mat-icon-button matSuffix (click)="sendMessage(selectedUserData)" type="submit" >
+        <mat-form-field appearance="outline" [formGroup]="chatInputMessage">
+          <input matInput placeholder="Enter your message..." formControlName="selectedUserData"
+            (keydown.enter)="sendMessage(selectedUserData)" />
+          <button mat-icon-button matSuffix (click)="sendMessage(selectedUserData)" type="submit">
             <mat-icon>send</mat-icon>
           </button>
         </mat-form-field>

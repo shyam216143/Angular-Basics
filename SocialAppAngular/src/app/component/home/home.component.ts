@@ -20,7 +20,7 @@ import { ChatMessageService } from 'src/app/service/chat-message.service';
 import { UserService } from 'src/app/service/user.service';
 import { SnakebarComponent } from '../snakebar/snakebar.component';
 
-
+import { Element, NONE_TYPE } from '@angular/compiler';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -35,9 +35,8 @@ export class HomeComponent implements OnInit {
   chatMessageList:ChatMessage[]=[]
   url:string = 'ws://127.0.0.1:8000/ws/as/'+JSON.stringify(this.userData.id)+'/'
 
-
+	private subscriptions: Subscription[] = [];
   ws = new WebSocket(this.url)
-  private subscriptions: Subscription[] = [];
   chatInputMessage!: FormGroup
   searchControl = new FormControl('');
   messageControl = new FormControl('');
@@ -58,6 +57,8 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    
+  
     this.chatInputMessage = this.fb.group({
       selectedUserData: new FormControl('', Validators.required)
     })
@@ -116,7 +117,17 @@ export class HomeComponent implements OnInit {
     var white = new RegExp(/^\s$/);
     return white.test(x.charAt(0));
   };
+  flag_check=false;
   createChat(user: User) {
+    if (this.flag_check){
+      let a = document.getElementById("message-content") as any
+      let ele = document.getElementById('message-content1') as any
+      console.log(a.innerHTML)
+      a.innerHTML=""
+      ele.innerHTML=""
+
+    }
+    
     // this.selectedUserData = {}
     this.chatMessageList=[]
 
@@ -124,9 +135,9 @@ export class HomeComponent implements OnInit {
     this.chatService.getChatData(user.id).subscribe({
     next:(data:ChatMessage[])=>{
       console.log(data)
-     data.forEach(pR=>{
-      this.chatMessageList.push(pR)
-     })
+      this.chatMessageList=[]
+      this.chatMessageList=data;
+      this.flag_check=true
     },
     error: (errorResponse: HttpErrorResponse) => {
       this.matSnackbar.openFromComponent(SnakebarComponent, {
@@ -159,8 +170,7 @@ export class HomeComponent implements OnInit {
     let data1= JSON.stringify(data)
     console.log(data1)
     this.ws.send(data1)
-    const message = "shyam fbjkhfehguirhjuhgkojehguhg  nbfnjm jhbgvf mnjhbvf jhbjhnjkn unbkjnkj  nkjn njk nb implements"
-    const message1 = 'bfjkswddsd'
+   
     function countWords(message: string) {
       const arr = message.split(' ');
 
@@ -171,7 +181,7 @@ export class HomeComponent implements OnInit {
     this.ws.onmessage = async function (event) {
       console.log("websocket is receiving message from server...", event)
       console.log("websocket is receiving message from server actual data is...", event.data)
-      let ele = document.getElementById('chat-area')
+      let ele = document.getElementById('message-content')
       let data= JSON.parse(event.data)
       let  message=data.message
       let sent_by = data.sent_by
@@ -196,19 +206,41 @@ export class HomeComponent implements OnInit {
       
       if(current_user_id==sent_by){
         if (ele != null) {
-          ele.innerHTML += "<div style=\"width:100%;display:flex;flex-direction:row-reverse\"><p style=\"background-color:grey;max-width:40%;padding:0px 10px;border-radius:10px;\">" + output + "</p></div>"
-          let pixels = ele.clientHeight;
+          let timestampNow1 = Date.now()
+          let date = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).toLowerCase();
+          const element = document.createElement("div")
+          element.className = "message-sender";
+          // element.style.width=100%;
+          // element.style.display="flex"
+          // const element1 = document.createElement("div")
+          // element1.className = "message-content";
+
+          // const node = document.createTextNode(output);
+          // element1.appendChild(node)
+
+          // element.appendChild(element1)
+
+          // ele
+          ele.innerHTML += "<div class=\"sender\" style=\"width:100%;padding: 0px 10px;border-radius: 10px; background-color: grey;display:flex;flex-direction:row-reverse\"><div style=\"\">" + output +"<div style=\"color:white;left: 0%;font-size: x-small;\">"+"..."+date+"</div> </div></div>"
+          let ele1:any = document.getElementById('chat-area')
+
+          let pixels = ele1.clientHeight;
   
           ele.scrollBy(0, pixels);
+  
   
         }
-      }
+      } 
       else{
-        if (ele != null) {
-          ele.innerHTML += "<div style=\"width:100%;display:flex;flex-direction:row\"><p style=\"background-color:grey;max-width:40%;padding:0px 10px;border-radius:10px;\">" + output + "</p></div>"
-          let pixels = ele.clientHeight;
+        let ele1 = document.getElementById('message-content1')
+        if (ele1 != null) {
+          let timestampNow1 = Date.now()
+          let date = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).toLowerCase();
+          ele1.innerHTML +="<div class=\"sender\" style=\"width:100%;padding: 0px 10px;border-radius: 10px; background-color: grey;display:flex;flex-direction:row\"><div style=\"\">" + output +"<div style=\"color:white;left: 0%;font-size: x-small;\">"+"..."+date+"</div> </div></div>"
+          let pixels = ele1.clientHeight;
   
-          ele.scrollBy(0, pixels);
+          ele1.scrollBy(0, pixels);
+          
   
         }
       }

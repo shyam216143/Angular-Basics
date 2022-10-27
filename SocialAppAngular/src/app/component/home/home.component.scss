@@ -60,7 +60,7 @@
 
             overflow-y: auto;
 
-           
+
 
         }
 
@@ -89,8 +89,8 @@ mat-form-field {
     padding-left: 0%;
 }
 
-.message-receiver p {
-    background-color: grey;
+.message-receiver .message-content {
+    background-color: rgb(128, 201, 201);
     max-width: 40%;
     padding: 0px 10px;
     border-radius: 10px;
@@ -110,9 +110,27 @@ mat-form-field {
     flex-direction: row-reverse;
 }
 
-.message-sender p {
+.message-sender .message-content {
     background-color: grey;
     max-width: 40%;
     padding: 0px 10px;
     border-radius: 10px;
+}
+
+#shyam {
+  
+    width:100%;
+    display:flex;
+    flex-direction:row-reverse
+}
+#shyam1 {
+  
+    width:100%;
+    display:flex;
+    flex-direction:row-reverse
+}
+.date{
+    left: 0%;
+    font-size: x-small;
+    color: white;
 }

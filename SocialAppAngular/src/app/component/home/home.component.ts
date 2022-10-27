@@ -236,7 +236,7 @@ export class HomeComponent implements OnInit {
         if (ele1 != null) {
           let timestampNow1 = Date.now()
           let date = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).toLowerCase();
-          ele1.innerHTML +="<div class=\"sender\" style=\"width:100%;padding: 0px 10px;border-radius: 10px; background-color: grey;display:flex;flex-direction:row\"><div style=\"\">" + output +"<div style=\"color:white;left: 0%;font-size: x-small;\">"+"..."+date+"</div> </div></div>"
+          ele1.innerHTML +="<div style=\"width:100%;padding: 0px 10px;border-radius: 10px; background-color: rgb(128, 201, 201);display:flex;flex-direction:row\"><div style=\"\">" + output +"<div style=\"color:white;left: 0%;font-size: x-small;\">"+"..."+date+"</div> </div></div>"
           let pixels = ele1.clientHeight;
   
           ele1.scrollBy(0, pixels);

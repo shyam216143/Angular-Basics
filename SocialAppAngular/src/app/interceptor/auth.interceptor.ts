@@ -25,7 +25,7 @@ export class AuthInterceptor implements HttpInterceptor {
 			return next.handle(request);
 		}
 
-		if (request.url.includes(`${this.host}/verify-email`)) {
+		if (request.url.includes(`${this.host}/verify-email/:uid/:token`)) {
 			return next.handle(request);
 		}
 

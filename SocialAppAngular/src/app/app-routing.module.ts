@@ -38,7 +38,7 @@ const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
   { path: 'message', component: MessageComponent },
   { path: 'reset-password/:uid/:token', component: ResetPasswordComponent },
-  { path: 'verify-email/:token', component: VerifyEmailComponent },
+  { path: 'verify-email/:uid/:token', component: VerifyEmailComponent },
   { path: 'home', component: HomeComponent },
   
   // { path: 'post', component: PostComponent },

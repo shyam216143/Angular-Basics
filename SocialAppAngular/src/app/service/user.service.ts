@@ -28,8 +28,8 @@ export class UserService {
 
 		return this.httpClient.post<any>(`${this.host}/forgot_password_send_email/`, { "email": email });
 	}
-	verifyEmail(token: string): Observable<HttpResponse<any> | HttpErrorResponse> {
-		return this.httpClient.post<HttpResponse<any> | HttpErrorResponse>(`${this.host}/verify-email/${token}`, null);
+	verifyEmail(token: string, uid:string): Observable<HttpResponse<any> | HttpErrorResponse> {
+		return this.httpClient.post<HttpResponse<any> | HttpErrorResponse>(`${this.host}/verify-email/${uid}/${token}/`, null);
 	}
 
 	getUserPosts(userId: number, page: number, size: number): Observable<PostResponse[]|any | HttpErrorResponse> {

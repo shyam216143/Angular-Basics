@@ -45,9 +45,6 @@ export class HomeComponent implements OnInit {
   messages$: Observable<any[]> | undefined;
 
 
-
-
-
   constructor(private userService: UserService,
     private authService: AuthService,
     private fb: FormBuilder,
@@ -156,12 +153,7 @@ export class HomeComponent implements OnInit {
     let send_to;
     console.log(selectedUserData.id, "user id is")
     console.log(this.userData.id, "user id is")
-    if (this.userData.id == 5) {
-      send_to = 8
-    }
-    else {
-      send_to = 5
-    }
+   
     let data = {
       "message": str,
       "sent_by": this.userData.id,

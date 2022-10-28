@@ -3,7 +3,7 @@ import { Post } from "./post";
 import { User } from "./user";
 
 export class Notification {
-    id!: number;
+	id!: number;
 	type!: string;
 	receiver!: User;
 	sender!: User;

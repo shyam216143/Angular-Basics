@@ -12,34 +12,34 @@ import { environment } from 'src/environments/environment';
 import { SnakebarComponent } from '../snakebar/snakebar.component';
 
 @Component({
-  selector: 'app-photo-upload-dialog',
-  templateUrl: './photo-upload-dialog.component.html',
-  styleUrls: ['./photo-upload-dialog.component.css']
+	selector: 'app-photo-upload-dialog',
+	templateUrl: './photo-upload-dialog.component.html',
+	styleUrls: ['./photo-upload-dialog.component.css']
 })
 export class PhotoUploadDialogComponent implements OnInit {
-	photoPreviewUrl!: string|null;
+	photoPreviewUrl!: string | null;
 	photo!: File;
-//   data: any;
+	//   data: any;
 	defaultProfilePhotoUrl: string = environment.defaultProfilePhotoUrl;
 	defaultCoverPhotoUrl: string = environment.defaultCoverPhotoUrl;
 	private subscriptions: Subscription[] = [];
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
+	constructor(
+		@Inject(MAT_DIALOG_DATA) public data: any,
 		private authService: AuthService,
 		private userService: UserService,
 		private thisDialogRef: MatDialogRef<PhotoUploadDialogComponent>,
 		private matSnackbar: MatSnackBar,
-		private route:Router,
-  ) { }
+		private route: Router,
+	) { }
 
-  ngOnInit(): void {
+	ngOnInit(): void {
 		if (this.data.uploadType === 'profile_photo') {
 			this.photoPreviewUrl = this.data.authUser.profile_photo ? this.data.authUser.profile_photo : this.defaultProfilePhotoUrl;
 		} else if (this.data.uploadType === 'cover_photo') {
 			this.photoPreviewUrl = this.data.authUser.cover_photo ? this.data.authUser.cover_photo : this.defaultCoverPhotoUrl;
 		}
 	}
-  previewPhoto(e: any): void {
+	previewPhoto(e: any): void {
 		if (e.target.files) {
 			this.photo = e.target.files[0];
 			const reader = new FileReader();
@@ -86,7 +86,7 @@ export class PhotoUploadDialogComponent implements OnInit {
 								duration: 5000
 							});
 							this.thisDialogRef.close({ updatedUser });
-							
+
 						},
 						error: (errorResponse: HttpErrorResponse) => {
 							this.matSnackbar.openFromComponent(SnakebarComponent, {

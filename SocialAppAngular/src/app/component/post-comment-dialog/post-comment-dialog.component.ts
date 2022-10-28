@@ -16,15 +16,15 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import { SnakebarComponent } from '../snakebar/snakebar.component';
 
 @Component({
-  selector: 'app-post-comment-dialog',
-  templateUrl: './post-comment-dialog.component.html',
-  styleUrls: ['./post-comment-dialog.component.css']
+	selector: 'app-post-comment-dialog',
+	templateUrl: './post-comment-dialog.component.html',
+	styleUrls: ['./post-comment-dialog.component.css']
 })
 export class PostCommentDialogComponent implements OnInit {
-google() {
-throw new Error('Method not implemented.');
-}
-  @Output() updatedCommentCountEvent = new EventEmitter<number>();
+	google() {
+		throw new Error('Method not implemented.');
+	}
+	@Output() updatedCommentCountEvent = new EventEmitter<number>();
 	@Output() newItemEvent = new EventEmitter<string>();
 	authUserId!: number;
 	commentResponseList: CommentResponse[] = [];
@@ -37,36 +37,36 @@ throw new Error('Method not implemented.');
 	defaultProfilePhotoUrl = environment.defaultProfilePhotoUrl;
 	private subscriptions: Subscription[] = [];
 	constructor(
-    @Inject(MAT_DIALOG_DATA) public dataPost: Post,
+		@Inject(MAT_DIALOG_DATA) public dataPost: Post,
 		private authService: AuthService,
 		private postService: PostService,
 		private commentService: CommentService,
 		private formBuilder: FormBuilder,
 		private matDialog: MatDialog,
 		private matSnackbar: MatSnackBar
-  ) { }
-  get content() { return this.commentFormGroup.get('content') }
+	) { }
+	get content() { return this.commentFormGroup.get('content') }
 
-  ngOnInit(): void {
-    this.authUserId = this.authService.getAuthUserId();
+	ngOnInit(): void {
+		this.authUserId = this.authService.getAuthUserId();
 
 		this.commentFormGroup = this.formBuilder.group({
 			content: new FormControl('', [Validators.required, Validators.maxLength(1024)])
 		});
 
 		this.loadComments(1);
-  }
+	}
 
 
-  ngOnDestroy(): void {
-	this.subscriptions.forEach(sub => sub.unsubscribe());
-}
+	ngOnDestroy(): void {
+		this.subscriptions.forEach(sub => sub.unsubscribe());
+	}
 
 	loadComments(currentPage: number): void {
 		if (!this.fetchingResult) {
 			if (this.dataPost.commentCount > 0) {
 				this.fetchingResult = true;
-	
+
 				this.subscriptions.push(
 					this.postService.getPostComments(this.dataPost.id, currentPage, this.resultSize).subscribe({
 						next: (resultList: CommentResponse[]) => {
@@ -89,7 +89,7 @@ throw new Error('Method not implemented.');
 						}
 					})
 				);
-			} 
+			}
 		}
 	}
 
@@ -101,7 +101,7 @@ throw new Error('Method not implemented.');
 					console.log(newComment)
 					this.commentFormGroup.reset();
 					Object.keys(this.commentFormGroup.controls).forEach(key => {
-						this.commentFormGroup.get(key)?.setErrors(null) ;
+						this.commentFormGroup.get(key)?.setErrors(null);
 					});
 					this.commentResponseList.unshift(newComment);
 					this.updatedCommentCountEvent.emit(this.commentResponseList.length);
@@ -133,7 +133,7 @@ throw new Error('Method not implemented.');
 			this.subscriptions.push(
 				this.commentService.unlikeComment(commentResponse.comment.id).subscribe({
 					next: (response: any) => {
-						const targetCommentResponse:any = this.commentResponseList.find(cR => cR === commentResponse);
+						const targetCommentResponse: any = this.commentResponseList.find(cR => cR === commentResponse);
 						targetCommentResponse.likedByAuthUser = false;
 						targetCommentResponse.comment.likeCount--;
 					},
@@ -150,7 +150,7 @@ throw new Error('Method not implemented.');
 			this.subscriptions.push(
 				this.commentService.likeComment(commentResponse.comment.id).subscribe({
 					next: (response: any) => {
-						const targetCommentResponse:any = this.commentResponseList.find(cR => cR === commentResponse);
+						const targetCommentResponse: any = this.commentResponseList.find(cR => cR === commentResponse);
 						targetCommentResponse.likedByAuthUser = true;
 						targetCommentResponse.comment.likeCount++;
 					},

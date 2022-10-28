@@ -18,9 +18,9 @@ import { UserService } from 'src/app/service/user.service';
 import { SnakebarComponent } from '../snakebar/snakebar.component';
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css']
+	selector: 'app-settings',
+	templateUrl: './settings.component.html',
+	styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
 	authUser: any;
@@ -33,19 +33,19 @@ export class SettingsComponent implements OnInit {
 	repeatPasswordMatcher = new RepeatPasswordMatcher();
 	private subscriptions: Subscription[] = [];
 
-  constructor(
-    private authService: AuthService,
-    private formBuilder: FormBuilder,
-    private router: Router,
-	private countryService: CountryService,
+	constructor(
+		private authService: AuthService,
+		private formBuilder: FormBuilder,
+		private router: Router,
+		private countryService: CountryService,
 
-    private userService:UserService,
-    private matSnackbar: MatSnackBar,
-  ) {
-	
-  }
-  get updateInfoFirstName() { return this.updateInfoFormGroup.get('firstName') }
-  get updateInfoUsername() { return this.updateInfoFormGroup.get('Username') }
+		private userService: UserService,
+		private matSnackbar: MatSnackBar,
+	) {
+
+	}
+	get updateInfoFirstName() { return this.updateInfoFormGroup.get('firstName') }
+	get updateInfoUsername() { return this.updateInfoFormGroup.get('Username') }
 	get updateInfoLastName() { return this.updateInfoFormGroup.get('lastName') }
 	get updateInfoIntro() { return this.updateInfoFormGroup.get('intro') }
 	get updateInfoGender() { return this.updateInfoFormGroup.get('gender') }
@@ -65,68 +65,68 @@ export class SettingsComponent implements OnInit {
 
 
 
-  matchPasswords:any| ValidatorFn = (group: FormGroup): ValidationErrors | null => {
+	matchPasswords: any | ValidatorFn = (group: FormGroup): ValidationErrors | null => {
 		const password = group.get('password')?.value;
 		const passwordRepeat = group.get('passwordRepeat')?.value;
 		return password === passwordRepeat ? null : { passwordMissMatch: true }
 	}
 
-  ngOnInit(): void {
-	this.authUser = this.authService.getAuthUserFromCache();
-	this.authService.getuserdata().subscribe(data => {
-		this.authUser=data
-		console.log(this.authUser)
-		const newLoan={
-			'Username':this.authUser.username,
-			  'firstName':this.authUser.first_name,
-			  'lastName':this.authUser.last_name,
-			  "intro":this.authUser.intro,
-			  "hometown":this.authUser.hometown,
-			  "currentCity":this.authUser.current_city,
-			  "eduInstitution":this.authUser.username,
-			  "workplace":this.authUser.edu_institution,
-			  "gender":this.authUser.gender,
-			  "countryName":this.authUser.country,
-			  "birthDate":this.authUser.birth_date
-		  }
-		  this.updateInfoFormGroup.setValue(newLoan)
-	})
+	ngOnInit(): void {
+		this.authUser = this.authService.getAuthUserFromCache();
+		this.authService.getuserdata().subscribe(data => {
+			this.authUser = data
+			console.log(this.authUser)
+			const newLoan = {
+				'Username': this.authUser.username,
+				'firstName': this.authUser.first_name,
+				'lastName': this.authUser.last_name,
+				"intro": this.authUser.intro,
+				"hometown": this.authUser.hometown,
+				"currentCity": this.authUser.current_city,
+				"eduInstitution": this.authUser.username,
+				"workplace": this.authUser.edu_institution,
+				"gender": this.authUser.gender,
+				"countryName": this.authUser.country,
+				"birthDate": this.authUser.birth_date
+			}
+			this.updateInfoFormGroup.setValue(newLoan)
+		})
 
-	this.countryService.getCountryList().subscribe({
-		next: (countryList: Country[]) => {
-			this.countryList = countryList;
-			console.log(this.countryList)
-		},
-		error: (errorResponse: HttpErrorResponse) => { }
-	});
-    this.updateInfoFormGroup = this.formBuilder.group({
-	  Username: new FormControl('', [Validators.required, Validators.maxLength(64)]),
-      firstName: new FormControl('', [Validators.required, Validators.maxLength(64)]),
-      lastName: new FormControl('', [Validators.required, Validators.maxLength(64)]),
-      intro: new FormControl('', [Validators.maxLength(100)]),
-      hometown: new FormControl('', [Validators.maxLength(128)]),
-      currentCity: new FormControl('', [Validators.maxLength(128)]),
-      eduInstitution: new FormControl('', [Validators.maxLength(128)]),
-      workplace: new FormControl('', [Validators.maxLength(128)]),
-      gender: new FormControl('',[Validators.required]),
-      countryName: new FormControl('',[Validators.required]),
-      birthDate: new FormControl('',[Validators.required])
-    });
-    this.updateEmailFormGroup = this.formBuilder.group({
-      email: new FormControl("", [Validators.required, Validators.email, Validators.maxLength(64)]),
-      password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(32)])
-    });
-    this.updatePasswordFormGroup = this.formBuilder.group({
-      password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]),
-      passwordRepeat: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]),
-      oldPassword: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(32)])
-    }, { validators: this.matchPasswords });
+		this.countryService.getCountryList().subscribe({
+			next: (countryList: Country[]) => {
+				this.countryList = countryList;
+				console.log(this.countryList)
+			},
+			error: (errorResponse: HttpErrorResponse) => { }
+		});
+		this.updateInfoFormGroup = this.formBuilder.group({
+			Username: new FormControl('', [Validators.required, Validators.maxLength(64)]),
+			firstName: new FormControl('', [Validators.required, Validators.maxLength(64)]),
+			lastName: new FormControl('', [Validators.required, Validators.maxLength(64)]),
+			intro: new FormControl('', [Validators.maxLength(100)]),
+			hometown: new FormControl('', [Validators.maxLength(128)]),
+			currentCity: new FormControl('', [Validators.maxLength(128)]),
+			eduInstitution: new FormControl('', [Validators.maxLength(128)]),
+			workplace: new FormControl('', [Validators.maxLength(128)]),
+			gender: new FormControl('', [Validators.required]),
+			countryName: new FormControl('', [Validators.required]),
+			birthDate: new FormControl('', [Validators.required])
+		});
+		this.updateEmailFormGroup = this.formBuilder.group({
+			email: new FormControl("", [Validators.required, Validators.email, Validators.maxLength(64)]),
+			password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(32)])
+		});
+		this.updatePasswordFormGroup = this.formBuilder.group({
+			password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]),
+			passwordRepeat: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]),
+			oldPassword: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(32)])
+		}, { validators: this.matchPasswords });
 
-  }
+	}
 
 
 
-  handleUpdateInfo(): void {
+	handleUpdateInfo(): void {
 		this.submittingForm = true;
 		const updateUserInfo = new UpdateUserInfo();
 		updateUserInfo.username = this.updateInfoUsername?.value;
@@ -171,7 +171,7 @@ export class SettingsComponent implements OnInit {
 							panelClass: ['bg-danger'],
 							duration: 5000
 						});
-            alert("error occured")
+						alert("error occured")
 					}
 					this.submittingForm = false;
 				}
@@ -182,7 +182,7 @@ export class SettingsComponent implements OnInit {
 
 
 
-  
+
 	handleUpdateEmail(): void {
 		this.submittingForm = true;
 		const updateUserEmail = new UpdateUserEmail();
@@ -217,7 +217,7 @@ export class SettingsComponent implements OnInit {
 							panelClass: ['bg-danger'],
 							duration: 5000
 						});
-            console.log("error has occured")
+						console.log("error has occured")
 					}
 					this.submittingForm = false;
 				}
@@ -229,7 +229,7 @@ export class SettingsComponent implements OnInit {
 
 
 
-  handleUpdatePassword(): void {
+	handleUpdatePassword(): void {
 		this.submittingForm = true;
 		const updateUserPassword = new UpdateUserPassword();
 		updateUserPassword.password = this.updatePasswordFormGroup.get('password')?.value;
@@ -264,7 +264,7 @@ export class SettingsComponent implements OnInit {
 							panelClass: ['bg-danger'],
 							duration: 5000
 						});
-            alert("error hass occured")
+						alert("error hass occured")
 					}
 					this.submittingForm = false;
 				}

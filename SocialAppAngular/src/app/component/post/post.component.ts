@@ -36,13 +36,13 @@ export class PostComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.authUserId = this.authService.getAuthUserId();
-		console.log("user id is:",this.authUserId);
+		console.log("user id is:", this.authUserId);
 		console.log(this.postResponse)
 		console.log(this.postResponse.post.author.id)
 		console.log(this.postResponse.post.postTags)
 	}
 
-	
+
 	ngOnDestroy(): void {
 		this.subscriptions.forEach(sub => sub.unsubscribe());
 	}

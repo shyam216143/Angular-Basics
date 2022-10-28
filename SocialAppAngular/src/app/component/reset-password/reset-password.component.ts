@@ -11,37 +11,37 @@ import { UserService } from 'src/app/service/user.service';
 import { SnakebarComponent } from '../snakebar/snakebar.component';
 
 @Component({
-  selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.css']
+	selector: 'app-reset-password',
+	templateUrl: './reset-password.component.html',
+	styleUrls: ['./reset-password.component.css']
 })
 export class ResetPasswordComponent implements OnInit {
-  resetPasswordFormGroup!: FormGroup;
+	resetPasswordFormGroup!: FormGroup;
 	fetchingResult: boolean = false;
-	token: string|any;
-  uid: any;
-  constructor(private userService: UserService,
+	token: string | any;
+	uid: any;
+	constructor(private userService: UserService,
 		private router: Router,
 		private formBuilder: FormBuilder,
 		private matSnackbar: MatSnackBar,
 		private activatedRoute: ActivatedRoute,
 		private matDialog: MatDialog) { }
 
-		private subscriptions: Subscription[] = [];
+	private subscriptions: Subscription[] = [];
 
 
 
-    get password() { return this.resetPasswordFormGroup.get('password') }
-    get passwordRepeat() { return this.resetPasswordFormGroup.get('passwordRepeat') }
-  ngOnInit(): void {
-    this.token = this.activatedRoute.snapshot.paramMap.get('token');
-	this.uid = this.activatedRoute.snapshot.paramMap.get('uid');
+	get password() { return this.resetPasswordFormGroup.get('password') }
+	get passwordRepeat() { return this.resetPasswordFormGroup.get('passwordRepeat') }
+	ngOnInit(): void {
+		this.token = this.activatedRoute.snapshot.paramMap.get('token');
+		this.uid = this.activatedRoute.snapshot.paramMap.get('uid');
 
 		this.resetPasswordFormGroup = this.formBuilder.group({
 			password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]),
 			passwordRepeat: new FormControl('', [Validators.required])
 		});
-  }
+	}
 
 
 
@@ -50,7 +50,7 @@ export class ResetPasswordComponent implements OnInit {
 
 
 
-  resetPassword(): void {
+	resetPassword(): void {
 		if (this.resetPasswordFormGroup.valid) {
 			if (!this.fetchingResult) {
 				this.fetchingResult = true;
@@ -59,7 +59,7 @@ export class ResetPasswordComponent implements OnInit {
 				resetPassword.password2 = this.passwordRepeat?.value;
 
 				this.subscriptions.push(
-					this.userService.resetPassword(this.token,this.uid, resetPassword).subscribe({
+					this.userService.resetPassword(this.token, this.uid, resetPassword).subscribe({
 						next: (result: any) => {
 							this.matSnackbar.openFromComponent(SnakebarComponent, {
 								data: 'Your password has been changed successfully.',
@@ -82,5 +82,5 @@ export class ResetPasswordComponent implements OnInit {
 			}
 		}
 	}
-  
+
 }

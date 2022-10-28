@@ -12,36 +12,36 @@ import { PostLikeDialogComponent } from '../post-like-dialog/post-like-dialog.co
 import { SnakebarComponent } from '../snakebar/snakebar.component';
 
 @Component({
-  selector: 'app-post-share-dialog',
-  templateUrl: './post-share-dialog.component.html',
-  styleUrls: ['./post-share-dialog.component.css']
+	selector: 'app-post-share-dialog',
+	templateUrl: './post-share-dialog.component.html',
+	styleUrls: ['./post-share-dialog.component.css']
 })
 export class PostShareDialogComponent implements OnInit {
-  postShareResponseList: PostResponse[] = [];
+	postShareResponseList: PostResponse[] = [];
 	resultPage: number = 1;
-//   dataPost:any
+	//   dataPost:any
 	resultSize: number = 5;
 	hasMoreResult: boolean = false;
 	fetchingResult: boolean = false;
 	defaultProfilePhotoUrl = environment.defaultProfilePhotoUrl;
 	private subscriptions: Subscription[] = [];
-  constructor(
-  @Inject(MAT_DIALOG_DATA) public dataPost: Post,
-  private postService: PostService,
-  private matDialog: MatDialog,
-  private matSnackbar: MatSnackBar) { }
+	constructor(
+		@Inject(MAT_DIALOG_DATA) public dataPost: Post,
+		private postService: PostService,
+		private matDialog: MatDialog,
+		private matSnackbar: MatSnackBar) { }
 
-  ngOnInit(): void {
-    if (this.dataPost.shareCount > 0) {
+	ngOnInit(): void {
+		if (this.dataPost.shareCount > 0) {
 			this.loadPostShares(1);
 		}
-  }
+	}
 
-  ngOnDestroy(): void {
-	this.subscriptions.forEach(sub => sub.unsubscribe());
-}
+	ngOnDestroy(): void {
+		this.subscriptions.forEach(sub => sub.unsubscribe());
+	}
 
-  loadPostShares(currentPage: number): void {
+	loadPostShares(currentPage: number): void {
 		if (!this.fetchingResult) {
 			this.fetchingResult = true;
 			this.subscriptions.push(

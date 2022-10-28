@@ -5,10 +5,10 @@ import { environment } from 'src/environments/environment';
 import { User } from '../model/user';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class CommentService {
-  private host = environment.apiUrl;
+	private host = environment.apiUrl;
 
 
 	constructor(private httpClient: HttpClient) { }
@@ -20,10 +20,10 @@ export class CommentService {
 	unlikeComment(commentId: number): Observable<any | HttpErrorResponse> {
 		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/posts/comments/${commentId}/unlike/`, null);
 	}
-  deleteComment(postId: number, commentId: number): Observable<any | HttpErrorResponse> {
+	deleteComment(postId: number, commentId: number): Observable<any | HttpErrorResponse> {
 		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/posts/${postId}/comments/${commentId}/delete/`, null);
 	}
-	getCommentLikes(commentId: number, page: number, size: number): Observable<User[]|any | HttpErrorResponse> {
+	getCommentLikes(commentId: number, page: number, size: number): Observable<User[] | any | HttpErrorResponse> {
 		const reqParams = new HttpParams().set('page', page).set('size', size);
 		return this.httpClient.get<User[] | HttpErrorResponse>(`${this.host}/posts/comments/${commentId}/likes/`, { params: reqParams });
 	}

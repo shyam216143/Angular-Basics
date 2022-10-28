@@ -8,9 +8,9 @@ describe('FollowingFollowerListDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FollowingFollowerListDialogComponent ]
+      declarations: [FollowingFollowerListDialogComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(FollowingFollowerListDialogComponent);
     component = fixture.componentInstance;

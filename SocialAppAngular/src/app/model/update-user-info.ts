@@ -1,5 +1,5 @@
 export class UpdateUserInfo {
-    username!:string
+    username!: string
     first_name!: string;
     last_name!: string;
     gender!: string;

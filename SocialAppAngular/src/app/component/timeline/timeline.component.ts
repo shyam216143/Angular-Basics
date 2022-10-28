@@ -12,12 +12,12 @@ import { TimelineService } from 'src/app/service/timeline.service';
 import { SnakebarComponent } from '../snakebar/snakebar.component';
 
 @Component({
-  selector: 'app-timeline',
-  templateUrl: './timeline.component.html',
-  styleUrls: ['./timeline.component.css']
+	selector: 'app-timeline',
+	templateUrl: './timeline.component.html',
+	styleUrls: ['./timeline.component.css']
 })
 export class TimelineComponent implements OnInit {
-  timelinePostResponseList: PostResponse[] = [];
+	timelinePostResponseList: PostResponse[] = [];
 	timelineTagList: Tag[] = [];
 	noPost: boolean = false;
 	resultPage: number = 1;
@@ -28,20 +28,20 @@ export class TimelineComponent implements OnInit {
 	targetTagName!: any;
 	loadingTimelinePostsInitially: boolean = true;
 	loadingTimelineTagsInitially: boolean = true;
-  private subscriptions: Subscription[] = [];
+	private subscriptions: Subscription[] = [];
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private timelineService: TimelineService,
+	constructor(
+		private authService: AuthService,
+		private router: Router,
+		private timelineService: TimelineService,
 		private activatedRoute: ActivatedRoute,
 		private matSnackbar: MatSnackBar,
-    private postService: PostService,
-    
-  ) { }
+		private postService: PostService,
 
-  ngOnInit(): void {
-    if (!this.authService.isUserLoggedIn()) {
+	) { }
+
+	ngOnInit(): void {
+		if (!this.authService.isUserLoggedIn()) {
 			this.router.navigateByUrl('/login');
 		} else {
 			if (this.router.url !== '/') {
@@ -54,27 +54,27 @@ export class TimelineComponent implements OnInit {
 
 			this.loadTimelineTags();
 		}
-  }
-  ngOnDestroy(): void {
+	}
+	ngOnDestroy(): void {
 		this.subscriptions.forEach(sub => sub.unsubscribe());
 	}
-  loadTimelinePosts(currentPage: number): void {
+	loadTimelinePosts(currentPage: number): void {
 		if (!this.fetchingResult) {
 			this.fetchingResult = true;
 			this.subscriptions.push(
 				this.timelineService.getTimelinePosts(currentPage, this.resultSize).subscribe({
 					next: (postResponseList: PostResponse[]) => {
-						const x=postResponseList[0]
+						const x = postResponseList[0]
 						if (postResponseList.length === 0 && currentPage === 1) this.noPost = true;
-						
-						postResponseList.forEach(pR =>{ 
-							console.log("this is post 1",pR.post.dateCreated)
+
+						postResponseList.forEach(pR => {
+							console.log("this is post 1", pR.post.dateCreated)
 							console.log("this is post 1",)
 							let datePost = new Date(pR.post.dateCreated)
 							let dateNow = new Date();
-							if(datePost >= dateNow){
+							if (datePost >= dateNow) {
 								console.log('suucess to date');
-								
+
 							}
 
 							this.timelinePostResponseList.push(pR)
@@ -111,10 +111,10 @@ export class TimelineComponent implements OnInit {
 					next: (postResponseList: PostResponse[]) => {
 						console.log(postResponseList)
 						if (postResponseList.length === 0 && currentPage === 1) this.noPost = true;
-						
-						postResponseList.forEach((pR:any) =>{
+
+						postResponseList.forEach((pR: any) => {
 							console.log(pR)
-							 this.timelinePostResponseList.push(pR)
+							this.timelinePostResponseList.push(pR)
 						});
 						if (postResponseList.length > 0) {
 							this.hasMoreResult = true;

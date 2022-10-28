@@ -1,7 +1,7 @@
 import { Country } from "./country";
 export class User {
     id!: number;
-    username!:string;
+    username!: string;
     email!: string;
     first_name!: string;
     last_name!: string;
@@ -21,5 +21,5 @@ export class User {
     account_verified!: boolean;
     email_verified!: boolean;
     birth_date!: string;
- 
+
 }

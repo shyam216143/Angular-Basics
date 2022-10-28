@@ -10,37 +10,37 @@ import { UserService } from 'src/app/service/user.service';
 import { SnakebarComponent } from '../snakebar/snakebar.component';
 
 @Component({
-  selector: 'app-forgot-password-dialog',
-  templateUrl: './forgot-password-dialog.component.html',
-  styleUrls: ['./forgot-password-dialog.component.css']
+	selector: 'app-forgot-password-dialog',
+	templateUrl: './forgot-password-dialog.component.html',
+	styleUrls: ['./forgot-password-dialog.component.css']
 })
 export class ForgotPasswordDialogComponent implements OnInit {
 	forgotPasswordFormGroup!: FormGroup;
- 
-  fetchingResult: boolean = false;
-  private subscriptions: Subscription[] = [];
+
+	fetchingResult: boolean = false;
+	private subscriptions: Subscription[] = [];
 
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private userService: UserService,
-    private matSnackbar: MatSnackBar,
+	constructor(
+		private formBuilder: FormBuilder,
+		private userService: UserService,
+		private matSnackbar: MatSnackBar,
 		private thisDialogRef: MatDialogRef<ForgotPasswordDialogComponent>,
 		private router: Router
-    
-  ) { }
+
+	) { }
 
 	get email() { return this.forgotPasswordFormGroup.get('email'); }
-  ngOnInit(): void {
-    this.forgotPasswordFormGroup = this.formBuilder.group({
+	ngOnInit(): void {
+		this.forgotPasswordFormGroup = this.formBuilder.group({
 			email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(64)])
 		});
-  }
-  ngOnDestroy(): void {
-	this.subscriptions.forEach(sub => sub.unsubscribe());
-}
+	}
+	ngOnDestroy(): void {
+		this.subscriptions.forEach(sub => sub.unsubscribe());
+	}
 
-  
+
 	sendForgotPasswordEmail(): void {
 		if (this.forgotPasswordFormGroup.valid) {
 			if (!this.fetchingResult) {

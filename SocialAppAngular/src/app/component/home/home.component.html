@@ -38,20 +38,22 @@
       </div>
 
       <mat-divider></mat-divider>
-      <div class="chat-area" id="chat-area"*ngIf="selectedUserData">
+      <div class="chat-area" id="chat-area" *ngIf="selectedUserData">
         <div *ngFor="let chat of chatMessageList">
           <div class="message-sender" *ngIf="chat.user.id==userData.id">
             <div class="message-content">
               <div>{{chat.message}}</div>
-              <div class="date" style="left:0%;font-size: x-small; color: white;">....{{ chat.timestamp|date:"hh:mm a"}}</div>
-             </div>
+              <div class="date" style="left:0%;font-size: x-small; color: white;">....{{ chat.timestamp|date:"hh:mm a"}}
+              </div>
+            </div>
 
           </div>
           <div class="message-receiver" *ngIf="chat.user.id!==userData.id">
             <div class="message-content">
               <div>{{chat.message}}</div>
-              <div class="date" style="left:0%;font-size: x-small; color: white;">....{{ chat.timestamp|date:"hh:mm a"}}</div>
-             </div>
+              <div class="date" style="left:0%;font-size: x-small; color: white;">....{{ chat.timestamp|date:"hh:mm a"}}
+              </div>
+            </div>
 
           </div>
         </div>

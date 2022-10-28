@@ -17,9 +17,9 @@ import { UserResponse } from '../model/user-response';
 export class UserService {
 	private host = environment.apiUrl;
 	private jwtService = new JwtHelperService();
-	getUserById(userId: number): Observable<UserResponse|any | HttpErrorResponse> {
-		console.log("user id is ",userId)
-		return this.httpClient.post<UserResponse|any | HttpErrorResponse>(`${this.host}/profile/${userId}/`,{});
+	getUserById(userId: number): Observable<UserResponse | any | HttpErrorResponse> {
+		console.log("user id is ", userId)
+		return this.httpClient.post<UserResponse | any | HttpErrorResponse>(`${this.host}/profile/${userId}/`, {});
 	}
 
 
@@ -28,11 +28,11 @@ export class UserService {
 
 		return this.httpClient.post<any>(`${this.host}/forgot_password_send_email/`, { "email": email });
 	}
-	verifyEmail(token: string, uid:string): Observable<HttpResponse<any> | HttpErrorResponse> {
+	verifyEmail(token: string, uid: string): Observable<HttpResponse<any> | HttpErrorResponse> {
 		return this.httpClient.post<HttpResponse<any> | HttpErrorResponse>(`${this.host}/verify-email/${uid}/${token}/`, null);
 	}
 
-	getUserPosts(userId: number, page: number, size: number): Observable<PostResponse[]|any | HttpErrorResponse> {
+	getUserPosts(userId: number, page: number, size: number): Observable<PostResponse[] | any | HttpErrorResponse> {
 		const reqParams = new HttpParams().set('page', page).set('size', size);
 		return this.httpClient.get<PostResponse[] | HttpErrorResponse>(`${this.host}/users/posts/`, { params: reqParams });
 	}
@@ -47,7 +47,7 @@ export class UserService {
 	updateUserPassword(updateUserPassword: UpdateUserPassword): Observable<any | HttpErrorResponse> {
 		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/change-password/`, updateUserPassword);
 	}
-	resetPassword(token: string,uid:string, resetPassword: ResetPassword): Observable<any | HttpErrorResponse> {
+	resetPassword(token: string, uid: string, resetPassword: ResetPassword): Observable<any | HttpErrorResponse> {
 		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/reset-password/${uid}/${token}/`, resetPassword);
 	}
 
@@ -56,16 +56,16 @@ export class UserService {
 		return this.httpClient.get<UserResponse[] | HttpErrorResponse>(`${this.host}/users/search/`, { params: reqParams });
 	}
 	followUser(userId: number): Observable<any | HttpErrorResponse> {
-		const body={
-			"follower":localStorage.getItem('id'),
+		const body = {
+			"follower": localStorage.getItem('id'),
 			"followed": userId
 		}
 		console.log(JSON.stringify(body));
 		return this.httpClient.post<any | HttpErrorResponse>(`${this.host}/follow-user/`, body);
 	}
 	unfollowUser(userId: number): Observable<any | HttpErrorResponse> {
-		const body={
-			"follower":localStorage.getItem('id'),
+		const body = {
+			"follower": localStorage.getItem('id'),
 			"followed": userId
 		}
 		console.log(JSON.stringify(body));
@@ -78,7 +78,7 @@ export class UserService {
 		formData.append('profile_photo', profilePhoto);
 		return this.httpClient.post<User | HttpErrorResponse>(`${this.host}/update/profile-photo/`, formData);
 	}
-	updateCoverPhoto(coverPhoto: File): Observable<User|any | HttpErrorResponse> {
+	updateCoverPhoto(coverPhoto: File): Observable<User | any | HttpErrorResponse> {
 		const formData = new FormData();
 		formData.append('cover_photo', coverPhoto);
 		return this.httpClient.post<User | HttpErrorResponse>(`${this.host}/update/cover-photo/`, formData);

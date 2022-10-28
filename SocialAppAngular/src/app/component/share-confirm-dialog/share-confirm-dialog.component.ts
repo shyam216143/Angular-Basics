@@ -12,12 +12,12 @@ import { environment } from 'src/environments/environment';
 import { SnakebarComponent } from '../snakebar/snakebar.component';
 
 @Component({
-  selector: 'app-share-confirm-dialog',
-  templateUrl: './share-confirm-dialog.component.html',
-  styleUrls: ['./share-confirm-dialog.component.css']
+	selector: 'app-share-confirm-dialog',
+	templateUrl: './share-confirm-dialog.component.html',
+	styleUrls: ['./share-confirm-dialog.component.css']
 })
 export class ShareConfirmDialogComponent implements OnInit {
-  targetPostId!: number;
+	targetPostId!: number;
 
 	shareFormGroup!: FormGroup;
 	creatingShare: boolean = false;
@@ -25,24 +25,24 @@ export class ShareConfirmDialogComponent implements OnInit {
 
 	private subscriptions: Subscription[] = [];
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public dataPost: Post,
+	constructor(
+		@Inject(MAT_DIALOG_DATA) public dataPost: Post,
 		private thisMatDialogRef: MatDialogRef<ShareConfirmDialogComponent>,
 		private router: Router,
 		private postService: PostService,
 		private formBuilder: FormBuilder,
 		private matSnackbar: MatSnackBar
-  ) { }
-  get content() { return this.shareFormGroup.get('content'); }
+	) { }
+	get content() { return this.shareFormGroup.get('content'); }
 
-  ngOnInit(): void {
-    this.shareFormGroup = this.formBuilder.group({
+	ngOnInit(): void {
+		this.shareFormGroup = this.formBuilder.group({
 			content: new FormControl('', [Validators.maxLength(4096)])
 		});
 		this.targetPostId = this.dataPost.isTypeShare ? this.dataPost.sharedPost.id : this.dataPost.id;
 
-  }
-  createNewPostShare(): void {
+	}
+	createNewPostShare(): void {
 		if (!this.creatingShare) {
 			this.creatingShare = true;
 			this.subscriptions.push(

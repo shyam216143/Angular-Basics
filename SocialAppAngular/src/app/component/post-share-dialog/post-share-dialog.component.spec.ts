@@ -8,9 +8,9 @@ describe('PostShareDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PostShareDialogComponent ]
+      declarations: [PostShareDialogComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PostShareDialogComponent);
     component = fixture.componentInstance;

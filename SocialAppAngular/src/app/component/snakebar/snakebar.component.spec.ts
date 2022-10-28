@@ -8,9 +8,9 @@ describe('SnakebarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SnakebarComponent ]
+      declarations: [SnakebarComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SnakebarComponent);
     component = fixture.componentInstance;

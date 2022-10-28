@@ -2,7 +2,7 @@ import { Tag } from "./tag";
 import { User } from "./user";
 
 export class Post {
-    id!: number;
+	id!: number;
 	content!: string;
 	postPhoto!: string;
 	likeCount!: number;

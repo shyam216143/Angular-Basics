@@ -5,7 +5,7 @@ export class ChatMessage {
     id!: number;
     thread!: Thread;
     timestamp!: string;
-    seen!:boolean;
-    message!:string;
-	user!: User;
+    seen!: boolean;
+    message!: string;
+    user!: User;
 }

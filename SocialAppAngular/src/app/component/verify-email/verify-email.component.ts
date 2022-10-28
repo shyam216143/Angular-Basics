@@ -7,14 +7,14 @@ import { AppConstants } from 'src/app/common/app-constants';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
-  selector: 'app-verify-email',
-  templateUrl: './verify-email.component.html',
-  styleUrls: ['./verify-email.component.css']
+	selector: 'app-verify-email',
+	templateUrl: './verify-email.component.html',
+	styleUrls: ['./verify-email.component.css']
 })
 export class VerifyEmailComponent implements OnInit {
 
-  token!: string|any;
-  uid: any;
+	token!: string | any;
+	uid: any;
 
 	private jwtService = new JwtHelperService();
 	private subscriptions: Subscription[] = [];
@@ -30,7 +30,7 @@ export class VerifyEmailComponent implements OnInit {
 		this.uid = this.route.snapshot.paramMap.get('uid');
 		if (this.token !== null) {
 			this.subscriptions.push(
-				this.userService.verifyEmail(this.token,this.uid).subscribe(
+				this.userService.verifyEmail(this.token, this.uid).subscribe(
 					(response: any) => {
 						localStorage.setItem(AppConstants.messageTypeLabel, AppConstants.successLabel);
 						localStorage.setItem(AppConstants.messageHeaderLabel, AppConstants.emailVerifySuccessHeader);

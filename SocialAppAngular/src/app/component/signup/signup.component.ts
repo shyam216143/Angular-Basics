@@ -10,21 +10,21 @@ import { AuthService } from 'src/app/service/auth.service';
 import { SnakebarComponent } from '../snakebar/snakebar.component';
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+	selector: 'app-signup',
+	templateUrl: './signup.component.html',
+	styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  submittingForm: boolean = false;
+	submittingForm: boolean = false;
 	signupFormGroup!: FormGroup;
 	private subscriptions: Subscription[] = [];
-  constructor(private router: Router,
+	constructor(private router: Router,
 		private formBuilder: FormBuilder,
 		private matSnackbar: MatSnackBar,
-    private authService:AuthService) { }
+		private authService: AuthService) { }
 
-  ngOnInit(): void {
-    this.signupFormGroup = this.formBuilder.group({
+	ngOnInit(): void {
+		this.signupFormGroup = this.formBuilder.group({
 			infoGroup: this.formBuilder.group({
 				firstName: new FormControl('',
 					[Validators.required, Validators.maxLength(64)]
@@ -45,8 +45,8 @@ export class SignupComponent implements OnInit {
 			})
 		}, { validators: this.matchPasswords });
 
-  }
-  get firstName() { return this.signupFormGroup.get('infoGroup.firstName') }
+	}
+	get firstName() { return this.signupFormGroup.get('infoGroup.firstName') }
 	get username() { return this.signupFormGroup.get('infoGroup.username') }
 	get lastName() { return this.signupFormGroup.get('infoGroup.lastName') }
 	get email() { return this.signupFormGroup.get('infoGroup.email') }
@@ -58,7 +58,7 @@ export class SignupComponent implements OnInit {
 
 
 
-	matchPasswords: ValidatorFn |any= (group: FormGroup): ValidationErrors | null => {
+	matchPasswords: ValidatorFn | any = (group: FormGroup): ValidationErrors | null => {
 		const password = group.get('passwordGroup.password')?.value;
 		const passwordRepeat = group.get('passwordGroup.passwordRepeat')?.value;
 		return password === passwordRepeat ? null : { passwordMissMatch: true }
@@ -66,7 +66,7 @@ export class SignupComponent implements OnInit {
 
 
 
-  handleSignup(): void {
+	handleSignup(): void {
 		if (this.signupFormGroup.valid) {
 			this.submittingForm = true;
 			const userSignup = new UserSignup();
@@ -80,9 +80,9 @@ export class SignupComponent implements OnInit {
 
 			this.subscriptions.push(
 				this.authService.signup(userSignup).subscribe({
-					next: (response: HttpResponse<any>|UserSignup) => {
+					next: (response: HttpResponse<any> | UserSignup) => {
 						localStorage.setItem('authUser', JSON.stringify(response));
-            alert(response)
+						alert(response)
 						localStorage.setItem(AppConstants.messageTypeLabel, AppConstants.successLabel);
 						localStorage.setItem(AppConstants.messageHeaderLabel, AppConstants.signupSuccessHeader);
 						localStorage.setItem(AppConstants.messageDetailLabel, AppConstants.signupSuccessDetail);
@@ -110,7 +110,7 @@ export class SignupComponent implements OnInit {
 								panelClass: ['bg-danger'],
 								duration: 5000
 							});
-              console.log('error')
+							console.log('error')
 						}
 						this.submittingForm = false;
 					}

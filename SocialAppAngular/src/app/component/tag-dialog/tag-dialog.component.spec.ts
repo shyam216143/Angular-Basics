@@ -8,9 +8,9 @@ describe('TagDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TagDialogComponent ]
+      declarations: [TagDialogComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(TagDialogComponent);
     component = fixture.componentInstance;

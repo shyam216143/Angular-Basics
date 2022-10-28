@@ -8,9 +8,9 @@ describe('WaitingDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WaitingDialogComponent ]
+      declarations: [WaitingDialogComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(WaitingDialogComponent);
     component = fixture.componentInstance;

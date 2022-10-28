@@ -53,11 +53,11 @@ export class ProfileComponent implements OnInit {
 			this.loadingProfile = true;
 			this.authUser = localStorage.getItem('authUser');
 			this.authService.getuserdata().subscribe(data => {
-			console.log(data.email)
-			console.log(data)
+				console.log(data.email)
+				console.log(data)
 
-			this.authUser=data
-			console.log(this.authUser)
+				this.authUser = data
+				console.log(this.authUser)
 
 				this.authService.storeAuthUserInCache(data);
 			});
@@ -65,9 +65,9 @@ export class ProfileComponent implements OnInit {
 			if (this.activatedRoute.snapshot.paramMap.get('userId') === null) {
 				this.isProfileViewerOwner = true;
 				this.profileUserId = this.authService.getAuthUserId();
-				
+
 			} else {
-				
+
 				this.profileUserId = Number(this.activatedRoute.snapshot.paramMap.get('userId'));
 				const currentUserId = localStorage.getItem('id')
 
@@ -79,57 +79,57 @@ export class ProfileComponent implements OnInit {
 						console.log(foundUserResponse);
 						const foundUser: any = foundUserResponse.data;
 						console.log(foundUser.id)
-						this.viewerFollowsProfileUser=foundUserResponse.follower_exists
+						this.viewerFollowsProfileUser = foundUserResponse.follower_exists
 
-						if(!this.authUser){   //null verification
+						if (!this.authUser) {   //null verification
 							this.authService.getuserdata().subscribe(data => {
-								this.authUser=data
+								this.authUser = data
 								if (foundUser.id === this.authUser.id) {
 									this.router.navigateByUrl('/profile');
 								}
-		
-									
-		
+
+
+
 								if (!foundUser.profile_photo) {
 									foundUser.profile_photo = environment.defaultProfilePhotoUrl
 								}
-		
+
 								if (!foundUser.cover_photo) {
 									foundUser.cover_photo = environment.defaultCoverPhotoUrl
 								}
-		
+
 								this.profileUser = foundUser;
 								console.log(this.profileUser);
-		
+
 								this.loadProfilePosts(1);
-		
+
 								this.loadingProfile = false;
 							})
 						}
-						else{
+						else {
 							if (foundUser.id === this.authUser.id) {
 								this.router.navigateByUrl('/profile');
 							}
-	
-							
-	
+
+
+
 							if (!foundUser.profile_photo) {
 								foundUser.profile_photo = environment.defaultProfilePhotoUrl
 							}
-	
+
 							if (!foundUser.cover_photo) {
 								foundUser.cover_photo = environment.defaultCoverPhotoUrl
 							}
-	
+
 							this.profileUser = foundUser;
 							console.log(this.profileUser);
-	
+
 							this.loadProfilePosts(1);
-	
+
 							this.loadingProfile = false;
 						}
 
-					
+
 					},
 					error: (errorResponse: HttpErrorResponse) => {
 						localStorage.setItem(AppConstants.messageTypeLabel, AppConstants.errorLabel);
@@ -153,8 +153,8 @@ export class ProfileComponent implements OnInit {
 			this.fetchingResult = true;
 			this.subscriptions.push(
 				this.userService.getUserPosts(this.profileUserId, currentPage, this.resultSize).subscribe({
-					next: (postResponses: PostResponse[]|any) => {
-						postResponses.forEach((post:any) => this.profileUserPostResponses.push(post));
+					next: (postResponses: PostResponse[] | any) => {
+						postResponses.forEach((post: any) => this.profileUserPostResponses.push(post));
 						if (postResponses.length <= 0 && this.resultPage === 1) this.hasNoPost = true;
 						if (postResponses.length <= 0) this.hasMoreResult = false;
 						this.fetchingResult = false;

@@ -8,9 +8,9 @@ describe('PhotoUploadDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PhotoUploadDialogComponent ]
+      declarations: [PhotoUploadDialogComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PhotoUploadDialogComponent);
     component = fixture.componentInstance;

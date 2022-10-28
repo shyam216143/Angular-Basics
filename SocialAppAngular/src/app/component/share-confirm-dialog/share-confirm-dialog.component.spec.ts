@@ -8,9 +8,9 @@ describe('ShareConfirmDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ShareConfirmDialogComponent ]
+      declarations: [ShareConfirmDialogComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ShareConfirmDialogComponent);
     component = fixture.componentInstance;

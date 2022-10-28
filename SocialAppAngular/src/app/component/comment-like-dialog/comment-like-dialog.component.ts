@@ -11,12 +11,12 @@ import { SnakebarComponent } from '../snakebar/snakebar.component';
 import { Comment } from 'src/app/model/comment';
 
 @Component({
-  selector: 'app-comment-like-dialog',
-  templateUrl: './comment-like-dialog.component.html',
-  styleUrls: ['./comment-like-dialog.component.css']
+	selector: 'app-comment-like-dialog',
+	templateUrl: './comment-like-dialog.component.html',
+	styleUrls: ['./comment-like-dialog.component.css']
 })
 export class CommentLikeDialogComponent implements OnInit {
-  likeList: User[] = [];
+	likeList: User[] = [];
 	resultPage: number = 1;
 	resultSize: number = 1;
 	hasMoreResult: boolean = false;
@@ -25,17 +25,17 @@ export class CommentLikeDialogComponent implements OnInit {
 
 	private subscriptions: Subscription[] = [];
 
-  constructor(@Inject(MAT_DIALOG_DATA) public dataComment: Comment,
-  private commentService: CommentService,
-  private matSnackbar: MatSnackBar) { }
+	constructor(@Inject(MAT_DIALOG_DATA) public dataComment: Comment,
+		private commentService: CommentService,
+		private matSnackbar: MatSnackBar) { }
 
-  ngOnInit(): void {
-    this.loadCommentLikes(1);
-  }
-  ngOnDestroy(): void {
-	this.subscriptions.forEach(sub => sub.unsubscribe());
-}
-  loadCommentLikes(currentPage: number): void {
+	ngOnInit(): void {
+		this.loadCommentLikes(1);
+	}
+	ngOnDestroy(): void {
+		this.subscriptions.forEach(sub => sub.unsubscribe());
+	}
+	loadCommentLikes(currentPage: number): void {
 		if (this.dataComment.likeCount > 0) {
 			this.fetchingResult = true;
 			this.subscriptions.push(

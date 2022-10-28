@@ -49,7 +49,8 @@
 
 				<mat-form-field class="w-100 pb-2" appearance="outline" formGroupName="passwordGroup">
 					<mat-label>Password</mat-label>
-					<input type="password" matInput formControlName="password" placeholder="*************" autocomplete="on">
+					<input type="password" matInput formControlName="password" placeholder="*************"
+						autocomplete="on">
 					<mat-error *ngIf="password?.hasError('required')">
 						Password is <b>required</b>
 					</mat-error>
@@ -63,11 +64,13 @@
 
 				<mat-form-field class="w-100 pb-2" appearance="outline" formGroupName="passwordGroup">
 					<mat-label>Repeat Password</mat-label>
-					<input type="password" matInput formControlName="passwordRepeat" placeholder="*************" autocomplete="on">
+					<input type="password" matInput formControlName="passwordRepeat" placeholder="*************"
+						autocomplete="on">
 					<mat-error *ngIf="passwordRepeat?.hasError('required')">
 						Password Repeat is <b>required</b>
 					</mat-error>
-					<mat-error *ngIf="signupFormGroup.hasError('passwordMissMatch') || passwordRepeat?.hasError('serverError')">
+					<mat-error
+						*ngIf="signupFormGroup.hasError('passwordMissMatch') || passwordRepeat?.hasError('serverError')">
 						Password did not match
 					</mat-error>
 				</mat-form-field>

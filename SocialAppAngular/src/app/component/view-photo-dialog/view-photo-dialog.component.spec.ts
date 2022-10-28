@@ -8,9 +8,9 @@ describe('ViewPhotoDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViewPhotoDialogComponent ]
+      declarations: [ViewPhotoDialogComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ViewPhotoDialogComponent);
     component = fixture.componentInstance;

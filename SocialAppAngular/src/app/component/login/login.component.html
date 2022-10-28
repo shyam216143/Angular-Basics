@@ -17,7 +17,8 @@
 
 				<mat-form-field class="w-100 pb-2" appearance="outline">
 					<mat-label>Password</mat-label>
-					<input type="password" matInput formControlName="password" placeholder="*************" autocomplete="on">
+					<input type="password" matInput formControlName="password" placeholder="*************"
+						autocomplete="on">
 					<mat-error *ngIf="password?.hasError('required')">
 						Password is <b>required</b>
 					</mat-error>
@@ -29,7 +30,8 @@
 					</mat-error>
 				</mat-form-field>
 
-				<a class="d-inline-block text-secondary text-decoration-none cursor-pointer mt-3" (click)="openForgotPasswordDialog($event)">
+				<a class="d-inline-block text-secondary text-decoration-none cursor-pointer mt-3"
+					(click)="openForgotPasswordDialog($event)">
 					Forgot Password?
 				</a>
 

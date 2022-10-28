@@ -8,9 +8,9 @@ describe('ForgotPasswordDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ForgotPasswordDialogComponent ]
+      declarations: [ForgotPasswordDialogComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ForgotPasswordDialogComponent);
     component = fixture.componentInstance;

@@ -14,12 +14,12 @@ import { SearchDialogComponent } from '../search-dialog/search-dialog.component'
 import { SnakebarComponent } from '../snakebar/snakebar.component';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+	selector: 'app-header',
+	templateUrl: './header.component.html',
+	styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-	@Output() brightnewwMode=new EventEmitter<boolean>();
+	@Output() brightnewwMode = new EventEmitter<boolean>();
 	authUser: any;
 	isUserLoggedIn: boolean = false;
 	isProfilePage: boolean = false;
@@ -32,50 +32,50 @@ export class HeaderComponent implements OnInit {
 	defaultProfilePhotoUrl = environment.defaultProfilePhotoUrl;
 	private subscriptions: Subscription[] = [];
 
-  constructor(
-    private authService: AuthService,
+	constructor(
+		private authService: AuthService,
 		private notificationService: NotificationService,
 		private matDialog: MatDialog,
 		private matSnackbar: MatSnackBar
-  ) { }
+	) { }
 
-  ngOnInit(): void {
-	if (this.authService.isUserLoggedIn()) {
-		this.isUserLoggedIn = true;
-		this.authUser = JSON.parse(this.authService.getAuthUserFromCache());
-		console.log(this.authUser);
-		if (this.authUser.profile_photo) {
-			console.log('User logged in Successfully')
+	ngOnInit(): void {
+		if (this.authService.isUserLoggedIn()) {
+			this.isUserLoggedIn = true;
+			this.authUser = JSON.parse(this.authService.getAuthUserFromCache());
+			console.log(this.authUser);
+			if (this.authUser.profile_photo) {
+				console.log('User logged in Successfully')
 
-		}
-		console.log(this.authUser.profile_photo);
-	} else {
-		this.isUserLoggedIn = false;
-	}
-
-	if (this.isUserLoggedIn) {
-		this.loadNotifications(1);
-	}
-
-	this.authService.logoutSubject.subscribe(loggedOut => {
-		if (loggedOut) {
+			}
+			console.log(this.authUser.profile_photo);
+		} else {
 			this.isUserLoggedIn = false;
 		}
-	});
 
-	this.authService.loginSubject.subscribe(loggedInUser => {
-		if (loggedInUser) {
-			this.authUser = loggedInUser;
-			this.isUserLoggedIn = true;
+		if (this.isUserLoggedIn) {
+			this.loadNotifications(1);
 		}
-	});
-	
 
-  }
-  ngOnDestroy(): void {
-	this.subscriptions.forEach(sub => sub.unsubscribe());
-}
-  openPostDialog(): void {
+		this.authService.logoutSubject.subscribe(loggedOut => {
+			if (loggedOut) {
+				this.isUserLoggedIn = false;
+			}
+		});
+
+		this.authService.loginSubject.subscribe(loggedInUser => {
+			if (loggedInUser) {
+				this.authUser = loggedInUser;
+				this.isUserLoggedIn = true;
+			}
+		});
+
+
+	}
+	ngOnDestroy(): void {
+		this.subscriptions.forEach(sub => sub.unsubscribe());
+	}
+	openPostDialog(): void {
 		this.matDialog.open(PostDialogComponent, {
 			data: null,
 			autoFocus: false,
@@ -83,18 +83,18 @@ export class HeaderComponent implements OnInit {
 			maxWidth: '700px'
 		});
 	}
-  openSearchDialog(): void {
+	openSearchDialog(): void {
 		this.matDialog.open(SearchDialogComponent, {
 			autoFocus: true,
 			width: '500px'
 		});
 	}
-  
+
 	loadNotifications(page: number): void {
 		this.fetchingResult = true;
 
 		this.subscriptions.push(
-			this.notificationService.getNotifications(page,  this.resultSize).subscribe({
+			this.notificationService.getNotifications(page, this.resultSize).subscribe({
 				next: (notifications: Notification[]) => {
 					console.log(notifications);
 					this.fetchingResult = false;
@@ -115,7 +115,7 @@ export class HeaderComponent implements OnInit {
 				error: (errorResponse: HttpErrorResponse) => {
 					this.matSnackbar.openFromComponent(SnakebarComponent, {
 						data: AppConstants.snackbarErrorContent,
-						panelClass: ['bg-danger'],	
+						panelClass: ['bg-danger'],
 						duration: 5000
 					});
 					this.fetchingResult = false;
@@ -143,7 +143,7 @@ export class HeaderComponent implements OnInit {
 		}
 	}
 
-	togglechange(i:boolean){
+	togglechange(i: boolean) {
 		this.brightnewwMode.emit(i)
 	}
 }

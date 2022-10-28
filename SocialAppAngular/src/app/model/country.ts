@@ -1,5 +1,5 @@
 export class Country {
-    id!: number;
+	id!: number;
 	name!: string;
 	countryCode!: string;
 	callingCode!: string;

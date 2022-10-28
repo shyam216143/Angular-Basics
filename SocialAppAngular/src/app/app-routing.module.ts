@@ -40,7 +40,7 @@ const routes: Routes = [
   { path: 'reset-password/:uid/:token', component: ResetPasswordComponent },
   { path: 'verify-email/:uid/:token', component: VerifyEmailComponent },
   { path: 'home', component: HomeComponent },
-  
+
   // { path: 'post', component: PostComponent },
   // { path: 'post-like-dialog', component: PostLikeDialogComponent },
   // { path: 'post-share-dialog', component: PostShareDialogComponent },
@@ -53,15 +53,15 @@ const routes: Routes = [
   // { path: 'photo', component: PhotoUploadDialogComponent },
   // { path: 'following', component: FollowingFollowerListDialogComponent },
 
-	{ path: '**', redirectTo: '/login', pathMatch: 'full' }
+  { path: '**', redirectTo: '/login', pathMatch: 'full' }
 
- 
+
 
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
-   
+
 })
 export class AppRoutingModule { }

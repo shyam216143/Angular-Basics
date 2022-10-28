@@ -81,7 +81,7 @@ export class PostDialogComponent implements OnInit {
 		);
 	}
 	private populateWithPostTags(): void {
-		this.dataPost.postTags.forEach((tag:any) => {
+		this.dataPost.postTags.forEach((tag: any) => {
 			this.postTags.push({
 				tagName: tag.name,
 				action: 'saved'
@@ -145,17 +145,62 @@ export class PostDialogComponent implements OnInit {
 		if (!this.creatingPost) {
 			this.creatingPost = true;
 			this.subscriptions.push(
-			this.postService.createNewPost(this.content?.value, this.postPhoto, this.postTags).subscribe({
+				this.postService.createNewPost(this.content?.value, this.postPhoto, this.postTags).subscribe({
+					next: (createdPost: Post) => {
+						this.matDialogRef.close();
+						this.matSnackbar.openFromComponent(SnakebarComponent, {
+							panelClass: ['bg-success'],
+							data: 'Post created successfully.',
+							duration: 5000
+						});
+						this.creatingPost = false;
+						this.router.navigateByUrl(`/posts/${createdPost.id}`).then(() => {
+							window.location.reload();
+						});
+					},
+					error: (errorResponse: HttpErrorResponse) => {
+						this.matSnackbar.openFromComponent(SnakebarComponent, {
+							data: AppConstants.snackbarErrorContent,
+							panelClass: ['bg-danger'],
+							duration: 5000
+						});
+						this.creatingPost = false;
+					}
+				})
+			);
+		}
+	}
+
+	private updatePost(): void {
+		this.subscriptions.push(
+			this.postService.updatePost(this.dataPost.id, this.content?.value, this.postPhoto, this.postTags).subscribe({
 				next: (createdPost: Post) => {
 					this.matDialogRef.close();
 					this.matSnackbar.openFromComponent(SnakebarComponent, {
-						panelClass: ['bg-success'],
-						data: 'Post created successfully.',
+						data: 'Post updated successfully.',
 						duration: 5000
 					});
-					this.creatingPost = false;
-					this.router.navigateByUrl(`/posts/${createdPost.id}`).then(() => {
-						window.location.reload();
+					this.router.navigateByUrl(`/posts/${createdPost.id}`);
+				},
+				error: (errorResponse: HttpErrorResponse) => {
+					this.matSnackbar.openFromComponent(SnakebarComponent, {
+						data: AppConstants.snackbarErrorContent,
+						panelClass: ['bg-danger'],
+						duration: 5000
+					});
+				}
+			})
+		);
+	}
+
+	private deletePostPhoto(): void {
+		this.subscriptions.push(
+			this.postService.deletePostPhoto(this.dataPost.id).subscribe({
+				next: (createdPost: Post) => {
+					this.postPhotoPreviewUrl = null;
+					this.matSnackbar.openFromComponent(SnakebarComponent, {
+						data: 'Photo deleted successfully.',
+						duration: 5000
 					});
 				},
 				error: (errorResponse: HttpErrorResponse) => {
@@ -164,53 +209,8 @@ export class PostDialogComponent implements OnInit {
 						panelClass: ['bg-danger'],
 						duration: 5000
 					});
-					this.creatingPost = false;
 				}
 			})
-			);
-		}
-	}
-
-	private updatePost(): void {
-		this.subscriptions.push(
-		this.postService.updatePost(this.dataPost.id, this.content?.value, this.postPhoto, this.postTags).subscribe({
-			next: (createdPost: Post) => {
-				this.matDialogRef.close();
-				this.matSnackbar.openFromComponent(SnakebarComponent, {
-					data: 'Post updated successfully.',
-					duration: 5000
-				});
-				this.router.navigateByUrl(`/posts/${createdPost.id}`);
-			},
-			error: (errorResponse: HttpErrorResponse) => {
-				this.matSnackbar.openFromComponent(SnakebarComponent, {
-					data: AppConstants.snackbarErrorContent,
-					panelClass: ['bg-danger'],
-					duration: 5000
-				});
-			}
-		})
-		);
-	}
-
-	private deletePostPhoto(): void {
-		this.subscriptions.push(
-		this.postService.deletePostPhoto(this.dataPost.id).subscribe({
-			next: (createdPost: Post) => {
-				this.postPhotoPreviewUrl = null;
-				this.matSnackbar.openFromComponent(SnakebarComponent, {
-					data: 'Photo deleted successfully.',
-					duration: 5000
-				});
-			},
-			error: (errorResponse: HttpErrorResponse) => {
-				this.matSnackbar.openFromComponent(SnakebarComponent, {
-					data: AppConstants.snackbarErrorContent,
-					panelClass: ['bg-danger'],
-					duration: 5000
-				});
-			}
-		})
 		);
 	}
 

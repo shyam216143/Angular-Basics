@@ -8,9 +8,9 @@ describe('SearchDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SearchDialogComponent ]
+      declarations: [SearchDialogComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SearchDialogComponent);
     component = fixture.componentInstance;

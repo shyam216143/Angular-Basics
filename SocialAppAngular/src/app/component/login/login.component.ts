@@ -61,9 +61,9 @@ export class LoginComponent implements OnInit {
 						this.authService.storeAuthUserInCache(response.body);
 						this.submittingForm = false;
 						this.router.navigate(['/'])
-						setTimeout(()=>{
+						setTimeout(() => {
 							window.location.reload();
-						},10)
+						}, 10)
 
 					},
 					error: (errorResponse: HttpErrorResponse) => {

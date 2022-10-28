@@ -13,12 +13,12 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import { SnakebarComponent } from '../snakebar/snakebar.component';
 
 @Component({
-  selector: 'app-search-dialog',
-  templateUrl: './search-dialog.component.html',
-  styleUrls: ['./search-dialog.component.css']
+	selector: 'app-search-dialog',
+	templateUrl: './search-dialog.component.html',
+	styleUrls: ['./search-dialog.component.css']
 })
 export class SearchDialogComponent implements OnInit {
-  searchResult: UserResponse[] = [];
+	searchResult: UserResponse[] = [];
 	searchUserFormGroup!: FormGroup;
 	resultPage: number = 1;
 	resultSize: number = 5;
@@ -28,28 +28,28 @@ export class SearchDialogComponent implements OnInit {
 	defaultProfilePhotoUrl: string = environment.defaultProfilePhotoUrl;
 	private subscriptions: Subscription[] = [];
 	constructor(
-    private userService: UserService,
+		private userService: UserService,
 		private formBuilder: FormBuilder,
 		private matSnackbar: MatSnackBar,
 		private matDialog: MatDialog,
 		private router: Router
-  ) { }
-  get key() { return this.searchUserFormGroup.get('key'); }
-  ngOnInit(): void {
-    this.searchUserFormGroup = this.formBuilder.group({
+	) { }
+	get key() { return this.searchUserFormGroup.get('key'); }
+	ngOnInit(): void {
+		this.searchUserFormGroup = this.formBuilder.group({
 			key: new FormControl('', [Validators.minLength(1), Validators.maxLength(64)])
 		});
-  }
-  ngOnDestroy(): void {
-	this.subscriptions.forEach(sub => sub.unsubscribe());
-}
-  searchUser(currentPage: number): void {
+	}
+	ngOnDestroy(): void {
+		this.subscriptions.forEach(sub => sub.unsubscribe());
+	}
+	searchUser(currentPage: number): void {
 		if (!this.fetchingResult) {
 			if (this.key?.value.length >= 1) {
 				this.fetchingResult = true;
-	
+
 				if (currentPage === 1) this.searchResult = [];
-	
+
 				this.subscriptions.push(
 					this.userService.getUserSearchResult(this.key?.value, currentPage, this.resultSize).subscribe({
 						next: (resultList: any[]) => {
@@ -58,11 +58,11 @@ export class SearchDialogComponent implements OnInit {
 							} else {
 								this.noResult = false;
 							}
-	
+
 							resultList.forEach((uR) => this.searchResult.push(uR));
 							this.resultPage++;
 							this.fetchingResult = false;
-	
+
 							if (resultList.length < this.resultSize) {
 								this.hasMoreResult = false;
 								this.resultPage = 1;
@@ -88,9 +88,9 @@ export class SearchDialogComponent implements OnInit {
 				});
 			}
 		}
-	} 
+	}
 
-  openFollowConfirmDialog(userResponse: UserResponse): void {
+	openFollowConfirmDialog(userResponse: UserResponse): void {
 		const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
 			data: `Do you want to follow this ${userResponse.user.first_name + ' ' + userResponse.user.last_name}?`,
 			autoFocus: false,
@@ -103,7 +103,7 @@ export class SearchDialogComponent implements OnInit {
 					this.subscriptions.push(
 						this.userService.followUser(userResponse.user.id).subscribe({
 							next: (response: any) => {
-								const targetResult:any = this.searchResult.find((uR:any) => uR === userResponse);
+								const targetResult: any = this.searchResult.find((uR: any) => uR === userResponse);
 								targetResult.followedByAuthUser = true;
 
 								this.matSnackbar.openFromComponent(SnakebarComponent, {
@@ -139,7 +139,7 @@ export class SearchDialogComponent implements OnInit {
 					this.subscriptions.push(
 						this.userService.unfollowUser(userResponse.user.id).subscribe({
 							next: (response: any) => {
-								const targetResult:any = this.searchResult.find(uR => uR === userResponse);
+								const targetResult: any = this.searchResult.find(uR => uR === userResponse);
 								targetResult.followedByAuthUser = false;
 
 								this.matSnackbar.openFromComponent(SnakebarComponent, {
@@ -161,5 +161,5 @@ export class SearchDialogComponent implements OnInit {
 		);
 	}
 
-  
+
 }

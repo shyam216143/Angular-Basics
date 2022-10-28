@@ -8,9 +8,9 @@ describe('CommentLikeDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CommentLikeDialogComponent ]
+      declarations: [CommentLikeDialogComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(CommentLikeDialogComponent);
     component = fixture.componentInstance;

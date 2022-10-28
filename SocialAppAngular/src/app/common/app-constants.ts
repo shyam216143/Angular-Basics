@@ -1,5 +1,5 @@
 export class AppConstants {
-    static messageTypeLabel = 'messageType';
+	static messageTypeLabel = 'messageType';
 	static messageHeaderLabel = 'messageHeader';
 	static messageDetailLabel = 'messageDetail';
 

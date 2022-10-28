@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -27,7 +27,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { MatSliderModule } from '@angular/material/slider';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -98,49 +98,49 @@ import { HomeComponent } from './component/home/home.component';
     PhotoUploadDialogComponent,
     FollowingFollowerListDialogComponent,
     ViewPhotoDialogComponent,
-    
+
   ],
   imports: [
     BrowserModule,
-	CommonModule,
+    CommonModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-		ReactiveFormsModule,
-		MatToolbarModule,
-		MatIconModule,
-		MatButtonModule,
-		MatMenuModule,
-		MatCardModule,
-		MatInputModule,
-		MatFormFieldModule,
-		MatProgressBarModule,
-		MatProgressSpinnerModule,
-		MatDividerModule,
-		MatListModule,
-		MatTooltipModule,
-		MatChipsModule,
-		MatBadgeModule,
-		MatDialogModule,
-		MatSnackBarModule,
-		MatRippleModule,
-		MatTabsModule,
-		MatSelectModule,
-		MatRadioModule,
-		MatDatepickerModule,
-		MatNativeDateModule,
-		MatMomentDateModule,
-		MatSliderModule,
+    ReactiveFormsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatCardModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatDividerModule,
+    MatListModule,
+    MatTooltipModule,
+    MatChipsModule,
+    MatBadgeModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatRippleModule,
+    MatTabsModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatMomentDateModule,
+    MatSliderModule,
     MatAutocompleteModule,
     MatDividerModule,
     MatSlideToggleModule
   ],
   providers: [
-		AuthGuard,
-		{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-		{ provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
-	],
+    AuthGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

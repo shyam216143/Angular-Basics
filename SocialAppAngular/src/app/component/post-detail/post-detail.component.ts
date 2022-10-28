@@ -9,25 +9,25 @@ import { AuthService } from 'src/app/service/auth.service';
 import { PostService } from 'src/app/service/post.service';
 
 @Component({
-  selector: 'app-post-detail',
-  templateUrl: './post-detail.component.html',
-  styleUrls: ['./post-detail.component.css']
+	selector: 'app-post-detail',
+	templateUrl: './post-detail.component.html',
+	styleUrls: ['./post-detail.component.css']
 })
 export class PostDetailComponent implements OnInit {
-  postId!: number;
+	postId!: number;
 	postResponse!: PostResponse;
 	fetchingResult: boolean = false;
 	private subscriptions: Subscription[] = [];
-  constructor(
-    private authService: AuthService,
+	constructor(
+		private authService: AuthService,
 		private router: Router,
 		private postService: PostService,
 		private activatedRoute: ActivatedRoute,
 		private matSnackbar: MatSnackBar
-  ) { }
+	) { }
 
-  ngOnInit(): void {
-    if (!this.authService.isUserLoggedIn()) {
+	ngOnInit(): void {
+		if (!this.authService.isUserLoggedIn()) {
 			this.router.navigateByUrl('/login');
 		} else {
 			this.fetchingResult = true;
@@ -50,6 +50,6 @@ export class PostDetailComponent implements OnInit {
 				})
 			);
 		}
-  }
+	}
 
 }

@@ -8,9 +8,9 @@ describe('PostLikeDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PostLikeDialogComponent ]
+      declarations: [PostLikeDialogComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PostLikeDialogComponent);
     component = fixture.componentInstance;

@@ -108,7 +108,8 @@ export class SearchDialogComponent implements OnInit {
 
 								this.matSnackbar.openFromComponent(SnakebarComponent, {
 									data: `You are now following 
-                  ${userResponse.user + ' ' + userResponse.user}.`,
+                  ${userResponse.user.username + ' ' + userResponse.user.username}.`,
+									panelClass: 'bg-success',
 									duration: 5000
 								});
 							},
@@ -130,6 +131,7 @@ export class SearchDialogComponent implements OnInit {
 		const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
 			data: `Do you want to stop following ${userResponse.user.first_name + ' ' + userResponse.user.last_name}?`,
 			autoFocus: false,
+			panelClass: 'bg-success',
 			maxWidth: '500px'
 		});
 
@@ -144,7 +146,9 @@ export class SearchDialogComponent implements OnInit {
 
 								this.matSnackbar.openFromComponent(SnakebarComponent, {
 									data: `You no longer follow ${userResponse.user.first_name + ' ' + userResponse.user.last_name}.`,
+									panelClass: 'bg-success',
 									duration: 5000
+
 								});
 							},
 							error: (errorResponse: HttpErrorResponse) => {

@@ -14,12 +14,12 @@
     </div>
     <mat-selection-list [multiple]="false" [formControl]="chatListControl" *ngFor="let x of users_data">
       <mat-divider></mat-divider>
-      <mat-list-option (click)="createChat(x)">
-        <img matListAvatar src="http://127.0.0.1:8000{{x.profile_photo}}" />
+      <mat-list-option (click)="createChat(x.user)">
+        <img matListAvatar src="http://127.0.0.1:8000{{x.user.profile_photo}}" />
         <p mat-line class="chat-title">
-          <span class="chat-name">{{x.username}}</span><span class="chat-date">{{x.birth_date}}</span>
+          <span class="chat-name">{{x.user.username}}</span><span class="chat-date">{{x.user.birth_date}}</span>
         </p>
-        <p mat-line>hello bro</p>
+        <p mat-line>{{x.last_message}}</p>
         <mat-divider></mat-divider>
       </mat-list-option>
 

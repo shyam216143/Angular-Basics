@@ -21,6 +21,7 @@ import { UserService } from 'src/app/service/user.service';
 import { SnakebarComponent } from '../snakebar/snakebar.component';
 
 import { Element, NONE_TYPE } from '@angular/compiler';
+import { UserChatData } from 'src/app/model/user-chat-data';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -31,7 +32,7 @@ export class HomeComponent implements OnInit {
   endOfChat!: ElementRef;
   userData: User = JSON.parse(this.authService.getAuthUserFromCache())
   selectedUserData!: User
-  users_data: User[] = []
+  users_data: UserChatData[] = []
   chatMessageList: ChatMessage[] = []
   url: string = 'ws://127.0.0.1:8000/ws/as/' + JSON.stringify(this.userData.id) + '/'
 
@@ -75,7 +76,7 @@ export class HomeComponent implements OnInit {
     console.log(this.userData.id)
 
 
-    this.authService.getUserFollowersData(this.userData.id).subscribe((data: User[]) => {
+    this.authService.getUserFollowersData(this.userData.id).subscribe((data: UserChatData[]) => {
       data.forEach(x => {
         console.log(x)
         this.users_data.push(x)
@@ -147,8 +148,9 @@ export class HomeComponent implements OnInit {
     })
 
   }
-
+wow!:any;
   sendMessage(selectedUserData: User) {
+    let z='';
     let str = this.wordWrap(this.chatInputMessage.value.selectedUserData, 10);
     let send_to;
     console.log(selectedUserData.id, "user id is")
@@ -176,6 +178,7 @@ export class HomeComponent implements OnInit {
       let ele = document.getElementById('message-content')
       let data = JSON.parse(event.data)
       let message = data.message
+     
       let sent_by = data.sent_by
       console.log(message)
       console.log(sent_by, "sent_by")
@@ -195,7 +198,8 @@ export class HomeComponent implements OnInit {
       let user: any = localStorage.getItem('authUser')
       console.log(JSON.parse(user).id)
       let current_user_id = JSON.parse(user).id
-
+      z=output
+      console.log("messge is:  ",z)
       if (current_user_id == sent_by) {
         if (ele != null) {
           let timestampNow1 = Date.now()
@@ -213,6 +217,7 @@ export class HomeComponent implements OnInit {
           // element.appendChild(element1)
 
           // ele
+   
           ele.innerHTML += "<div class=\"sender\" style=\"width:100%;padding: 0px 10px;border-radius: 10px; background-color: grey;display:flex;flex-direction:row-reverse\"><div style=\"\">" + output + "<div style=\"color:white;left: 0%;font-size: x-small;\">" + "..." + date + "</div> </div></div>"
           let ele1: any = document.getElementById('chat-area')
 
@@ -241,7 +246,16 @@ export class HomeComponent implements OnInit {
     }
     this.chatInputMessage.reset()
 
+for(let i=0;i<this.users_data.length;i++){
+  if(this.users_data[i].user==selectedUserData){
+    this.users_data[i].last_message=z
+    let date1 = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).toLowerCase();
+    this.users_data[i].time_stamp=date1
+    console.log("date : ",date1)
+    console.log("message : ",z)
 
+  }
+}
 
 
   }

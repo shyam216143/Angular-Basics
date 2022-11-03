@@ -5,6 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../model/user';
+import { UserChatData } from '../model/user-chat-data';
 import { UserLogin } from '../model/user-login';
 import { UserSignup } from '../model/user-signup';
 
@@ -46,7 +47,7 @@ export class AuthService {
 
 	}
 	getUserFollowersData(user_id: number): Observable<any> {
-		return this.http.get<HttpResponse<User[]> | HttpErrorResponse>(`${this.host}/${user_id}/followers_data/`);
+		return this.http.get<HttpResponse<UserChatData[]> | HttpErrorResponse>(`${this.host}/${user_id}/followers_data/`);
 	}
 
 	storeTokenInCache(authToken: string): void {

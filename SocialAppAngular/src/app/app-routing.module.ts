@@ -24,6 +24,7 @@ import { SnakebarComponent } from './component/snakebar/snakebar.component';
 import { TimelineComponent } from './component/timeline/timeline.component';
 import { VerifyEmailComponent } from './component/verify-email/verify-email.component';
 import { WaitingDialogComponent } from './component/waiting-dialog/waiting-dialog.component';
+import { AuthGuard } from './guard/auth.guard';
 
 const routes: Routes = [
   { path: '', component: TimelineComponent },
@@ -32,7 +33,7 @@ const routes: Routes = [
   { path: 'user/:userId', component: ProfileComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'settings', component: SettingsComponent },
+  { path: 'settings', component: SettingsComponent , canActivate:[AuthGuard]},
   { path: 'example', component: ExampleComponent },
   { path: 'forgot', component: ForgotPasswordDialogComponent },
   { path: 'logout', component: LogoutComponent },
@@ -40,22 +41,8 @@ const routes: Routes = [
   { path: 'reset-password/:uid/:token', component: ResetPasswordComponent },
   { path: 'verify-email/:uid/:token', component: VerifyEmailComponent },
   { path: 'home', component: HomeComponent },
-
-  // { path: 'post', component: PostComponent },
-  // { path: 'post-like-dialog', component: PostLikeDialogComponent },
-  // { path: 'post-share-dialog', component: PostShareDialogComponent },
-  // { path: 'share-confirm-dialog', component: ShareConfirmDialogComponent },
-  // { path: 'post-dialog', component: PostDialogComponent },
-  // { path: 'confirmation-dialog', component: ConfirmationDialogComponent },
-  // { path: 'waiting-dialog', component: WaitingDialogComponent },
-  // { path: 'comment-likes', component: CommentLikeDialogComponent },
   { path: 'posts/:postId', component: PostDetailComponent },
-  // { path: 'photo', component: PhotoUploadDialogComponent },
-  // { path: 'following', component: FollowingFollowerListDialogComponent },
-
   { path: '**', redirectTo: '/login', pathMatch: 'full' }
-
-
 
 ];
 

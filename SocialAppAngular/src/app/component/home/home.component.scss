@@ -15,12 +15,17 @@
             justify-content: space-between;
 
             .chat-name {
-                font-weight: 500;
+                font-weight: 700;
+                
+            }
+            .chat-last-message{
+                font-size: 0.7rem;
+                color: rgba(188, 185, 185, 0.7)
             }
 
             .chat-date {
                 font-size: 0.7rem;
-                color: rgba(0, 0, 0, 0.7)
+                color: rgba(188, 185, 185, 0.7)
             }
 
         }

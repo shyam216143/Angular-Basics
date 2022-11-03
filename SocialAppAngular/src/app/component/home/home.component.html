@@ -1,6 +1,6 @@
 <h1>hellojvjnj</h1>
 <div class="container">
-  <div class="chat-list mat-elevation-z5">
+  <div class="chat-list mat-elevation-z5" style=" max-height: 100% !important;overflow: inherit !important;">
     <div class="search-input">
       <mat-form-field>
         <input matInput placeholder="Search for users and start a chat" [matAutocomplete]="users"
@@ -17,9 +17,9 @@
       <mat-list-option (click)="createChat(x.user)">
         <img matListAvatar src="http://127.0.0.1:8000{{x.user.profile_photo}}" />
         <p mat-line class="chat-title">
-          <span class="chat-name">{{x.user.username}}</span><span class="chat-date">{{x.user.birth_date}}</span>
+          <span class="chat-name">{{x.user.username}}</span><span class="chat-date">at..{{x.time_stamp|date:'hh:mm'}}</span>
         </p>
-        <p mat-line>{{x.last_message}}</p>
+        <p mat-line class="chat-message">{{x.last_message}}</p>
         <mat-divider></mat-divider>
       </mat-list-option>
 

@@ -218,7 +218,7 @@ wow!:any;
 
           // ele
    
-          ele.innerHTML += "<div class=\"sender\" style=\"width:100%;padding: 0px 10px;border-radius: 10px; background-color: grey;display:flex;flex-direction:row-reverse\"><div style=\"\">" + output + "<div style=\"color:white;left: 0%;font-size: x-small;\">" + "..." + date + "</div> </div></div>"
+          ele.innerHTML += "<div class=\"sender\" style=\"width:100%;padding: 0px 10px;border-radius: 10px; background-color: grey;display:flex;flex-direction:row-reverse\"><div style=\"\">" + output + "<div style=\"color:white;left: 0%;font-size: x-small;\">" + "..." + date + "<mat-icon >done_all</mat-icon></div> </div></div>"
           let ele1: any = document.getElementById('chat-area')
 
           let pixels = ele1.clientHeight;

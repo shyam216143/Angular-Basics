@@ -16,10 +16,13 @@
       <mat-divider></mat-divider>
       <mat-list-option (click)="createChat(x.user)">
         <img matListAvatar src="http://127.0.0.1:8000{{x.user.profile_photo}}" />
-        <p mat-line class="chat-title">
-          <span class="chat-name">{{x.user.username}}</span><span class="chat-date">at..{{x.time_stamp|date:'hh:mm'}}</span>
+       
+        
+        <p mat-line class="chat-title" >
+          
+          <span class="chat-name">{{x.user.username}}</span><span class="chat-date">{{x.time_stamp|date:'hh:mm'}} <mat-icon style="color: white; font-size:small;">done_all</mat-icon></span>
         </p>
-        <p mat-line class="chat-message">{{x.last_message}}</p>
+        <span mat-line class="chat-message">{{x.last_message}}</span>
         <mat-divider></mat-divider>
       </mat-list-option>
 
@@ -44,7 +47,9 @@
             <div class="message-content">
               <div>{{chat.message}}</div>
               <div class="date" style="left:0%;font-size: x-small; color: white;">....{{ chat.timestamp|date:"hh:mm a"}}
+                <mat-icon style="color: white; font-size:small;">done_all</mat-icon>
               </div>
+              
             </div>
 
           </div>
